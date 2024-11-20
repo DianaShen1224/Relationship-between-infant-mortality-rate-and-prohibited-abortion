@@ -1,10 +1,10 @@
 ---
-title: "My title"
-subtitle: "My subtitle if needed"
+title: "Examining the Overturn of Roe v. Wade: The Impact of Abortion Bans on Infant Mortality Rates in the United States Using a Difference-in-Differences Approach"
+subtitle: "The infant death rate increased by 0.268 deaths per 1,000 people in states that became abortion-banned, compared to states where abortion remained legal based on Difference in Difference linear modeling."
 author: 
   - First author
   - Another author
-thanks: "Code and data are available at: [https://github.com/RohanAlexander/starter_folder](https://github.com/RohanAlexander/starter_folder)."
+thanks: "Code and data are available at: [https://github.com/DianaShen1224/Relationship-between-infant-mortality-rate-and-prohibited-abortion)."
 date: today
 date-format: long
 abstract: "First sentence. Second sentence. Third sentence. Fourth sentence."
@@ -19,11 +19,35 @@ bibliography: references.bib
 #| message: false
 
 library(tidyverse)
-library(palmerpenguins)
+library(arrow)
+library(knitr)
+```
+
+```{r}
+analysis_data<-read_parquet(here::here("data", "02-analysis_data", "analysis_data.parquet"))
 ```
 
 
 # Introduction
+
+The overturning of Roe v. Wade on June 24, 2022, in the Supreme Court’s Dobbs v. Jackson Women’s Health Organization decision ended nearly five decades of constitutional protection for abortion rights. This ruling returned authority over abortion regulations to individual states, resulting in a patchwork of laws across the country. The shift sparked debates over reproductive rights and public health, underscoring disparities in access to abortion services and their impact on health outcomes in states with restrictive policies.
+
+The banning of abortion not only raises maternal mortality rates—evidenced by a 56% increase in Texas from 2019 to 2022 [@nbcnews]—but also influences infant mortality rates. Restrictive abortion laws can lead to more unintended or high-risk pregnancies, particularly among disadvantaged individuals with limited healthcare access, resulting in higher rates of preterm births, low birth weights, and delivery complications that elevate infant mortality.
+
+Before 
+
+The estimand of our analysis is the change in the difference in infant death rates between states that banned abortion and states where abortion remained legal after June 24, 2022. The object of the estimation is to estimate the change in the difference in the infant death rate between the treatment and control groups based on observational data in the United States using the Difference-in-Difference approach. Our aim is to identify changes in infant mortality trends over time, providing a clearer understanding of the potential impacts of abortion bans on public health outcomes.
+
+The structure of this paper is organized as follows: @sec-data 
+provides details on the data sources and variables used in our analysis.
+@sec-model explains the modeling approach, including the assumptions
+and specifications of our linear regression framework. In
+@sec-result, we present our findings, emphasizing the key predictors
+of Harris's support. Finally, @sec-discussion explores the
+implications of our results and suggests potential directions for future
+research. @sec-a provides external data detail, @sec-b provides
+model detail, @sec-c provides an investigation for pollster Siena College's
+methodology, and  @sec-d provides an idealized methodology for polling the poll.
 
 Overview paragraph
 
@@ -44,71 +68,185 @@ Telegraphing paragraph: The remainder of this paper is structured as follows. @s
 
 ## Overview
 
-We use the statistical programming language R [@citeR].... Our data [@shelter].... Following @tellingstories, we consider...
+We conduct our infant death rate observational data analysis using the R programming language
+[@citeR]. Our dataset, obtained from CDC Wonder
+[@cdc_wonder_2024], based on data as of December 2022, provides
+a detailed overview of public opinion in the lead-up to the election.
+Adhering to the guidelines presented in @tellingstories, we explore
+various factors that influence voter support percentages, including the
+timing of the polls, the traits of polling organizations, and regional
+differences.
 
 Overview text
 
 ## Measurement
 	
-Some paragraphs about how we go from a phenomena in the world to an entry in the dataset.
+
 
 ## Outcome variables
 
-Add graphs, tables and text. Use sub-sub-headings for each outcome variable or update the subheading to be singular.
+### Death Rate
 
-
-
-Some of our data is of penguins (@fig-bills), from @palmerpenguins.
+The `death rate` refers to the number of deaths of infants under one year of age per 1,000 live births in a specified population during a given time period. It serves as a key indicator of a population’s overall health and access to healthcare. Rates labeled as "Unreliable" occur when there are fewer than 20 deaths in the numerator, as these figures do not meet the National Center for Health Statistics (NCHS) standards for reliability or precision. After cleaning the dataset, the "Unreliable" label is converted into a separate variable named `reliable`.
 
 ```{r}
-#| label: fig-bills
-#| fig-cap: Bills of penguins
+#| label: fig-deathrate
+#| fig-cap: The distribution of infant death rate (per 1,000 live births), with a peak observed between 5 and 10 deaths per 1,000 infants.The distribution is right-skewed, highlighting the predominance of lower infant death rates in the dataset.
 #| echo: false
 
-ggplot(penguins, aes(x = island, fill = species)) +
-  geom_bar(alpha = 0.8) +
-  scale_fill_manual(values = c("darkorange","purple","cyan4"),
-                    guide = "none") +
-  theme_minimal() +
-  facet_wrap(~species, ncol = 1) +
-  coord_flip()
+ggplot(analysis_data, aes(x = death_rate)) +
+  geom_histogram(binwidth = 1, fill = "brown", color = "black") +
+  labs(
+    x = "Infant Death Rate (per 1,000 live births)", y = "Count",
+    caption = "Data source: CDC Wonder."
+  ) +theme_classic()
 ```
+@fig-deathrate illustrates the distribution of infant death rates (per 1,000 live births) based on the available data. The majority of infant death rates cluster around lower values, with a peak observed between 5 and 10 deaths per 1,000 infants. As the death rate increases, the frequency of occurrences decreases, indicating that higher infant death rates are relatively rare. There are few instances where the rate exceeds 20 deaths per 1,000 infants, suggesting these are outliers. Overall, the distribution is right-skewed, highlighting the predominance of lower infant death rates in the dataset.
 
-Talk more about it.
 
-And also planes (@fig-planes). (You can change the height and width, but don't worry about doing that until you have finished every other aspect of the paper - Quarto will try to make it look nice and the defaults usually work well once you have enough text.)
-
-```{r}
-#| label: fig-planes
-#| fig-cap: Relationship between wing length and width
-#| echo: false
-#| warning: false
-#| message: false
-
-analysis_data <- read_csv(here::here("data/02-analysis_data/analysis_data.csv"))
-
-analysis_data |> 
-  ggplot(aes(x = width, y = length)) +
-  geom_point(alpha = 0.8) +
-  theme_minimal() +
-  labs(x = "Wing width (mm)",
-       y = "Wing length (mm)")
-```
-
-Talk way more about it. 
 
 ## Predictor variables
 
-Add graphs, tables and text.
+### Abortion Legality & After Injunction
 
-Use sub-sub-headings for each outcome variable and feel free to combine a few into one if they go together naturally.
+Abortion legality (named `abortion_illegal` in the dataset) is a newly created variable in our dataset, which refers to the legal status of abortion within a given state. It is represented as a binary variable, where 1 indicates that abortion is illegal in the state, and 0 indicates that abortion is legal. This classification reflects the policies and laws governing abortion access in each state.
+
+Another created variable `after_injunction` indicates whether the date of infants' death falls after the implementation of the abortion restrictions following the overturn of Roe v. Wade in June 2022. It is coded as a binary variable, where 1 represents dates after June 2022, signifying the post-injunction period, and 0 represents dates before June 2022, indicating the pre-injunction period.
+
+```{r}
+#|include: false
+library(usmap)
+library(ggplot2)
+library(dplyr)
+
+# Ensure the number of states and `abortion_illegal` values match
+illegal_states <- tolower(c("Alabama", "Arkansas", "Idaho", "Indiana", "Kentucky", 
+                    "Louisiana", "Mississippi", "Oklahoma", "South Dakota", 
+                    "Tennessee", "Texas", "West Virginia"))
+abortion_status <- data.frame(
+  state = tolower(c(
+    "Alabama", "Alaska", "Arizona", "Arkansas", "California", "Colorado", "Connecticut", 
+    "Delaware", "Florida", "Georgia", "Hawaii", "Idaho", "Illinois", "Indiana", 
+    "Iowa", "Kansas", "Kentucky", "Louisiana", "Maine", "Maryland", "Massachusetts", 
+    "Michigan", "Minnesota", "Mississippi", "Missouri", "Montana", "Nebraska", 
+    "Nevada", "New Hampshire", "New Jersey", "New Mexico", "New York", "North Carolina", 
+    "North Dakota", "Ohio", "Oklahoma", "Oregon", "Pennsylvania", "Rhode Island", 
+    "South Carolina", "South Dakota", "Tennessee", "Texas", "Utah", "Vermont", 
+    "Virginia", "Washington", "West Virginia", "Wisconsin", "Wyoming"
+  )),
+  short = c(
+    "AL", "AK", "AZ", "AR", "CA", "CO", "CT", "DE", "FL", "GA", "HI", "ID", "IL", "IN", 
+    "IA", "KS", "KY", "LA", "ME", "MD", "MA", "MI", "MN", "MS", "MO", "MT", "NE", 
+    "NV", "NH", "NJ", "NM", "NY", "NC", "ND", "OH", "OK", "OR", "PA", "RI", "SC", 
+    "SD", "TN", "TX", "UT", "VT", "VA", "WA", "WV", "WI", "WY"
+  )
+)|>mutate(abortion_illegal = as.factor(case_when(state %in% illegal_states ~ 1, TRUE ~ 0)))
+```
+
+```{r}
+#|include: false
+us_map <- map_data("state")
+map_data <- us_map|>
+   left_join(abortion_status, c("region"="state"))|>filter(!is.na(abortion_illegal))
+```
 
 
+```{r}
+#| label: fig-map
+#| fig-cap: Abortion Legality by State. As of November 2024, abortion is illegal in Alabama, Arkansas, Idaho, Indiana, Kentucky, Louisiana, Mississippi, Missouri, North Dakota, Oklahoma, South Dakota, Tennessee, Texas, West Virginia, and Wisconsin.
+#| echo: false
+ggplot() +
+  geom_polygon(data = map_data, aes(fill = abortion_illegal, x = long, y = lat, group = group)) +
+  scale_fill_manual(
+    values = c("0" = "blue", "1" = "red"),
+    labels = c("Legal", "Illegal"),
+    name = "Abortion Legal Or Not"
+  ) +
+  theme_void() +
+  labs(
+    caption = "Source: Center for Reproductive Rights\nDate as of Nov.19 2024"
+  ) 
+```
+@fig-map illustrates the legality of abortion across U.S. states. Based on @reproductiveright, as of November 2024, abortion has been illegal in Alabama, Arkansas, Idaho, Indiana, Kentucky, Louisiana, Mississippi, Missouri, North Dakota, Oklahoma, South Dakota, Tennessee, Texas, West Virginia, and Wisconsin following the June 2022 decision.
+```{r}
+#| label: fig-rateandstate
+#| fig-cap: Infant death rates (per 1,000 live births) over time, with a slight increase after June 2022 in states where abortion is illegal, while rates remain stable in states where abortion is legal.
+#| echo: false
+analysis_data|>
+  mutate(illegal = if_else( abortion_illegal== 1, "Illegal State", "Legal State"))|>
+  ggplot(aes(x = date, y = death_rate,colour = illegal)) +
+  geom_point(alpha = 0.5)+
+  geom_smooth() +
+  labs(x = "Date of Infant Death", y = "Infant Death Rate (per 1,000 live births)",color="State is Illegal for Abortion Or Not",caption = "Data source: CDC Wonder.\nIn June 2022, the U.S. Supreme Court overturned Roe v. Wade.") +
+  facet_wrap(vars(illegal), nrow = 2)+
+  geom_vline(xintercept = as.Date("2022-06-01"), linetype = "dashed")  +
+  scale_x_date(
+    limits = c(as.Date("2021-01-01"), as.Date("2022-12-01")), 
+    date_breaks = "3 months",  
+    date_labels = "%Y-%m" 
+  )+
+  scale_color_brewer(palette = "Set1")+
+  theme_classic() 
+```
+@fig-rateandstate illustrates trends in infant death rates (per 1,000 live births) over time in states where abortion is illegal versus legal. In states with abortion bans, infant mortality shows a slight increase after June 2022, marked by the dashed line representing the overturn of Roe v. Wade. In contrast, states where abortion remains legal exhibit relatively stable trends. This suggests a potential link between abortion bans and rising infant mortality rates, warranting further investigation.
+
+### Year of Death
+
+### State
+
+The state of the mother’s legal residence at the time of birth. This data is categorized by the mother’s state of residence and excludes territories.
 
 
+```{r}
+#| label: tbl-motherage
+#| tbl-cap: Average Infant Death Rate (per 1,000 live births) of different age group of Mother. It shows that infant death rates decrease with increasing maternal age, with the highest rate (10.0) among mothers aged 20–24 and the lowest (6.6) among those aged 30–34.
+#| echo: false
+#| warning: false
+#| message: false
+library(kableExtra)
+analysis_data_state <- analysis_data|>
+  group_by(state)|>
+  summarize(`Average Infant Death Rate (per 1,000 live births)` = round(mean(death_rate, na.rm = TRUE), 1)) |>rename(`State`=state)
 
+# Display the result as a table
+kable(analysis_data_state)|>footnote("Data Source: CDC Wonder")
+```
 
+### Age of Mother
 
+The Age of Mother (`age_of_mother`) refers to the age group of the mother at the time of childbirth.In our observational data, age is categorized into the brackets 15–19 years, 20–24 years, 25–29 years, and 30–34 years in the raw data, in compliance with privacy requirements. 
+
+@tbl-motherage displays the average infant death rate (per 1,000 live births) by the age group of mothers. It shows a clear trend: younger mothers, particularly those aged 15–19 and 20–24, have higher infant death rates (9.0 and 10.0, respectively), while older mothers in the 25–29 and 30–34 age groups have lower rates (7.4 and 6.6, respectively). This suggests that maternal age may be a factor influencing infant mortality, with younger mothers experiencing higher risks.
+```{r}
+#| label: tbl-motherage
+#| tbl-cap: Average Infant Death Rate (per 1,000 live births) of different age group of Mother. It shows that infant death rates decrease with increasing maternal age, with the highest rate (10.0) among mothers aged 20–24 and the lowest (6.6) among those aged 30–34.
+#| echo: false
+#| warning: false
+#| message: false
+library(kableExtra)
+analysis_data_state <- analysis_data|>
+  group_by(age_of_mother)|>
+  summarize(`Average Infant Death Rate (per 1,000 live births)` = round(mean(death_rate, na.rm = TRUE), 1)) |>rename(`Age of Mother`=age_of_mother)
+
+# Display the result as a table
+kable(analysis_data_state)|>footnote("Data Source: CDC Wonder")
+```
+
+### Mother's Single Race
+The self-identified race of the mother, recorded as a single race category. In this dataset, the available categories are: Asian, Black or African American, and White. This classification facilitates the analysis of maternal and infant health outcomes across these racial groups.
+```{r}
+#| label: tbl-motherage
+#| tbl-cap: Average Infant Death Rate (per 1,000 live births) of different age group of Mother. It shows that infant death rates decrease with increasing maternal age, with the highest rate (10.0) among mothers aged 20–24 and the lowest (6.6) among those aged 30–34.
+#| echo: false
+#| warning: false
+#| message: false
+analysis_data_state <- analysis_data|>
+  group_by(mothers_single_race)|>
+  summarize(`Average Infant Death Rate (per 1,000 live births)` = round(mean(death_rate, na.rm = TRUE), 1)) |>rename(`Mother's Single Race`=mothers_single_race)
+
+# Display the result as a table
+kable(analysis_data_state)|>footnote("Data Source: CDC Wonder")
+```
 
 # Model
 
@@ -153,6 +291,8 @@ library(rstanarm)
 
 first_model <-
   readRDS(file = here::here("models/first_model.rds"))
+second_model <-
+  readRDS(file = here::here("models/second_model.rds"))
 ```
 
 ```{r}
@@ -162,16 +302,10 @@ first_model <-
 #| tbl-cap: "Explanatory models of flight time based on wing width and wing length"
 #| warning: false
 
-modelsummary::modelsummary(
-  list(
-    "First model" = first_model
-  ),
-  statistic = "mad",
-  fmt = 2
-)
+modelsummary::msummary(
+  list(first_model,second_model),
+  fmt = 3,coef_omit="state",notes = "Note. All models include a control for state and pollsters. The reference level of the state is Alaska, the reference level of population is likely voter, and the reference level of pollsters is Angus Reid.")
 ```
-
-
 
 
 # Discussion
@@ -249,6 +383,17 @@ plot(first_model, "trace")
 plot(first_model, "rhat")
 ```
 
+
+```{r}
+analysis_data|>
+  ggplot(aes(x = after_injunction, y = death_rate, color = as.factor(abortion_illegal))) +
+  geom_point(alpha = 0.2) +
+  geom_line(aes(group = state)) +
+  theme_minimal() +
+  labs(x = "Time period", y = "Death Rate", color = "Person got a new racket")  +
+  scale_color_brewer(palette = "Set1") +
+  theme(legend.position = "bottom")
+```
 
 
 \newpage
