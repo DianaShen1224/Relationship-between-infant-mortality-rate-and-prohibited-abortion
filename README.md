@@ -42,14 +42,15 @@ This repo provides students with a foundation for their own projects associated 
 
 ## File Structure
 
-The repo is structured as:
+The repository is structured as follows:
 
--   `data/raw_data` contains the raw data as obtained from X.
--   `data/analysis_data` contains the cleaned dataset that was constructed.
--   `model` contains fitted models. 
--   `other` contains relevant literature, details about LLM chat interactions, and sketches.
--   `paper` contains the files used to generate the paper, including the Quarto document and reference bibliography file, as well as the PDF of the paper. 
--   `scripts` contains the R scripts used to simulate, download and clean data.
+-   `data/raw_data` contains the raw poll data as obtained from [CDC Wonder](https://wonder.cdc.gov/controller/datarequest/D159), by searching for "Download the data", then selecting Presidential general election polls (current cycle), then "Download". To open these data through GitHub, they can be downloaded. Alternatively, to view these files within RStudio, they can be imported using the library `readr`.
+-   `data/02-analysis_data` contains the cleaned dataset constructed in `scripts/03-clean_data`.
+-   The `scripts` folder contains the R scripts and code that simulated, tested, downloaded, and cleaned the data.
+-   `model` contains fitted models.
+-   `other` contains details about LLM chat interactions and sket
+-   `paper` contains the files used to generate the paper, including the Quarto document and reference bibliography file, as well as the PDF of the paper.
+
 
 
 ## Statement on LLM usage
