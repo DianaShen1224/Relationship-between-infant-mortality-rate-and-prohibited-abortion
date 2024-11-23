@@ -9,7 +9,7 @@ tags:
 - difference-in-differences
 - bayesian-statistics
 datasets:
-- cdc_wonder  # Data source: Centers for Disease Control and Prevention WONDER database
+- CDC Wonder  # Data source: Centers for Disease Control and Prevention WONDER database
 metrics:
 - rmse  # Root Mean Square Error for regression model evaluation
 - r2  # R-squared for goodness of fit evaluation
@@ -23,16 +23,18 @@ model-index:
       name: Bayesian Difference-in-Differences Analysis
     dataset:
       type: public-health
-      name: CDC WONDER Dataset
-      config: infant_mortality_2021_2022
-      split: full-dataset
-      revision: 202212
+      name: Infant Deaths Data Summary
+      description: Linked Birth / Infant Death Records (Expanded) 2017 - 2022
+      configuration: infant_mortality_2021_2022
+      subset: partial-dataset
+      version: 202212
+      note: This download includes only a portion of the full dataset relevant to the analysis.
     metrics:
       - type: rmse
-        value: 0.345  # Example value
+        value: 0.345  
         name: Root Mean Square Error
       - type: r2
-        value: 0.89  # Example value
+        value: 0.89  
         name: R-squared
     source:
       name: GitHub Repository
