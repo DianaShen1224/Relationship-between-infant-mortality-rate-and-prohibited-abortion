@@ -182,7 +182,13 @@ Here’s a detailed and formatted response based on your training process and re
 
 ### Training Data
 
-The training data originates from the Linked Birth/Infant Death Records (2017-2022) dataset, which contains vital statistics on infant mortality in the United States. The dataset provides information on maternal demographics, infant death rates, and various temporal and geographic factors. Key features include: - State of Residence: Identifies the mother’s state of residence during childbirth. - Maternal Age: Categorized into groups such as 15-19, 20-24, 25-29, and 30-34 years. - Maternal Race: Recorded as a categorical variable (e.g., Asian, Black or African American, White). - Year and Month of Death: Specifies when the infant death occurred. - Death Rate: Continuous variable indicating the number of infant deaths per 1,000 live births, with reliability labels.
+The training data originates from the Linked Birth/Infant Death Records (2017-2022) dataset, which contains vital statistics on infant mortality in the United States. The dataset provides information on maternal demographics, infant death rates, and various temporal and geographic factors. 
+Key features include: 
+
+- State of Residence: Identifies the mother’s state of residence during childbirth.
+- Maternal Age: Categorized into groups such as 15-19, 20-24, 25-29, and 30-34 years.
+- Maternal Race: Recorded as a categorical variable (e.g., Asian, Black or African American, White).
+- Year and Month of Death: Specifies when the infant death occurred. - Death Rate: Continuous variable indicating the number of infant deaths per 1,000 live births, with reliability labels.
 
 The dataset underwent cleaning and feature engineering, as described in the preprocessing steps, to ensure readiness for analysis and modeling.
 
@@ -242,9 +248,9 @@ Here is a detailed response for the evaluation section based on your project req
 #### Testing Data
 
 The testing data is a subset of the Linked Birth/Infant Death Records (2017-2022) dataset, focusing on infant mortality trends after 2021 and up to 2022. This subset includes demographic, temporal, and geographic factors relevant to evaluating the causal impact of abortion bans. Key attributes include:
-	-	States with and without abortion bans post-June 2022.
-	-	Temporal data: Infant deaths categorized before and after the abortion injunctions.
-	-	Demographic data: Maternal age and race.
+-	States with and without abortion bans post-June 2022.
+-	Temporal data: Infant deaths categorized before and after the abortion injunctions.
+-	Demographic data: Maternal age and race.
 
 #### Factors
 
@@ -281,13 +287,13 @@ The evaluation metrics used to assess the models include:
 2.	**Model 2: Incorporates additional demographic factors (age_of_mother, mothers_single_race).**
  -	RMSE: 2.36 deaths per 1,000 live births.
  -	$R^2$: 0.793.
- -	Older maternal age groups were associated with lower infant mortality rates, while Black mothers experienced disproportionately higher rates.tes.
+ -	Older maternal age groups were associated with lower infant mortality rates, while Black mothers experienced disproportionately higher rates.
 
 #### Summary
 
 The models effectively captured the impact of abortion bans on infant mortality rates, with significant differences observed in states with restrictive abortion policies. Demographic disparities, such as race and maternal age, further influenced mortality rates, highlighting the compounded effects of policy and social factors.
 
-#### Model Examination [optional]
+#### Model Examination 
 
 The models underwent posterior predictive checks and comparison between prior and posterior distributions:
 	-	Posterior Predictive Checks:
