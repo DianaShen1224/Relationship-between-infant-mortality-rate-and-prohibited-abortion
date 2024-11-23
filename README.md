@@ -11,9 +11,9 @@ tags:
 datasets:
 - CDC Wonder  # Data source: Centers for Disease Control and Prevention WONDER database
 metrics:
-- rmse  # Root Mean Square Error for regression model evaluation
-- r2  # R-squared for goodness of fit evaluation
-base_model: null  # No pre-trained base model used
+- rmse  
+- r2  
+base_model: null  
 
 model-index:
 - name: Impact of Abortion Policies on Infant Mortality
@@ -29,13 +29,6 @@ model-index:
       subset: partial-dataset
       version: 202212
       note: This download includes only a portion of the full dataset relevant to the analysis.
-    metrics:
-      - type: rmse
-        value: 0.345  
-        name: Root Mean Square Error
-      - type: r2
-        value: 0.89  
-        name: R-squared
     source:
       name: GitHub Repository
       url: https://github.com/DianaShen1224/Relationship-between-infant-mortality-rate-and-prohibited-abortion
@@ -277,7 +270,7 @@ The evaluation metrics used to assess the models include:
 	3.	Posterior Predictive Checks:
 	 -	Examines the alignment of predicted and observed values to assess model calibration.
 	4.	Significance of Coefficients:
-	 -	Evaluates the statistical significance of key predictors, including interaction terms like after_injunction * abortion_illegal.
+	 -	Evaluate the statistical significance of key predictors, including interaction terms like after_injunction * abortion_illegal.
 
 #### Results
 
