@@ -64,9 +64,8 @@ Aspects of the code were written with the help of the auto-complete tool, Codriv
 - [ ] Update comments in R scripts
 - [ ] Remove this checklist
 
-# Model Card for Bayesian Difference-in-Differences Model
-
-This model examines the impact of restrictive abortion policies in the United States following the Dobbs decision and the overturn of Roe v. Wade. By employing a Bayesian Difference-in-Differences (DID) approach, the model quantifies changes in infant mortality rates across U.S. states.
+# Model Card for Infant Mortality and Abortion Policy Analysis Model
+This model analyzes the impact of abortion bans resulting from the Dobbs v. Jackson Women’s Health Organization decision on infant mortality rates in the United States using data from 2021–2022. It incorporates policy factors, such as abortion legality and the timing of the Dobbs decision, as well as demographic variables, through Bayesian Difference-in-Differences (DID) regression models. The analysis focuses on the health disparities linked to restrictive abortion policies post-Dobbs.
 
 ## Model Details
 
