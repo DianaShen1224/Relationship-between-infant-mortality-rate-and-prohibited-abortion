@@ -33,25 +33,55 @@ model-index:
       name: GitHub Repository
       url: https://github.com/DianaShen1224/Relationship-between-infant-mortality-rate-and-prohibited-abortion
 ---
+
 # Starter folder
 
 ## Overview
 
 This repo provides students with a foundation for their own projects associated with *Telling Stories with Data*. You do not need every aspect for every paper and you should delete aspects that you do not need.
 
-
 ## File Structure
 
 The repository is structured as follows:
 
--   `data/01-raw_data` contains the raw infant death data as obtained from [CDC Wonder](https://wonder.cdc.gov/controller/datarequest/D159), The process for selecting the query parameters and downloading the dataset is outlined in the `data/script/02-download_data`. This ensures traceability and reproducibility of the data acquisition process.. To open these data through GitHub, they can be downloaded. Alternatively, to view these files within RStudio, they can be imported using the library `read.delim`.
+-   `data/01-raw_data` contains the raw infant death data as obtained from [CDC Wonder](https://wonder.cdc.gov/controller/datarequest/D159), The process for selecting the query parameters and downloading the dataset is outlined in the [Data Download](#section-data-download). This ensures traceability and reproducibility of the data acquisition process.. To open these data through GitHub, they can be downloaded. Alternatively, to view these files within RStudio, they can be imported using the library `read.delim`.
 -   `data/02-analysis_data` contains the cleaned dataset constructed in `scripts/03-clean_data`.
 -   The `scripts` folder contains the R scripts and code that simulated, tested, downloaded, and cleaned the data.
 -   `model` contains fitted models.
 -   `other` contains details about LLM chat interactions and sket
 -   `paper` contains the files used to generate the paper, including the Quarto document and reference bibliography file, as well as the PDF of the paper.
 
+### Data Download
 
+One way to download the Query Criteria, the same as the raw data, is to use the [saved request](https://wonder.cdc.gov/controller/saved/D159/D414F912) to get the exact same query criteria. After clicking the link, please read the terms of data use and click the "I Agree" button below to access the saved request. Once the processing requests are completed (about 5-7 minutes), click the "Results" tab at the top of the page to see the result table.
+
+Then, you can explore the table of data. Please scroll to the bottom and read the "Notes" section to learn about the "Caveats" of the dataset. Additionally, you can review the "Query Criteria" section to see the selected query range. Once you are done with the exploration, click the "Export" button at the top of the page and download the `.txt` file of the dataset. This will be our raw data. Import and save the file in the `data/01-raw_data` folder.
+
+If you’d prefer to recreate the process yourself, you can follow these steps to build the query manually:
+
+1.  Go to [Linked Birth / Infant Death Records for 2017-2022 with ICD 10 codes (expanded)](https://wonder.cdc.gov/lbd-current-expanded.html). Read the terms of data use and click the "I Agree" button.
+
+2.  In the Organize Table Layout section, choose to group results by the following variables:
+
+ -   **Age of Mother 9**
+ -   **Mother's Single Race 6**
+ -   **Year of Death**
+ -   **Month**
+ -   **State**
+
+3.  Scroll down the page to find the variable query section. Use the following steps to select variables (Hint: Use Ctrl + Click for multiple selections, or Shift + Click for a range):
+
+-   Select maternal characteristics:
+    -   **Age of Mother 9**: Under 15 years; 15-19 years; 20-24 years; 25-29 years; 30-34 years.
+    -   **Mother's Single Race 6**: American Indian or Alaska Native; Asian; Black or African American; Native Hawaiian or Other Pacific Islander; White; More than one race; Unknown or Not Stated.
+-   Select infant characteristics:
+    -   **Year of Death**: 2021; 2022.
+
+4.  Send your data request to be processed on the CDC WONDER database. The "Send" buttons are located at the bottom of the Request page and in the upper-right corner of each section for easy access.
+
+5.  Keep all table settings at default. Once the table is ready, click the "Export" button at the top of the page to download the `.txt` file of the dataset.
+
+6.  Import and save the file in the `data/01-raw_data` folder.
 
 ## Statement on LLM usage
 
@@ -59,13 +89,14 @@ Aspects of the code were written with the help of ChatGPT4o. Part of the writing
 
 ## Some checks
 
-- [ ] Change the rproj file name so that it's not starter_folder.Rproj
-- [ ] Change the README title so that it's not Starter folder
-- [ ] Remove files that you're not using
-- [ ] Update comments in R scripts
-- [ ] Remove this checklist
+-   [ ] Change the rproj file name so that it's not starter_folder.Rproj
+-   [ ] Change the README title so that it's not Starter folder
+-   [ ] Remove files that you're not using
+-   [ ] Update comments in R scripts
+-   [ ] Remove this checklist
 
 # Model Card for Infant Mortality and Abortion Policy Analysis Model
+
 This model analyzes the impact of abortion bans resulting from the Dobbs v. Jackson Women’s Health Organization decision on infant mortality rates in the United States using data from 2021–2022. It incorporates policy factors, such as abortion legality and the timing of the Dobbs decision, as well as demographic variables, through Bayesian Difference-in-Differences (DID) regression models. The analysis focuses on the health disparities linked to restrictive abortion policies post-Dobbs.
 
 ## Model Details
@@ -135,7 +166,7 @@ fine_tuned_model <- stan_glm( death_rate \~ after_injunction \* abortion_illegal
 # Generate predictions using the fine-tuned model
 
 new_predictions <- posterior_predict(fine_tuned_model, newdata = new_data)
-``` 
+```
 
 ### Out-of-Scope Use
 
@@ -182,13 +213,12 @@ Here’s a detailed and formatted response based on your training process and re
 
 ### Training Data
 
-The training data originates from the Linked Birth/Infant Death Records (2017-2022) dataset, which contains vital statistics on infant mortality in the United States. The dataset provides information on maternal demographics, infant death rates, and various temporal and geographic factors. 
-Key features include: 
+The training data originates from the Linked Birth/Infant Death Records (2017-2022) dataset, which contains vital statistics on infant mortality in the United States. The dataset provides information on maternal demographics, infant death rates, and various temporal and geographic factors. Key features include:
 
-- State of Residence: Identifies the mother’s state of residence during childbirth.
-- Maternal Age: Categorized into groups such as 15-19, 20-24, 25-29, and 30-34 years.
-- Maternal Race: Recorded as a categorical variable (e.g., Asian, Black or African American, White).
-- Year and Month of Death: Specifies when the infant death occurred. - Death Rate: Continuous variable indicating the number of infant deaths per 1,000 live births, with reliability labels.
+-   State of Residence: Identifies the mother’s state of residence during childbirth.
+-   Maternal Age: Categorized into groups such as 15-19, 20-24, 25-29, and 30-34 years.
+-   Maternal Race: Recorded as a categorical variable (e.g., Asian, Black or African American, White).
+-   Year and Month of Death: Specifies when the infant death occurred. - Death Rate: Continuous variable indicating the number of infant deaths per 1,000 live births, with reliability labels.
 
 The dataset underwent cleaning and feature engineering, as described in the preprocessing steps, to ensure readiness for analysis and modeling.
 
@@ -213,29 +243,27 @@ The dataset underwent cleaning and feature engineering, as described in the prep
 
 ##### Training Hyperparameters
 
-The training process used the Stan Generalized Linear Mixed Model (GLMM) framework implemented through the rstanarm library in R. 
-Two models were trained: 
+The training process used the Stan Generalized Linear Mixed Model (GLMM) framework implemented through the rstanarm library in R. Two models were trained:
 
-- First Model:
+-   First Model:
 
-```r
+``` r
 
 first_model <- stan_glmer( formula = death_rate \~ after_injunction \* abortion_illegal + abortion_illegal + (1 \| state), data = analysis_data, family = gaussian(), prior = normal(location = 0, scale = 2.5, autoscale = TRUE), prior_intercept = normal(location = 0, scale = 2.5, autoscale = TRUE), prior_aux = exponential(rate = 1, autoscale = TRUE), seed = 853 )
+```
 
-```         
-- Second Model (with additional covariates):
+-   Second Model (with additional covariates):
 
-```r
+``` r
 
 second_model <- stan_glmer( formula = death_rate \~ after_injunction \* abortion_illegal + abortion_illegal + year_of_death + age_of_mother + mothers_single_race + (1 \| state), data = analysis_data, family = gaussian(), prior = normal(location = 0, scale = 2.5, autoscale = TRUE), prior_intercept = normal(location = 0, scale = 2.5, autoscale = TRUE), prior_aux = exponential(rate = 1, autoscale = TRUE), seed = 853 )
-
-```         
+```
 
 ##### Speeds, Sizes, Times
 
 -   Model Training Time: Approximately 5-10 minutes per model on an 8-core CPU with 16 GB of RAM.
 -   Dataset Size: The cleaned dataset contains 659 rows and 11 variables.
--   Model Complexity: Included a random effect for the state to account for state-specific variations. 
+-   Model Complexity: Included a random effect for the state to account for state-specific variations.
 
 The preprocessing and modeling steps ensure robustness, interpretability, and reproducibility of the findings.
 
@@ -243,116 +271,76 @@ Here is a detailed response for the evaluation section based on your project req
 
 ## Evaluation
 
-### Testing Data, Factors  Metrics
+### Testing Data, Factors Metrics
 
 #### Testing Data
 
-The testing data is a subset of the Linked Birth/Infant Death Records (2017-2022) dataset, focusing on infant mortality trends after 2021 and up to 2022. This subset includes demographic, temporal, and geographic factors relevant to evaluating the causal impact of abortion bans. Key attributes include:
--	States with and without abortion bans post-June 2022.
--	Temporal data: Infant deaths categorized before and after the abortion injunctions.
--	Demographic data: Maternal age and race.
+The testing data is a subset of the Linked Birth/Infant Death Records (2017-2022) dataset, focusing on infant mortality trends after 2021 and up to 2022. This subset includes demographic, temporal, and geographic factors relevant to evaluating the causal impact of abortion bans. Key attributes include: - States with and without abortion bans post-June 2022. - Temporal data: Infant deaths categorized before and after the abortion injunctions. - Demographic data: Maternal age and race.
 
 #### Factors
 
-Evaluation of the model’s performance was disaggregated across the following factors:
-1.	**Policy Factors**:
- -	States categorized based on abortion legality (abortion_illegal).
- -	Timing relative to the abortion injunction (after_injunction).
-2.	**Demographic Factors**:
- -	Maternal race (mothers_single_race).
- -	Maternal age group (age_of_mother).
-3.	**Temporal Factors**:
- -	Year and month of death (year_of_death, date).
+Evaluation of the model’s performance was disaggregated across the following factors: 1. **Policy Factors**: - States categorized based on abortion legality (abortion_illegal). - Timing relative to the abortion injunction (after_injunction). 2. **Demographic Factors**: - Maternal race (mothers_single_race). - Maternal age group (age_of_mother). 3. **Temporal Factors**: - Year and month of death (year_of_death, date).
 
 #### Metrics
 
-The evaluation metrics used to assess the models include:
-1.	**Root Mean Square Error (RMSE)**:
-  -	Measures the average prediction error.
-  -	Lower RMSE indicates better model fit.
-2.	**R-squared ($R^2$)**:
-  -	Indicates the proportion of variance explained by the model.
-  -	Higher $R^2$ values represent a better fit.
-3.	**Posterior Predictive Checks**:
-  -	Examines the alignment of predicted and observed values to assess model calibration.
-4.	**Significance of Coefficients**:
-  -	Evaluates the statistical significance of key predictors, including interaction terms like after_injunction * abortion_illegal.
+The evaluation metrics used to assess the models include: 1. **Root Mean Square Error (RMSE)**: - Measures the average prediction error. - Lower RMSE indicates better model fit. 2. **R-squared (**$R^2$): - Indicates the proportion of variance explained by the model. - Higher $R^2$ values represent a better fit. 3. **Posterior Predictive Checks**: - Examines the alignment of predicted and observed values to assess model calibration. 4. **Significance of Coefficients**: - Evaluates the statistical significance of key predictors, including interaction terms like after_injunction \* abortion_illegal.
 
 #### Results
 
-1.	**Model 1: Focuses on policy factors (after_injunction and abortion_illegal) and their interaction.**
- -	RMSE: 4.21 deaths per 1,000 live births.
- -	$R^2$: 0.256.
- -	The interaction term (after_injunction * abortion_illegal) was statistically significant, indicating an increase in infant mortality rates in states with abortion bans after June 2022.
-2.	**Model 2: Incorporates additional demographic factors (age_of_mother, mothers_single_race).**
- -	RMSE: 2.36 deaths per 1,000 live births.
- -	$R^2$: 0.793.
- -	Older maternal age groups were associated with lower infant mortality rates, while Black mothers experienced disproportionately higher rates.
+1.  **Model 1: Focuses on policy factors (after_injunction and abortion_illegal) and their interaction.**
+
+-   RMSE: 4.21 deaths per 1,000 live births.
+-   $R^2$: 0.256.
+-   The interaction term (after_injunction \* abortion_illegal) was statistically significant, indicating an increase in infant mortality rates in states with abortion bans after June 2022.
+
+2.  **Model 2: Incorporates additional demographic factors (age_of_mother, mothers_single_race).**
+
+-   RMSE: 2.36 deaths per 1,000 live births.
+-   $R^2$: 0.793.
+-   Older maternal age groups were associated with lower infant mortality rates, while Black mothers experienced disproportionately higher rates.
 
 #### Summary
 
 The models effectively captured the impact of abortion bans on infant mortality rates, with significant differences observed in states with restrictive abortion policies. Demographic disparities, such as race and maternal age, further influenced mortality rates, highlighting the compounded effects of policy and social factors.
 
-#### Model Examination 
+#### Model Examination
 
-The models underwent posterior predictive checks and comparison between prior and posterior distributions:
-	-	Posterior Predictive Checks:
-	-	Demonstrated good alignment between predicted and observed infant mortality rates, validating model fit.
-	-	Prior vs. Posterior Distributions:
-	-	Confirmed that the data significantly informed posterior estimates, particularly for key predictors like the interaction term.
+The models underwent posterior predictive checks and comparison between prior and posterior distributions: - Posterior Predictive Checks: - Demonstrated good alignment between predicted and observed infant mortality rates, validating model fit. - Prior vs. Posterior Distributions: - Confirmed that the data significantly informed posterior estimates, particularly for key predictors like the interaction term.
 
 #### Environmental Impact
 
-The computational resources used to train and evaluate the models were minimal:
-	-	Hardware Type: Standard 8-core CPU with 16 GB RAM.
-	-	Hours used: Approximately 1-2 hours for training and evaluation.
-	-	Cloud Provider: Local machine; no external cloud services were used.
-	-	Compute Region: N/A for local computation.
-	-	Carbon Emitted: Negligible, as computations were performed on energy-efficient hardware.
+The computational resources used to train and evaluate the models were minimal: - Hardware Type: Standard 8-core CPU with 16 GB RAM. - Hours used: Approximately 1-2 hours for training and evaluation. - Cloud Provider: Local machine; no external cloud services were used. - Compute Region: N/A for local computation. - Carbon Emitted: Negligible, as computations were performed on energy-efficient hardware.
 
 ## Technical Specifications
 
 ### Model Architecture and Objective
 
-The model is a hierarchical Bayesian regression framework designed to assess the impact of abortion restrictions on infant mortality rates across U.S. states. 
-The setup includes two models: 
+The model is a hierarchical Bayesian regression framework designed to assess the impact of abortion restrictions on infant mortality rates across U.S. states. The setup includes two models:
 
-1. A baseline model to estimate direct and interaction effects. 
+1.  A baseline model to estimate direct and interaction effects.
 
-2. An extended model incorporating demographic and temporal controls.
+2.  An extended model incorporating demographic and temporal controls.
 
 ### Mathematical Model Setup
 
 The models are defined as follows:
 
-
-$$y_i|\mu_i,\sigma \sim \mbox{Normal}(\mu_i, \sigma)$$
-$$\text{First Model}: \mu_i = \beta_0 + \beta_1\cdot\text{After Injunction} + \beta_2\cdot\text{Abortion Illegal}+\beta_3\cdot\text{After Injunction}\cdot\text{Abortion Illegal}_i+\gamma_j$$
-$$
+$$y_i|\mu_i,\sigma \sim \mbox{Normal}(\mu_i, \sigma)$$ $$\text{First Model}: \mu_i = \beta_0 + \beta_1\cdot\text{After Injunction} + \beta_2\cdot\text{Abortion Illegal}+\beta_3\cdot\text{After Injunction}\cdot\text{Abortion Illegal}_i+\gamma_j$$ $$
 \begin{aligned}
 \text{Second Model}:\mu_i &= \beta_0 + \beta_1\cdot\text{After Injunction}_i + \beta_2\cdot\text{Abortion Illegal}_i+\beta_3\cdot\text{After Injunction}_i\cdot\text{Abortion Illegal}_i \\
 &+\beta_4\cdot\text{Year of Death}_i+\beta_5\cdot\text{Age of Mother}_i+\beta_6\cdot\text{Mother's Single Race}_i+\gamma_j
 \end{aligned}
-$$
-$$\beta_0 \sim \mbox{Normal}(0, 2.5)$$
-$$\beta_1 \sim \mbox{Normal}(0, 2.5)$$
-$$\beta_2 \sim \mbox{Normal}(0, 2.5)$$
-$$\beta_3 \sim \mbox{Normal}(0, 2.5)$$
-$$\beta_4 \sim \mbox{Normal}(0, 2.5)$$
-$$\beta_5 \sim \mbox{Normal}(0, 2.5)$$
-$$\beta_6 \sim \mbox{Normal}(0, 2.5)$$
-$$\gamma_j\sim \text{Normal}(0, \sigma_j^2)$$
-$$\sigma \sim \mbox{Exponential}(1)$$
+$$ $$\beta_0 \sim \mbox{Normal}(0, 2.5)$$ $$\beta_1 \sim \mbox{Normal}(0, 2.5)$$ $$\beta_2 \sim \mbox{Normal}(0, 2.5)$$ $$\beta_3 \sim \mbox{Normal}(0, 2.5)$$ $$\beta_4 \sim \mbox{Normal}(0, 2.5)$$ $$\beta_5 \sim \mbox{Normal}(0, 2.5)$$ $$\beta_6 \sim \mbox{Normal}(0, 2.5)$$ $$\gamma_j\sim \text{Normal}(0, \sigma_j^2)$$ $$\sigma \sim \mbox{Exponential}(1)$$
 
 ### Justification for the Model
 
-The model incorporates: 
+The model incorporates:
 
-- **Interaction Terms**: Capturing the combined effects of time and policy changes on infant mortality. 
+-   **Interaction Terms**: Capturing the combined effects of time and policy changes on infant mortality.
 
-- **Random Effects**: Adjusting for unobserved heterogeneity across states. 
+-   **Random Effects**: Adjusting for unobserved heterogeneity across states.
 
-- **Demographic and Temporal Controls**: Ensuring robust estimates that account for maternal age, race, and year of death.
+-   **Demographic and Temporal Controls**: Ensuring robust estimates that account for maternal age, race, and year of death.
 
 This approach leverages Difference-in-Differences (DID) to isolate causal effects while quantifying uncertainty through Bayesian inference.
 
@@ -362,7 +350,7 @@ The models were implemented using the `rstanarm` package in R, leveraging its de
 
 ## Citation
 
-**BibTeX:** 
+**BibTeX:**
 
 @misc{shen2024dobbs, author = {Diana Shen}, title = {Examining the impact Overturn of Roe v. Wade: Banning of Abortion on Infant Mortality Rates in the United States Using a Difference-in-Differences Approach}, year = {2024}, url = {<https://github.com/DianaShen1224/Relationship-between-infant-mortality-rate-and-prohibited-abortion>} }
 
@@ -396,4 +384,4 @@ Diana Shen
 
 ## Model Card Contact
 
-[diana.shen@mail.utoronto.ca](mailto:diana.shen@mail.utoronto.ca)
+[diana.shen\@mail.utoronto.ca](mailto:diana.shen@mail.utoronto.ca)
