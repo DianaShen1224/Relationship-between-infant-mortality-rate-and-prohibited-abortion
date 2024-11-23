@@ -107,8 +107,6 @@ This model analyzes the impact of abortion bans resulting from the Dobbs v. Jack
   * [Model Card Authors](#model-card-authors)
   * [Model Card Contact](#model-card-contact)
 
-<small><i><a href='http://ecotrust-canada.github.io/markdown-toc/'>Table of contents generated with markdown-toc</a></i></small>
-
 ## Model Details
 
 ### Model Description
