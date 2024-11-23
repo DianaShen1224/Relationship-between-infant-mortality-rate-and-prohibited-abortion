@@ -1,200 +1,202 @@
 ---
-# For reference on model card metadata, see the spec: https://github.com/huggingface/hub-docs/blob/main/modelcard.md?plain=1
-# Doc / guide: https://huggingface.co/docs/hub/model-cards
-{{ card_data }}
+language:
+- en
+license: mit  # MIT license for open collaboration
+library_name: rstanarm  # Bayesian modeling in R
+tags:
+- public-health
+- causal-inference
+- difference-in-differences
+- bayesian-statistics
+datasets:
+- cdc_wonder  # Data source: Centers for Disease Control and Prevention WONDER database
+metrics:
+- rmse  # Root Mean Square Error for regression model evaluation
+- r2  # R-squared for goodness of fit evaluation
+base_model: null  # No pre-trained base model used
+
+model-index:
+- name: Impact of Abortion Policies on Infant Mortality
+  results:
+  - task:
+      type: regression
+      name: Bayesian Difference-in-Differences Analysis
+    dataset:
+      type: public-health
+      name: CDC WONDER Dataset
+      config: infant_mortality_2021_2022
+      split: full-dataset
+      revision: 202212
+    metrics:
+      - type: rmse
+        value: 0.345  # Example value
+        name: Root Mean Square Error
+      - type: r2
+        value: 0.89  # Example value
+        name: R-squared
+    source:
+      name: GitHub Repository
+      url: https://github.com/DianaShen1224/Relationship-between-infant-mortality-rate-and-prohibited-abortion
 ---
 
-# Model Card for {{ model_id | default("Model ID", true) }}
+# Model Card for Bayesian Difference-in-Differences Model
 
-<!-- Provide a quick summary of what the model is/does. -->
-
-{{ model_summary | default("", true) }}
+This model examines the impact of restrictive abortion policies in the United States following the Dobbs decision and the overturn of Roe v. Wade. By employing a Bayesian Difference-in-Differences (DID) approach, the model quantifies changes in infant mortality rates across U.S. states.
 
 ## Model Details
 
 ### Model Description
 
-<!-- Provide a longer summary of what this model is. -->
+This Bayesian DID model is designed to evaluate the effects of abortion bans on infant mortality rates across U.S. states. It uses a hierarchical Bayesian framework to account for state-level variation while including predictors such as maternal age, race, and year of death.
 
-{{ model_description | default("", true) }}
+-   **Developed by:** Diana Shen
+-   **Funded by:** Independent research
+-   **Model type:** Bayesian Difference-in-Differences
+-   **License:** MIT License
+-   **Language(s):** N/A (focus on statistical analysis, not NLP)
 
-- **Developed by:** {{ developers | default("Diana Shen", true)}}
-- **Funded by [optional]:** {{ funded_by | default("[More Information Needed]", true)}}
-- **Shared by [optional]:** {{ shared_by | default("[More Information Needed]", true)}}
-- **Model type:** {{ model_type | default("[More Information Needed]", true)}}
-- **Language(s) (NLP):** {{ language | default("[More Information Needed]", true)}}
-- **License:** {{ license | default("[More Information Needed]", true)}}
-- **Finetuned from model [optional]:** {{ base_model | default("[More Information Needed]", true)}}
+### Model Sources
 
-### Model Sources [optional]
-
-<!-- Provide the basic links for the model. -->
-
-- **Repository:** {{ repo | default("[More Information Needed]", true)}}
-- **Paper [optional]:** {{ paper | default("[More Information Needed]", true)}}
-- **Demo [optional]:** {{ demo | default("[More Information Needed]", true)}}
+-   **Repository:** [GitHub Link](https://github.com/DianaShen1224/Relationship-between-infant-mortality-rate-and-prohibited-abortion)
+-   **Data Source:** CDC WONDER dataset, updated December 2022
 
 ## Uses
 
-<!-- Address questions around how the model is intended to be used, including the foreseeable users of the model and those affected by the model. -->
-
 ### Direct Use
 
-<!-- This section is for the model use without fine-tuning or plugging into a larger ecosystem/app. -->
+The model is intended for analyzing the impact of policy changes, specifically abortion bans, on infant mortality rates in the United States.
 
-{{ direct_use | default("[More Information Needed]", true)}}
+### Downstream Use
 
-### Downstream Use [optional]
-
-<!-- This section is for the model use when fine-tuned for a task, or when plugged into a larger ecosystem/app -->
-
-{{ downstream_use | default("[More Information Needed]", true)}}
+Researchers can adapt the model to evaluate other policy changes or health outcomes using similar observational data.
 
 ### Out-of-Scope Use
 
-<!-- This section addresses misuse, malicious use, and uses that the model will not work well for. -->
-
-{{ out_of_scope_use | default("[More Information Needed]", true)}}
+This model is not designed for individual-level predictions or contexts outside the dataset’s temporal and geographic scope.
 
 ## Bias, Risks, and Limitations
 
-<!-- This section is meant to convey both technical and sociotechnical limitations. -->
-
-{{ bias_risks_limitations | default("[More Information Needed]", true)}}
+The model relies on the assumption of parallel trends, which may not hold due to pre-existing differences in healthcare systems or socioeconomic conditions. Additionally, the observational nature of the data limits causal interpretation.
 
 ### Recommendations
 
-<!-- This section is meant to convey recommendations with respect to the bias, risk, and technical limitations. -->
-
-{{ bias_recommendations | default("Users (both direct and downstream) should be made aware of the risks, biases and limitations of the model. More information needed for further recommendations.", true)}}
+Results should be interpreted within the context of the dataset and assumptions. Additional qualitative research is recommended to complement the quantitative findings and address unobserved confounders.
 
 ## How to Get Started with the Model
 
-Use the code below to get started with the model.
+``` r
+library(rstanarm)
 
-{{ get_started_code | default("[More Information Needed]", true)}}
+# Load model
+first_model <-
+  readRDS(file = here::here("models/first_model.rds"))
+second_model <-
+  readRDS(file = here::here("models/second_model.rds"))
 
-## Training Details
+# View summary
+summary(first_model)
+summary(second_model)
+```
 
-### Training Data
+# Training Details
 
-<!-- This should link to a Dataset Card, perhaps with a short stub of information on what the training data is all about as well as documentation related to data pre-processing or additional filtering. -->
+## Training Data
 
-{{ training_data | default("[More Information Needed]", true)}}
+The model is trained using data from the CDC WONDER database, which includes variables such as maternal age, race, residence, state, and year and month of infant death.
 
-### Training Procedure
+## Training Procedure
 
-<!-- This relates heavily to the Technical Specifications. Content here should link to that section when it is relevant to the training procedure. -->
+The Bayesian model uses the `rstanarm` package in R with weakly informative priors:
 
-#### Preprocessing [optional]
+-   Prior for coefficients: Normal(0, 2.5)
 
-{{ preprocessing | default("[More Information Needed]", true)}}
+-   Prior for random effects: Normal(0, variance)
 
+-   Interaction term: Evaluates the combined effect of abortion legality and post-injunction timing.
 
-#### Training Hyperparameters
+# Evaluation
 
-- **Training regime:** {{ training_regime | default("[More Information Needed]", true)}} <!--fp32, fp16 mixed precision, bf16 mixed precision, bf16 non-mixed precision, fp16 non-mixed precision, fp8 mixed precision -->
+## Testing Data, Factors & Metrics
 
-#### Speeds, Sizes, Times [optional]
+### Testing Data
 
-<!-- This section provides information about throughput, start/end time, checkpoint size if relevant, etc. -->
+A subset of the CDC WONDER dataset was reserved for testing.
 
-{{ speeds_sizes_times | default("[More Information Needed]", true)}}
+Factors
 
-## Evaluation
+-   Abortion legality (binary)
 
-<!-- This section describes the evaluation protocols and provides the results. -->
+-   Post-injunction period (binary)
 
-### Testing Data, Factors & Metrics
+-   Maternal demographics
 
-#### Testing Data
+Metrics
 
-<!-- This should link to a Dataset Card if possible. -->
+-   Posterior mean estimates
 
-{{ testing_data | default("[More Information Needed]", true)}}
+-   Root Mean Square Error (RMSE)
 
-#### Factors
+-   $R^2$
 
-<!-- These are the things the evaluation is disaggregating by, e.g., subpopulations or domains. -->
+Results
 
-{{ testing_factors | default("[More Information Needed]", true)}}
+The DID analysis revealed a statistically significant increase of 0.285 deaths per 1,000 live births in states with abortion bans after the Dobbs decision. Maternal age and race were significant predictors, with Black mothers facing disproportionately higher rates.
 
-#### Metrics
+Environmental Impact
 
-<!-- These are the evaluation metrics being used, ideally with a description of why. -->
+-   Hardware Type: Local machine (CPU)
+-   Hours Used: \~3 hours
+-   Carbon Emitted: Minimal (local computational setup)
 
-{{ testing_metrics | default("[More Information Needed]", true)}}
+Technical Specifications
 
-### Results
+Model Architecture and Objective
 
-{{ results | default("[More Information Needed]", true)}}
+The model employs a hierarchical Bayesian structure with random effects for state-level variation. The objective is to estimate the causal impact of abortion bans on infant mortality rates.
 
-#### Summary
+Compute Infrastructure
 
-{{ results_summary | default("", true) }}
+-   Hardware: 8-core CPU, 16 GB RAM
 
-## Model Examination [optional]
+-   Software: R 4.2.0, rstanarm 2.21.3, tidyverse 1.3.1
 
-<!-- Relevant interpretability work for the model goes here -->
+Citation
 
-{{ model_examination | default("[More Information Needed]", true)}}
-
-## Environmental Impact
-
-<!-- Total emissions (in grams of CO2eq) and additional considerations, such as electricity usage, go here. Edit the suggested text below accordingly -->
-
-Carbon emissions can be estimated using the [Machine Learning Impact calculator](https://mlco2.github.io/impact#compute) presented in [Lacoste et al. (2019)](https://arxiv.org/abs/1910.09700).
-
-- **Hardware Type:** {{ hardware_type | default("[More Information Needed]", true)}}
-- **Hours used:** {{ hours_used | default("[More Information Needed]", true)}}
-- **Cloud Provider:** {{ cloud_provider | default("[More Information Needed]", true)}}
-- **Compute Region:** {{ cloud_region | default("[More Information Needed]", true)}}
-- **Carbon Emitted:** {{ co2_emitted | default("[More Information Needed]", true)}}
-
-## Technical Specifications [optional]
-
-### Model Architecture and Objective
-
-{{ model_specs | default("[More Information Needed]", true)}}
-
-### Compute Infrastructure
-
-{{ compute_infrastructure | default("[More Information Needed]", true)}}
-
-#### Hardware
-
-{{ hardware_requirements | default("[More Information Needed]", true)}}
-
-#### Software
-
-{{ software | default("[More Information Needed]", true)}}
+BibTeX:
 
 ## Citation [optional]
 
-<!-- If there is a paper or blog post introducing the model, the APA and Bibtex information for that should go in this section. -->
-
-**BibTeX:**
-
-{{ citation_bibtex | default("[More Information Needed]", true)}}
+**BibTeX:** @misc{shen2024dobbs, author = {Diana Shen}, title = {Examining the impact Overturn of Roe v. Wade: Banning of Abortion on Infant Mortality Rates in the United States Using a Difference-in-Differences Approach}, year = {2024}, url = {<https://github.com/DianaShen1224/Relationship-between-infant-mortality-rate-and-prohibited-abortion>} }
 
 **APA:**
 
-{{ citation_apa | default("[More Information Needed]", true)}}
+Shen, D. (2024). Examining the impact Overturn of Roe v. Wade: Banning of Abortion on Infant Mortality Rates in the United States Using a Difference-in-Differences Approach. Retrieved from <https://github.com/DianaShen1224/Relationship-between-infant-mortality-rate-and-prohibited-abortion>.
 
-## Glossary [optional]
+## Glossary
 
-<!-- If relevant, include terms and calculations in this section that can help readers understand the model or model card. -->
+-   Difference-in-Differences (DID): A statistical method used to estimate causal relationships by comparing changes in outcomes over time between a treatment group and a control group.
 
-{{ glossary | default("[More Information Needed]", true)}}
+-   Infant Mortality Rate (IMR): The number of deaths of infants under one year of age per 1,000 live births in a specified population during a given time period.
 
-## More Information [optional]
+-   Abortion Legality: A binary variable indicating whether abortion is legal (0) or illegal (1) in a state.
 
-{{ more_information | default("[More Information Needed]", true)}}
+-   Post-Injunction Period: The time after June 2022 when abortion restrictions were implemented following the Dobbs decision.
 
-## Model Card Authors [optional]
+-   Interaction Term: A variable created by multiplying abortion legality and the post-injunction period to evaluate their combined impact on infant mortality rates.
 
-{{ model_card_authors | default("[More Information Needed]", true)}}
+-   Parallel Trends Assumption: An assumption in DID analyses that, in the absence of an intervention, the treatment and control groups would have followed similar trends over time.
+
+-   Bayesian Framework: A statistical approach that incorporates prior beliefs and updates them with data to estimate the posterior distribution of model parameters.
+
+-   Random Effects: A statistical modeling component that captures variability across groups, such as states, in a hierarchical framework.
+
+-   Weakly Informative Priors: Priors that provide some guidance without overwhelming the data, commonly used in Bayesian analyses to improve model convergence.
+
+
+## Model Card Authors
+
+Diana Shen
 
 ## Model Card Contact
 
-{{ model_card_contact | default("[More Information Needed]", true)}}
+[diana.shen\@mail.utoronto.ca](mailto:diana.shen@mail.utoronto.ca){.email}
