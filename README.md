@@ -237,7 +237,7 @@ Here is a detailed response for the evaluation section based on your project req
 
 ## Evaluation
 
-### Testing Data, Factors & Metrics
+### Testing Data, Factors  Metrics
 
 #### Testing Data
 
@@ -249,39 +249,39 @@ The testing data is a subset of the Linked Birth/Infant Death Records (2017-2022
 #### Factors
 
 Evaluation of the model’s performance was disaggregated across the following factors:
-	1.	Policy Factors:
-	 -	States categorized based on abortion legality (abortion_illegal).
-	 -	Timing relative to the abortion injunction (after_injunction).
-	2.	Demographic Factors:
-	 -	Maternal race (mothers_single_race).
-	 -	Maternal age group (age_of_mother).
-	3.	Temporal Factors:
-	 -	Year and month of death (year_of_death, date).
+1.	**Policy Factors**:
+ -	States categorized based on abortion legality (abortion_illegal).
+ -	Timing relative to the abortion injunction (after_injunction).
+2.	**Demographic Factors**:
+ -	Maternal race (mothers_single_race).
+ -	Maternal age group (age_of_mother).
+3.	**Temporal Factors**:
+ -	Year and month of death (year_of_death, date).
 
 #### Metrics
 
 The evaluation metrics used to assess the models include:
-	1.	Root Mean Square Error (RMSE):
-	 -	Measures the average prediction error.
-	 -	Lower RMSE indicates better model fit.
-	2.	R-squared ($R^2$):
-	 -	Indicates the proportion of variance explained by the model.
-	 -	Higher $R^2$ values represent a better fit.
-	3.	Posterior Predictive Checks:
-	 -	Examines the alignment of predicted and observed values to assess model calibration.
-	4.	Significance of Coefficients:
-	 -	Evaluate the statistical significance of key predictors, including interaction terms like after_injunction * abortion_illegal.
+1.	**Root Mean Square Error (RMSE)**:
+  -	Measures the average prediction error.
+  -	Lower RMSE indicates better model fit.
+2.	**R-squared ($R^2$)**:
+  -	Indicates the proportion of variance explained by the model.
+  -	Higher $R^2$ values represent a better fit.
+3.	**Posterior Predictive Checks**:
+  -	Examines the alignment of predicted and observed values to assess model calibration.
+4.	**Significance of Coefficients**:
+  -	Evaluates the statistical significance of key predictors, including interaction terms like after_injunction * abortion_illegal.
 
 #### Results
 
-	-	Model 1: Focuses on policy factors (after_injunction and abortion_illegal) and their interaction.
-	-	RMSE: 4.21 deaths per 1,000 live births.
-	-	$R^2$: 0.256.
-	-	The interaction term (after_injunction * abortion_illegal) was statistically significant, indicating an increase in infant mortality rates in states with abortion bans after June 2022.
-	-	Model 2: Incorporates additional demographic factors (age_of_mother, mothers_single_race).
-	-	RMSE: 2.36 deaths per 1,000 live births.
-	-	$R^2$: 0.793.
-	-	Older maternal age groups were associated with lower infant mortality rates, while Black mothers experienced disproportionately higher rates.
+1.	**Model 1: Focuses on policy factors (after_injunction and abortion_illegal) and their interaction.**
+ -	RMSE: 4.21 deaths per 1,000 live births.
+ -	$R^2$: 0.256.
+ -	The interaction term (after_injunction * abortion_illegal) was statistically significant, indicating an increase in infant mortality rates in states with abortion bans after June 2022.
+2.	**Model 2: Incorporates additional demographic factors (age_of_mother, mothers_single_race).**
+ -	RMSE: 2.36 deaths per 1,000 live births.
+ -	$R^2$: 0.793.
+ -	Older maternal age groups were associated with lower infant mortality rates, while Black mothers experienced disproportionately higher rates.tes.
 
 #### Summary
 
@@ -319,22 +319,24 @@ The setup includes two models:
 
 The models are defined as follows:
 
+
+$$y_i|\mu_i,\sigma \sim \mbox{Normal}(\mu_i, \sigma)$$
+$$\text{First Model}: \mu_i = \beta_0 + \beta_1\cdot\text{After Injunction} + \beta_2\cdot\text{Abortion Illegal}+\beta_3\cdot\text{After Injunction}\cdot\text{Abortion Illegal}_i+\gamma_j$$
 $$
 \begin{aligned}
-y_i|\mu_i,\sigma &\sim \mbox{Normal}(\mu_i, \sigma)
-\text{First Model}: \mu_i &= \beta_0 + \beta_1\cdot\text{After Injunction} + \beta_2\cdot\text{Abortion Illegal}\\&+\beta_3\cdot\text{After Injunction}\cdot\text{Abortion Illegal}_i+\gamma_j\\
-\text{Second Model}:\mu_i &= \beta_0 + \beta_1\cdot\text{After Injunction}_i + \beta_2\cdot\text{Abortion Illegal}_i\\&+ \beta_3\cdot\text{After Injunction}_i\cdot\text{Abortion Illegal}_i\\&+\beta_4\cdot\text{Year of Death}_i+\beta_5\cdot\text{Age of Mother}_i+\beta_6\cdot\text{Mother's Single Race}_i+\gamma_j\\
-\beta_0 &\sim \mbox{Normal}(0, 2.5)\\
-\beta_1 &\sim \mbox{Normal}(0, 2.5)\\
-\beta_2 &\sim \mbox{Normal}(0, 2.5)\\
-\beta_3 &\sim \mbox{Normal}(0, 2.5)\\
-\beta_4 &\sim \mbox{Normal}(0, 2.5)\\
-\beta_5 &\sim \mbox{Normal}(0, 2.5)\\
-\beta_6 &\sim \mbox{Normal}(0, 2.5)\\
-\gamma_j&\sim \text{Normal}(0, \sigma_j^2)\\
-\sigma &\sim \mbox{Exponential}(1)
+\text{Second Model}:\mu_i &= \beta_0 + \beta_1\cdot\text{After Injunction}_i + \beta_2\cdot\text{Abortion Illegal}_i+\beta_3\cdot\text{After Injunction}_i\cdot\text{Abortion Illegal}_i \\
+&+\beta_4\cdot\text{Year of Death}_i+\beta_5\cdot\text{Age of Mother}_i+\beta_6\cdot\text{Mother's Single Race}_i+\gamma_j
 \end{aligned}
 $$
+$$\beta_0 \sim \mbox{Normal}(0, 2.5)$$
+$$\beta_1 \sim \mbox{Normal}(0, 2.5)$$
+$$\beta_2 \sim \mbox{Normal}(0, 2.5)$$
+$$\beta_3 \sim \mbox{Normal}(0, 2.5)$$
+$$\beta_4 \sim \mbox{Normal}(0, 2.5)$$
+$$\beta_5 \sim \mbox{Normal}(0, 2.5)$$
+$$\beta_6 \sim \mbox{Normal}(0, 2.5)$$
+$$\gamma_j\sim \text{Normal}(0, \sigma_j^2)$$
+$$\sigma \sim \mbox{Exponential}(1)$$
 
 ### Justification for the Model
 
