@@ -136,12 +136,13 @@ The model can be fine-tuned or integrated into broader systems for tasks such as
 
 # Fine-tune the model with additional data
 
-fine_tuned_model \<- stan_glm( death_rate \~ after_injunction \* abortion_illegal + age_of_mother + mothers_single_race + year_of_death, data = extended_data, family = gaussian(link = "identity") )
+``` r
+fine_tuned_model <- stan_glm( death_rate \~ after_injunction \* abortion_illegal + age_of_mother + mothers_single_race + year_of_death, data = extended_data, family = gaussian(link = "identity") )
 
 # Generate predictions using the fine-tuned model
 
-new_predictions \<- posterior_predict(fine_tuned_model, newdata = new_data)
-
+new_predictions <- posterior_predict(fine_tuned_model, newdata = new_data)
+``` 
 
 ### Out-of-Scope Use
 
@@ -171,13 +172,15 @@ library(rstanarm)
 library(tidyverse)
 
 # Load the model
-model <- readRDS("file = here::here("models/first_model.rds"))
-
+model1 <- readRDS("file = here::here("models/first_model.rds"))
+model2 <- readRDS("file = here::here("models/second_model.rds"))
 # Summarize the model
-summary(model)
+summary(model1)
+summary(model2)
 
 # Generate posterior predictive checks
-pp_check(model)
+pp_check(model1)
+pp_check(model2)
 ```
 
 Here’s a detailed and formatted response based on your training process and requirements:
@@ -218,22 +221,22 @@ Two models were trained:
 
 ```r
 
-first_model \<- stan_glmer( formula = death_rate \~ after_injunction \* abortion_illegal + abortion_illegal + (1 \| state), data = analysis_data, family = gaussian(), prior = normal(location = 0, scale = 2.5, autoscale = TRUE), prior_intercept = normal(location = 0, scale = 2.5, autoscale = TRUE), prior_aux = exponential(rate = 1, autoscale = TRUE), seed = 853 )
+first_model <- stan_glmer( formula = death_rate \~ after_injunction \* abortion_illegal + abortion_illegal + (1 \| state), data = analysis_data, family = gaussian(), prior = normal(location = 0, scale = 2.5, autoscale = TRUE), prior_intercept = normal(location = 0, scale = 2.5, autoscale = TRUE), prior_aux = exponential(rate = 1, autoscale = TRUE), seed = 853 )
 
 ```         
 - Second Model (with additional covariates):
 
 ```r
 
-second_model \<- stan_glmer( formula = death_rate \~ after_injunction \* abortion_illegal + abortion_illegal + year_of_death + age_of_mother + mothers_single_race + (1 \| state), data = analysis_data, family = gaussian(), prior = normal(location = 0, scale = 2.5, autoscale = TRUE), prior_intercept = normal(location = 0, scale = 2.5, autoscale = TRUE), prior_aux = exponential(rate = 1, autoscale = TRUE), seed = 853 )
+second_model <- stan_glmer( formula = death_rate \~ after_injunction \* abortion_illegal + abortion_illegal + year_of_death + age_of_mother + mothers_single_race + (1 \| state), data = analysis_data, family = gaussian(), prior = normal(location = 0, scale = 2.5, autoscale = TRUE), prior_intercept = normal(location = 0, scale = 2.5, autoscale = TRUE), prior_aux = exponential(rate = 1, autoscale = TRUE), seed = 853 )
 
 ```         
 
 ##### Speeds, Sizes, Times
 
 -   Model Training Time: Approximately 5-10 minutes per model on an 8-core CPU with 16 GB of RAM.
--   Dataset Size: Cleaned dataset contains 30,000 rows and 10 variables.
--   Model Complexity: Included a random effect for state to account for state-specific variations. 
+-   Dataset Size: The cleaned dataset contains 659 rows and 11 variables.
+-   Model Complexity: Included a random effect for the state to account for state-specific variations. 
 
 The preprocessing and modeling steps ensure robustness, interpretability, and reproducibility of the findings.
 
@@ -254,27 +257,27 @@ The testing data is a subset of the Linked Birth/Infant Death Records (2017-2022
 
 Evaluation of the model’s performance was disaggregated across the following factors:
 	1.	Policy Factors:
-	-	States categorized based on abortion legality (abortion_illegal).
-	-	Timing relative to the abortion injunction (after_injunction).
+	 -	States categorized based on abortion legality (abortion_illegal).
+	 -	Timing relative to the abortion injunction (after_injunction).
 	2.	Demographic Factors:
-	-	Maternal race (mothers_single_race).
-	-	Maternal age group (age_of_mother).
+	 -	Maternal race (mothers_single_race).
+	 -	Maternal age group (age_of_mother).
 	3.	Temporal Factors:
-	-	Year and month of death (year_of_death, date).
+	 -	Year and month of death (year_of_death, date).
 
 #### Metrics
 
 The evaluation metrics used to assess the models include:
 	1.	Root Mean Square Error (RMSE):
-	-	Measures the average prediction error.
-	-	Lower RMSE indicates better model fit.
+	 -	Measures the average prediction error.
+	 -	Lower RMSE indicates better model fit.
 	2.	R-squared ($R^2$):
-	-	Indicates the proportion of variance explained by the model.
-	-	Higher $R^2$ values represent a better fit.
+	 -	Indicates the proportion of variance explained by the model.
+	 -	Higher $R^2$ values represent a better fit.
 	3.	Posterior Predictive Checks:
-	-	Examines the alignment of predicted and observed values to assess model calibration.
+	 -	Examines the alignment of predicted and observed values to assess model calibration.
 	4.	Significance of Coefficients:
-	-	Evaluates the statistical significance of key predictors, including interaction terms like after_injunction * abortion_illegal.
+	 -	Evaluates the statistical significance of key predictors, including interaction terms like after_injunction * abortion_illegal.
 
 #### Results
 
@@ -325,7 +328,7 @@ The models are defined as follows:
 
 $$
 \begin{aligned}
-y_i|\mu_i,\sigma &\sim \mbox{Normal}(\mu_i, \sigma)\\
+y_i|\mu_i,\sigma &\sim \mbox{Normal}(\mu_i, \sigma)
 \text{First Model}: \mu_i &= \beta_0 + \beta_1\cdot\text{After Injunction} + \beta_2\cdot\text{Abortion Illegal}\\&+\beta_3\cdot\text{After Injunction}\cdot\text{Abortion Illegal}_i+\gamma_j\\
 \text{Second Model}:\mu_i &= \beta_0 + \beta_1\cdot\text{After Injunction}_i + \beta_2\cdot\text{Abortion Illegal}_i\\&+ \beta_3\cdot\text{After Injunction}_i\cdot\text{Abortion Illegal}_i\\&+\beta_4\cdot\text{Year of Death}_i+\beta_5\cdot\text{Age of Mother}_i+\beta_6\cdot\text{Mother's Single Race}_i+\gamma_j\\
 \beta_0 &\sim \mbox{Normal}(0, 2.5)\\
@@ -392,4 +395,4 @@ Diana Shen
 
 ## Model Card Contact
 
-[diana.shen\@mail.utoronto.ca](mailto:diana.shen@mail.utoronto.ca){.email}
+[diana.shen@mail.utoronto.ca](mailto:diana.shen@mail.utoronto.ca)
