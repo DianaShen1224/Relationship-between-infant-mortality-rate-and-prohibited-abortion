@@ -13,7 +13,8 @@ datasets:
 metrics:
 - rmse  
 - r2  
-base_model: null  
+base_model: null
+toc: true
 
 model-index:
 - name: Impact of Abortion Policies on Infant Mortality
