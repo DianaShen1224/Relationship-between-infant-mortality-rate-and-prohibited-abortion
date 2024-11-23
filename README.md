@@ -68,46 +68,7 @@ Aspects of the code were written with the help of ChatGPT4o. Part of the writing
 # Model Card for Infant Mortality and Abortion Policy Analysis Model
 This model analyzes the impact of abortion bans resulting from the Dobbs v. Jackson Women’s Health Organization decision on infant mortality rates in the United States using data from 2021–2022. It incorporates policy factors, such as abortion legality and the timing of the Dobbs decision, as well as demographic variables, through Bayesian Difference-in-Differences (DID) regression models. The analysis focuses on the health disparities linked to restrictive abortion policies post-Dobbs.
 
-Table Of Contents
-  * [Model Details](#model-details)
-    + [Model Description](#model-description)
-    + [Model Sources](#model-sources)
-  * [Uses](#uses)
-    + [Direct Use](#direct-use)
-      - [Example Code Snippet:](#example-code-snippet-)
-    + [Downstream Use](#downstream-use)
-      - [Example Code Snippet:](#example-code-snippet--1)
-  * [Fine-tune the model with additional data](#fine-tune-the-model-with-additional-data)
-    + [Out-of-Scope Use](#out-of-scope-use)
-  * [Bias, Risks, and Limitations](#bias--risks--and-limitations)
-    + [Recommendations](#recommendations)
-  * [How to Get Started with the Model](#how-to-get-started-with-the-model)
-  * [Training Details](#training-details)
-    + [Training Data](#training-data)
-      - [Training Procedure](#training-procedure)
-        * [Preprocessing](#preprocessing)
-        * [Training Hyperparameters](#training-hyperparameters)
-        * [Speeds, Sizes, Times](#speeds--sizes--times)
-  * [Evaluation](#evaluation)
-    + [Testing Data, Factors  Metrics](#testing-data--factors--metrics)
-      - [Testing Data](#testing-data)
-      - [Factors](#factors)
-      - [Metrics](#metrics)
-      - [Results](#results)
-      - [Summary](#summary)
-      - [Model Examination](#model-examination)
-      - [Environmental Impact](#environmental-impact)
-  * [Technical Specifications](#technical-specifications)
-    + [Model Architecture and Objective](#model-architecture-and-objective)
-    + [Mathematical Model Setup](#mathematical-model-setup)
-    + [Justification for the Model](#justification-for-the-model)
-    + [Compute Infrastructure](#compute-infrastructure)
-  * [Citation](#citation)
-  * [Glossary](#glossary)
-  * [Model Card Authors](#model-card-authors)
-  * [Model Card Contact](#model-card-contact)
-
-## Model Details {#model-details}
+## Model Details
 
 ### Model Description
 
