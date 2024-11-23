@@ -68,7 +68,7 @@ Aspects of the code were written with the help of ChatGPT4o. Part of the writing
 # Model Card for Infant Mortality and Abortion Policy Analysis Model
 This model analyzes the impact of abortion bans resulting from the Dobbs v. Jackson Women’s Health Organization decision on infant mortality rates in the United States using data from 2021–2022. It incorporates policy factors, such as abortion legality and the timing of the Dobbs decision, as well as demographic variables, through Bayesian Difference-in-Differences (DID) regression models. The analysis focuses on the health disparities linked to restrictive abortion policies post-Dobbs.
 
-- [Model Card for Infant Mortality and Abortion Policy Analysis Model](#model-card-for-infant-mortality-and-abortion-policy-analysis-model)
+Table Of Contents
   * [Model Details](#model-details)
     + [Model Description](#model-description)
     + [Model Sources](#model-sources)
@@ -107,7 +107,7 @@ This model analyzes the impact of abortion bans resulting from the Dobbs v. Jack
   * [Model Card Authors](#model-card-authors)
   * [Model Card Contact](#model-card-contact)
 
-## Model Details
+## Model Details {#model-details}
 
 ### Model Description
 
