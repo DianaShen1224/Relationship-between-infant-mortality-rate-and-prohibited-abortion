@@ -127,7 +127,7 @@ The model can be fine-tuned or integrated into broader systems for tasks such as
 
 #### Example Code Snippet:
 
-# Fine-tune the model with additional data
+## Fine-tune the model with additional data
 
 ``` r
 fine_tuned_model <- stan_glm( death_rate \~ after_injunction \* abortion_illegal + age_of_mother + mothers_single_race + year_of_death, data = extended_data, family = gaussian(link = "identity") )
