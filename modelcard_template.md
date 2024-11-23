@@ -18,7 +18,7 @@
 
 {{ model_description | default("", true) }}
 
-- **Developed by:** {{ developers | default("[More Information Needed]", true)}}
+- **Developed by:** {{ developers | default("Diana Shen", true)}}
 - **Funded by [optional]:** {{ funded_by | default("[More Information Needed]", true)}}
 - **Shared by [optional]:** {{ shared_by | default("[More Information Needed]", true)}}
 - **Model type:** {{ model_type | default("[More Information Needed]", true)}}
