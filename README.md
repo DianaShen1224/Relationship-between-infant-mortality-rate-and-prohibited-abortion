@@ -44,7 +44,7 @@ This repo provides students with a foundation for their own projects associated 
 
 The repository is structured as follows:
 
--   `data/01-raw_data` contains the raw poll data as obtained from [CDC Wonder](https://wonder.cdc.gov/controller/datarequest/D159), The process for selecting the query parameters and downloading the dataset is outlined in the `data/script/02-download_data`. This ensures traceability and reproducibility of the data acquisition process.. To open these data through GitHub, they can be downloaded. Alternatively, to view these files within RStudio, they can be imported using the library `read.delim`.
+-   `data/01-raw_data` contains the raw infant death data as obtained from [CDC Wonder](https://wonder.cdc.gov/controller/datarequest/D159), The process for selecting the query parameters and downloading the dataset is outlined in the `data/script/02-download_data`. This ensures traceability and reproducibility of the data acquisition process.. To open these data through GitHub, they can be downloaded. Alternatively, to view these files within RStudio, they can be imported using the library `read.delim`.
 -   `data/02-analysis_data` contains the cleaned dataset constructed in `scripts/03-clean_data`.
 -   The `scripts` folder contains the R scripts and code that simulated, tested, downloaded, and cleaned the data.
 -   `model` contains fitted models.
