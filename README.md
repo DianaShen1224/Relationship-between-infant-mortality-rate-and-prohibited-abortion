@@ -63,11 +63,11 @@ If you’d prefer to recreate the process yourself, you can follow these steps t
 
 2.  In the Organize Table Layout section, choose to group results by the following variables:
 
- -   **Age of Mother 9**
- -   **Mother's Single Race 6**
- -   **Year of Death**
- -   **Month**
- -   **State**
+-   **Age of Mother 9**
+-   **Mother's Single Race 6**
+-   **Year of Death**
+-   **Month**
+-   **State**
 
 3.  Scroll down the page to find the variable query section. Use the following steps to select variables (Hint: Use Ctrl + Click for multiple selections, or Shift + Click for a range):
 
