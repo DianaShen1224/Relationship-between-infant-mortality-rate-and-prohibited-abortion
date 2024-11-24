@@ -8,18 +8,4 @@
 # Any other information needed? [...UPDATE THIS...]
 
 
-#### Workspace setup ####
-library(tidyverse)
-# [...UPDATE THIS...]
-
-#### Download data ####
-# [...ADD CODE HERE TO DOWNLOAD...]
-
-
-
-#### Save data ####
-# [...UPDATE THIS...]
-# change the_raw_data to whatever name you assigned when you downloaded it.
-write_csv(the_raw_data, "inputs/data/raw_data.csv") 
-
-         
+Accroding to CDC Wonder's privacy
