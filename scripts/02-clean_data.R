@@ -1,11 +1,13 @@
 #### Preamble ####
-# Purpose: Cleans the raw plane data recorded by two observers..... [...UPDATE THIS...]
-# Author: Rohan Alexander [...UPDATE THIS...]
-# Date: 6 April 2023 [...UPDATE THIS...]
-# Contact: rohan.alexander@utoronto.ca [...UPDATE THIS...]
+# Purpose: Cleans the raw dataset of infant death rate across US in 2021 and 2022.
+# Author: Diana Shen
+# Date: 24 November 2024
+# Contact: diana.shen@mail.utoronto.ca
 # License: MIT
-# Pre-requisites: [...UPDATE THIS...]
-# Any other information needed? [...UPDATE THIS...]
+# Pre-requisites:  
+# - The `tidyverse`, `janitor`,`lubridate`,`arrow` packages must be installed and loaded
+# - 02-download_data.R must have been run
+# Any other information needed?  Make sure you are in the `Relationship between_infant_mortality_rate_and_prohibited_abortion` rproj
 
 #### Workspace setup ####
 library(tidyverse)
