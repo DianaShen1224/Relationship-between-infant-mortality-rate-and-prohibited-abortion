@@ -109,13 +109,12 @@ mitigate these adverse outcomes.
 The structure of this paper is organized as follows: @sec-data provides
 details on the data sources and variables used in our analysis.
 @sec-model explains the modeling approach, including the assumptions and
-specifications of our linear regression framework. In @sec-result, we
+specifications of our linear regression framework. In @sec-results, we
 present our findings, emphasizing the key predictors of Harris's
 support. Finally, @sec-discussion explores the implications of our
 results and suggests potential directions for future research.
 [Appendix- @sec-data-details] provides external data detail, [Appendix-
-@sec-model-details] provides model detail, @sec-c provides an datasheet,
-and @sec-d provides an detailed introduction of surveys, sampling and
+@sec-model-details] provides model detail, and [Appendix-@sec-survey] provides an detailed introduction of surveys, sampling and
 observational data in our paper.
 
 # Data {#sec-data}
@@ -492,6 +491,8 @@ injunctions were implemented) and a control group (states where abortion
 remains legal), providing a robust framework for estimating causal
 effects.
 
+# Model {#sec-model}
+
 ## Difference-In-Difference Approach (DID)
 
 Difference-in-Differences (DID) is a causal inference method that
@@ -676,7 +677,7 @@ suitable if group-level effects are negligible, parallel trends are
 violated, or data is insufficient, but when applied appropriately, it
 provides robust and interpretable causal estimates.
 
-# Results
+# Results {#sec-results}
 
 ```{r}
 #| echo: false
@@ -727,7 +728,7 @@ The models performed well, with low RMSE values and high $R^2$ values,
 indicating that the predictors account for a substantial portion of the
 variance in infant mortality rates.
 
-# Discussion
+# Discussion {#sec-discussion}
 
 ## Key Findings and Implications
 
