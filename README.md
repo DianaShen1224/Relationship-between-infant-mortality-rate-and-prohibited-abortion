@@ -34,17 +34,19 @@ model-index:
       url: https://github.com/DianaShen1224/Relationship-between-infant-mortality-rate-and-prohibited-abortion
 ---
 
-# Starter folder
+# Impact of the Dobbs Decision Overturning Roe v. Wade and Abortion Bans on Infant Mortality Rates in the United States (2021–2022)
 
 ## Overview
 
-This repo provides students with a foundation for their own projects associated with *Telling Stories with Data*. You do not need every aspect for every paper and you should delete aspects that you do not need.
+This repository contains the analysis and methodology used to examine the impact of abortion bans following the 2022 Dobbs decision on infant mortality rates in the United States. The primary objective is to quantify the changes in infant mortality rates in states where abortion became illegal compared to states where it remained legal. The analysis employs Bayesian Difference-in-Differences (DID) models, incorporating both policy factors and demographic variables, to understand these changes in-depth.
+
+The project draws on data from the CDC WONDER database (2021–2022) and explores the implications of policy changes on public health. It also discusses the data preparation process, statistical modeling, and the limitations of using observational data for causal inference. This repository provides all the necessary data, R scripts, and documentation for readers to reproduce and understand the study’s findings on the intersection of reproductive policy and infant health outcomes.
 
 ## File Structure
 
 The repository is structured as follows:
 
--   `data/01-raw_data` contains the raw infant death data as obtained from [CDC Wonder](https://wonder.cdc.gov/controller/datarequest/D159), The process for selecting the query parameters and downloading the dataset is outlined in the [Data Download](#section-data-download). This ensures traceability and reproducibility of the data acquisition process.. To open these data through GitHub, they can be downloaded. Alternatively, to view these files within RStudio, they can be imported using the library `read.delim`.
+-   `data/01-raw_data` contains the raw infant death data as obtained from [CDC Wonder](https://wonder.cdc.gov/controller/datarequest/D159), The process for selecting the query parameters and downloading the dataset is outlined in the <ins>Data Download </ins>. This ensures the traceability and reproducibility of the data acquisition process. To open these data through GitHub, they can be downloaded. Alternatively, to view these files within RStudio, they can be imported using the library `read.delim`.
 -   `data/02-analysis_data` contains the cleaned dataset constructed in `scripts/03-clean_data`.
 -   The `scripts` folder contains the R scripts and code that simulated, tested, downloaded, and cleaned the data.
 -   `model` contains fitted models.
