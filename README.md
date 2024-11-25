@@ -137,13 +137,19 @@ The model is designed to assess the relationship between restrictive abortion po
 library(rstanarm)
 
 # Example prediction for new data
+illegal_states <- c("AL", "AR", "ID", "IN", "KY", "LA", "MS", "OK", "SD", "TN", "TX", "WV")
 new_data <- data.frame(
-  after_injunction = c(0, 1),
-  abortion_illegal = c(0, 1),
-  age_of_mother = c(25, 30),
-  mothers_single_race = c("White", "Black"),
-  year_of_death = c(2021, 2022)
-)
+  death_rate = runif(700, min = 0, max = 50),
+  state = factor(sample(state.abb, size = 700, replace = TRUE)), 
+  age_of_mother = sample(c("15–19", "20–24", "25–29", "30–34"), 700, replace = TRUE),
+  mothers_single_race = sample(c("White", "Black", "Asian"), 700, replace = TRUE),
+  year_of_death = sample(c(2021, 2022), 700, replace = TRUE),
+  month = sample(1:12, 700, replace = TRUE)
+) |> 
+  mutate(
+    after_injunction = as.factor(case_when(year_of_death == 2022 & month >= 6 ~ 1, TRUE ~ 0)),
+    abortion_illegal = as.factor(case_when(state %in% illegal_states ~ 1, TRUE ~ 0))
+  )
 predictions <- posterior_predict(pre_trained_model, newdata = new_data)
 print(predictions)
 ```
@@ -163,7 +169,7 @@ The model can be fine-tuned or integrated into broader systems for tasks such as
 ## Fine-tune the model with additional data
 
 ``` r
-fine_tuned_model <- stan_glm( death_rate \~ after_injunction \* abortion_illegal + age_of_mother + mothers_single_race + year_of_death, data = extended_data, family = gaussian(link = "identity") )
+fine_tuned_model <- stan_glm( death_rate ~ after_injunction * abortion_illegal + age_of_mother + mothers_single_race + year_of_death + (1|state), data = extended_data, family = gaussian(link = "identity") )
 
 # Generate predictions using the fine-tuned model
 
@@ -285,7 +291,7 @@ Evaluation of the model’s performance was disaggregated across the following f
 
 #### Metrics
 
-The evaluation metrics used to assess the models include: 1. **Root Mean Square Error (RMSE)**: - Measures the average prediction error. - Lower RMSE indicates better model fit. 2. **R-squared (**$R^2$): - Indicates the proportion of variance explained by the model. - Higher $R^2$ values represent a better fit. 3. **Posterior Predictive Checks**: - Examines the alignment of predicted and observed values to assess model calibration. 4. **Significance of Coefficients**: - Evaluates the statistical significance of key predictors, including interaction terms like after_injunction \* abortion_illegal.
+The evaluation metrics used to assess the models include: 1. **Root Mean Square Error (RMSE)**: - Measures the average prediction error. - Lower RMSE indicates better model fit. 2. **R-squared (**$R^2$): - Indicates the proportion of variance explained by the model. - Higher $R^2$ values represent a better fit. 3. **Posterior Predictive Checks**: - Examines the alignment of predicted and observed values to assess model calibration. 
 
 #### Results
 
@@ -293,7 +299,7 @@ The evaluation metrics used to assess the models include: 1. **Root Mean Square 
 
 -   RMSE: 4.21 deaths per 1,000 live births.
 -   $R^2$: 0.256.
--   The interaction term (after_injunction \* abortion_illegal) was statistically significant, indicating an increase in infant mortality rates in states with abortion bans after June 2022.
+-   The interaction term (after_injunction \* abortion_illegal) was significant, indicating an increase in infant mortality rates in states with abortion bans after June 2022.
 
 2.  **Model 2: Incorporates additional demographic factors (age_of_mother, mothers_single_race).**
 
@@ -307,7 +313,7 @@ The models effectively captured the impact of abortion bans on infant mortality 
 
 #### Model Examination
 
-The models underwent posterior predictive checks and comparison between prior and posterior distributions: - Posterior Predictive Checks: - Demonstrated good alignment between predicted and observed infant mortality rates, validating model fit. - Prior vs. Posterior Distributions: - Confirmed that the data significantly informed posterior estimates, particularly for key predictors like the interaction term.
+The models underwent extensive posterior predictive checks and comparisons between prior and posterior distributions. The posterior predictive checks indicated a strong alignment between the predicted and observed infant mortality rates, highlighting the model’s ability to capturer general trends but limited precision. The comparison of prior and posterior distributions demonstrated that the data substantially informed the posterior estimates, particularly for key predictors such as the interaction term between restrictive abortion laws and the timing of the Dobbs decision. These results validate the model’s capacity to explore the effects of restrictive abortion policies on maternal mental health and infant outcomes, offering a sound basis for policy recommendations.
 
 #### Environmental Impact
 
