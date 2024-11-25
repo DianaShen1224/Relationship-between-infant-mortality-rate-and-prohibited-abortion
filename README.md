@@ -137,13 +137,19 @@ The model is designed to assess the relationship between restrictive abortion po
 library(rstanarm)
 
 # Example prediction for new data
+illegal_states <- c("AL", "AR", "ID", "IN", "KY", "LA", "MS", "OK", "SD", "TN", "TX", "WV")
 new_data <- data.frame(
-  after_injunction = c(0, 1),
-  abortion_illegal = c(0, 1),
-  age_of_mother = c(25, 30),
-  mothers_single_race = c("White", "Black"),
-  year_of_death = c(2021, 2022)
-)
+  death_rate = runif(700, min = 0, max = 50),
+  state = factor(sample(state.abb, size = 700, replace = TRUE)), 
+  age_of_mother = sample(c("15–19", "20–24", "25–29", "30–34"), 700, replace = TRUE),
+  mothers_single_race = sample(c("White", "Black", "Asian"), 700, replace = TRUE),
+  year_of_death = sample(c(2021, 2022), 700, replace = TRUE),
+  month = sample(1:12, 700, replace = TRUE)
+) |> 
+  mutate(
+    after_injunction = as.factor(case_when(year_of_death == 2022 & month >= 6 ~ 1, TRUE ~ 0)),
+    abortion_illegal = as.factor(case_when(state %in% illegal_states ~ 1, TRUE ~ 0))
+  )
 predictions <- posterior_predict(pre_trained_model, newdata = new_data)
 print(predictions)
 ```
