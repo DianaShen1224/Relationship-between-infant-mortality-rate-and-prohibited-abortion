@@ -710,12 +710,12 @@ second_model <-
 #| echo: false
 #| eval: true
 #| label: tbl-modelresults
-#| tbl-cap: "Explanatory models of flight time based on wing width and wing length"
+#| tbl-cap: "Summary of Bayesian Regression Model Examining the Impact of Abortion Bans on Infant Mortality Rates in the United States: A Difference-in-Differences Approach Using 2021-2022 Infant Mortality Data"
 #| warning: false
 
 modelsummary::msummary(
   list(first_model,second_model),
-  fmt = 3,coef_omit="state",notes = "Note. All models include a random variable for state. The reference level of age_of_mother is 15-19.The reference level of monthers_single_race is Asian.")
+  fmt = 3,coef_omit="state",notes = "Note. All models include a random variable for state. The reference level of age_of_mother is 15-19.The reference level of monthers_single_race is Asian. Source: CDC Wonder")
 ```
 
 The results from the two Bayesian models are summarized in
@@ -852,11 +852,9 @@ maternal and infant health outcomes.
 
 ## Posterior predictive check
 
-In @fig-ppcheckandposteriorvsprior-1 we implement a posterior predictive
-check for the first model. This shows...
+In @fig-ppcheckandposteriorvsprior-1 and @fig-ppcheckandposteriorvsprior-2 we implement a posterior predictive check for the first model and second model. It represent posterior predictive checks for Model 1 and Model 2, illustrating how well each model captures the observed data. The posterior predictive checks for Model 1 (policy-focused) and Model 2 (policy and demographic factors) illustrate model fit. In @fig-ppcheckandposteriorvsprior-1, the observed ($y$) and replicated ($y_{rep}$) distributions align moderately, reflecting general trends but limited precision. @fig-ppcheckandposteriorvsprior-2 shows improved alignment, indicating that adding demographic factors enhances predictive accuracy and better captures the complexities of infant mortality rates.
 
-In @fig-ppcheckandposteriorvsprior-2 we compare the posterior with the
-prior. This shows...
+In @fig-ppcheckandposteriorvsprior-3 and @fig-ppcheckandposteriorvsprior-4 we compare the posterior with the prior. The posterior vs. prior plots for Model 1 and Model 2 illustrate the role of data in informing the posterior estimates of the model parameters. In Model 1 @fig-ppcheckandposteriorvsprior-3, which focuses on policy-related predictors (e.g., abortion restrictions), the data significantly shift the posterior distributions for key variables, demonstrating their explanatory power. Model 2 @fig-ppcheckandposteriorvsprior-4, incorporating additional demographic factors such as maternal age and race, shows a more refined and concentrated posterior distribution, emphasizing the added predictive utility of demographic variables. The comparison indicates that Model 2 provides better-informed parameter estimates, supporting the hypothesis that demographic factors play a crucial role in understanding infant mortality in the context of restrictive abortion laws.
 
 ```{r}
 #| eval: true
@@ -865,8 +863,8 @@ prior. This shows...
 #| warning: false
 #| label: fig-ppcheckandposteriorvsprior
 #| layout-ncol: 2
-#| fig-cap: "Examining how the model fits, and is affected by, the data"
-#| fig-subcap: ["First Model Posterior prediction check", "First Model Comparing the posterior with the prior","Second Model Posterior prediction check", "Second Model Comparing the posterior with the prior"]
+#| fig-cap: "Examining how the model for infant death rate fits, and is affected by, the data"
+#| fig-subcap: ["First Model Posterior prediction check","Second Model Posterior prediction check", "First Model Comparing the posterior with the prior", "Second Model Comparing the posterior with the prior"]
 
 pp_check(first_model) +
   theme_classic() +
@@ -894,7 +892,9 @@ posterior_vs_prior(second_model) +
 prior_summary(first_model)
 prior_summary(second_model)
 ```
+The prior summaries for the two models, `first_model` and `second_model`, indicate that both use weakly informative priors. For the intercept, a normal prior with a mean of 0 and a standard deviation of 2.5 was specified, which adjusts to a scale of 12 after centering the predictors. The coefficients for both models are also assigned normal priors with a mean of 0 and a scale of 2.5, which are adjusted based on the predictors, resulting in scales such as [26.84, 28.43, 45.17] for the first model and [26.84, 28.43, 24.78,...] for the second model. The auxiliary parameter (sigma) follows an exponential prior with a rate of 1, adjusted to 0.2, while a decov prior regularizes the covariance structure in both models. Although the prior structure is similar, the second model incorporates more predictors, leading to a larger number of coefficients with slightly adjusted scales. These priors are designed to be weakly informative, allowing the data to primarily guide the posterior estimates while avoiding extreme parameter values.
 
+## Distribution
 ```{r}
 #| eval: true
 #| echo: false
@@ -902,8 +902,8 @@ prior_summary(second_model)
 #| warning: false
 #| label: fig-area
 #| layout-ncol: 2
-#| fig-cap: "Examining how the model fits, and is affected by, the data"
-#| fig-subcap: ["First Model Posterior prediction check", "First Model Comparing the posterior with the prior","Second Model Posterior prediction check", "Second Model Comparing the posterior with the prior"]
+#| fig-cap: "95% credibility intervals for fitted models"
+#| fig-subcap: ["First Model", "Second Model"]
 
 
 plot(
@@ -915,10 +915,11 @@ plot(
   "areas"
 )
 ```
+Credibility intervals are the Bayesian equivalent of confidence intervals, offering insight into the range of probable values for a parameter @tellingstories. Using Bayesian estimation, we derive a posterior distribution for each model coefficient. @fig-area-1 presents the 95% credibility intervals for coefficients in Model 1, while @fig-area-2 illustrates the same for Model 2. These intervals represent the range within which 95% of the posterior probability mass falls, offering a robust understanding of parameter uncertainty and the influence of predictors under the Bayesian framework @tellingstories.
 
 ## Diagnostics
 
-@fig-stanareyouokay-1 is a trace plot. It shows... This suggests...
+@fig-stanareyouokay-1 is a trace plot for model 1. It shows... This suggests...
 
 @fig-stanareyouokay-2 is a Rhat plot. It shows... This suggests...
 
@@ -928,8 +929,8 @@ plot(
 #| message: false
 #| warning: false
 #| label: fig-stanareyouokay
-#| fig-cap: "Checking the convergence of the MCMC algorithm"
-#| fig-subcap: ["Trace plot", "Rhat plot"]
+#| fig-cap: "Checking the convergence of the MCMC algorithm for the infant death rate model"
+#| fig-subcap: ["First Model Trace plot", "First Model Rhat plot","Second Model Trace plot", "Second Model Rhat plot"]
 #| layout-ncol: 2
 
 plot(first_model, "trace")
@@ -940,6 +941,9 @@ plot(second_model, "trace")
 
 plot(second_model, "rhat")
 ```
+
+The trace plot in @fig-stanareyouokay-1 shows the sampling chains for model 1, indicating good mixing and convergence as the chains overlap and appear stable throughout. This suggests that the model has achieved convergence during sampling. The Rhat plot in @fig-stanareyouokay-2 demonstrates that all Rhat values are below 1.05, further confirming convergence and indicating that the model’s posterior samples are reliable. @fig-stanareyouokay-3 represents the trace plots for Model 2, showing the posterior samples across four chains. The plots indicate good mixing, as the chains overlap well and stabilize around the same region, suggesting convergence.
+@fig-stanareyouokay-4 is the Rhat diagnostic plot for Model 2. All Rhat values are close to 1.00, confirming that the Markov chains have converged, and the posterior estimates are reliable. This supports the validity of Model 2’s Bayesian estimation process.
 
 # Idealized Methodology for A Survey-Based Qualitative Studies {#sec-survey}
 
