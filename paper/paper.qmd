@@ -24,6 +24,11 @@ editor:
 library(tidyverse)
 library(arrow)
 library(knitr)
+library(usmap)
+library(ggplot2)
+library(dplyr)
+library(kableExtra)
+library(rstanarm)
 ```
 
 ```{r}
@@ -114,8 +119,9 @@ present our findings, emphasizing the key predictors of Harris's
 support. Finally, @sec-discussion explores the implications of our
 results and suggests potential directions for future research.
 [Appendix- @sec-data-details] provides external data detail, [Appendix-
-@sec-model-details] provides model detail, and [Appendix-@sec-survey] provides an detailed introduction of surveys, sampling and
-observational data in our paper.
+@sec-model-details] provides model detail, and [Appendix- @sec-survey]
+provides an detailed introduction of surveys, sampling and observational
+data in our paper.
 
 # Data {#sec-data}
 
@@ -136,6 +142,24 @@ mother’s state of residence and the timing of the infant’s death as the
 predictor variable. Additionally, we include control variables such as
 infant year of death, the mother’s state of residence, race, and age to
 account for potential confounding factors.
+
+In this study, we utilized several R packages to streamline data
+manipulation, modeling, and visualization. The `tidyverse` package
+@tidyverse was central to our workflow, providing tools for data
+wrangling and analysis, while `arrow` @arrow efficiently managed parquet
+files for larger datasets. We used `modelsummary` package @modelsummary
+to generate clean and interpretable summaries of our regression
+models.We used `knitr` @knitr and `kableExtra` @kableExtra to generate
+clean tables and reproducible reports, and `usmap` for geographical
+visualizations. We use `here` @here package simplifies the management of
+file paths, ensuring a reproducible workflow by creating a consistent
+point of reference for file locations, regardless of the operating
+system or working directory.Data cleaning was facilitated by `janitor`
+@janitor, while `lubridate` @lubridate handled date-time variables.
+Visualization tasks were enhanced with `ggplot2` @ggplot2, and Bayesian
+regression modeling was conducted using `rstanarm` @rstanarm. Together,
+these packages supported an efficient, reproducible workflow for
+analyzing and presenting our findings.
 
 ## Measurement
 
@@ -173,7 +197,7 @@ state-level abortion policies and infant mortality, controlling for
 confounders such as maternal characteristics. This structured approach
 transforms complex datasets into actionable insights, shedding light on
 the health implications of varying abortion laws across the U.S. By
-leveraging comprehensive datasets and robust statistical techniques,
+utilizing comprehensive datasets and robust statistical techniques,
 this study offers a nuanced understanding of the intersection between
 policy, demographics, and infant health outcomes, informing public
 health strategies and legislative decisions.
@@ -245,11 +269,6 @@ evaluate the joint impact of these factors on infant death rates.
 #| include: false
 #| warning: false
 #| message: false
-
-
-library(usmap)
-library(ggplot2)
-library(dplyr)
 
 # Ensure the number of states and `abortion_illegal` values match
 illegal_states <- tolower(c("Alabama", "Arkansas", "Idaho", "Indiana", "Kentucky", 
@@ -347,7 +366,6 @@ investigation.
 #| echo: false
 #| warning: false
 #| message: false
-library(kableExtra)
 analysis_data_state <- analysis_data|>mutate(illegal_after_injunction=as.numeric(as.character(abortion_illegal))*as.numeric(as.character(after_injunction)))|>
   group_by(illegal_after_injunction)|>
   summarize(`Average Infant Death Rate (per 1,000 live births)` = round(mean(death_rate, na.rm = TRUE), 1)) 
@@ -403,7 +421,7 @@ mortality, with younger mothers experiencing higher risks.
 #| echo: false
 #| warning: false
 #| message: false
-library(kableExtra)
+#| 
 analysis_data_state <- analysis_data|>
   group_by(age_of_mother)|>
   summarize(`Average Infant Death Rate (per 1,000 live births)` = round(mean(death_rate, na.rm = TRUE), 1)) |>rename(`Age of Mother`=age_of_mother)
@@ -447,7 +465,7 @@ territories.
 #| fig-cap: Infant Death Rates Across U.S. States (per 1,000 Live Births), December 2022. Infant Mortality Rate is much higher iin Southeastern. Alabama and Mississippi show the highest rates, while California and New York exhibit lower rates.
 #| echo: false
 
-library(ggnewscale)
+
 death<-analysis_data|>group_by(state)|>summarise(death_rate=mean(death_rate))|>mutate(state=tolower(state))
 death_full <- us_map|>
    full_join(death, c("region"="state"))
@@ -481,7 +499,9 @@ grey. The map highlights disparities in infant mortality rates, with
 some states, particularly in the southeastern U.S., exhibiting notably
 higher rates compared to others. States like Alabama and Mississippi
 show the highest rates, while states such as California and New York
-exhibit lower rates. \# Model
+exhibit lower rates.
+
+# Model {#sec-model}
 
 For our analysis, we use a Bayesian Difference-in-Differences (DID)
 model to quantify the impact of abortion injunctions on the infant death
@@ -490,8 +510,6 @@ death rates over time between a treatment group (states where abortion
 injunctions were implemented) and a control group (states where abortion
 remains legal), providing a robust framework for estimating causal
 effects.
-
-# Model {#sec-model}
 
 ## Difference-In-Difference Approach (DID)
 
@@ -619,8 +637,6 @@ y_i|\mu_i,\sigma &\sim \mbox{Normal}(\mu_i, \sigma)\\
 \sigma &\sim \mbox{Exponential}(1)
 \end{aligned}$$
 
-
-
 The models are run in R (R Core Team 2023) using the rstanarm package of
 @rstanarm. The default priors from `rstanarm` are used for both GLM
 Bayesian models. We run the model in R [@citeR] using the `rstanarm`
@@ -684,9 +700,6 @@ provides robust and interpretable causal estimates.
 #| warning: false
 #| message: false
 #| include: false
-
-library(rstanarm)
-
 first_model <-
   readRDS(file = here::here("models/first_model.rds"))
 second_model <-
@@ -928,7 +941,6 @@ plot(second_model, "trace")
 plot(second_model, "rhat")
 ```
 
-
 # Idealized Methodology for A Survey-Based Qualitative Studies {#sec-survey}
 
 In our study, we examine the impact of abortion bans on infant mortality
@@ -939,10 +951,10 @@ populations. However, they often fall short in addressing underlying
 mechanisms due to limitations such as confounding factors and challenges
 in establishing causality.
 
-To address these gaps, in this appendix we propose incorporating surveys to gather
-qualitative data, which provide rich, detailed accounts of individual
-experiences and contextual factors. Qualitative methods allow for a
-deeper understanding of how restrictive abortion policies affect
+To address these gaps, in this appendix we propose incorporating surveys
+to gather qualitative data, which provide rich, detailed accounts of
+individual experiences and contextual factors. Qualitative methods allow
+for a deeper understanding of how restrictive abortion policies affect
 maternal health, access to healthcare, and infant outcomes, capturing
 nuances that quantitative analysis alone cannot.
 
@@ -1002,32 +1014,335 @@ policy responses to restrictive abortion laws.
 
 ## Sampling Approach
 
-In this analysis, we will use non-probability Respondent-driven sampling to finding respondents. Respondent-driven sampling (RDS), developed by @heckathorn1997, is ideal for studying hidden populations lacking a sampling frame and facing potential stigma or harm. Unlike snowball sampling, RDS offers dual compensation for participation and recruitment, with recruitment occurring peer-to-peer via social networks. This method maintains confidentiality, reduces bias through statistical adjustments, and is particularly effective for sensitive topics, such as abortion, by leveraging trust within communities. 
+In this analysis, we will use non-probability Respondent-driven sampling
+to finding respondents. Respondent-driven sampling (RDS), developed by
+@heckathorn1997, is ideal for studying hidden populations lacking a
+sampling frame and facing potential stigma or harm. Unlike snowball
+sampling, RDS offers dual compensation for participation and
+recruitment, with recruitment occurring peer-to-peer via social
+networks. This method maintains confidentiality, reduces bias through
+statistical adjustments, and is particularly effective for sensitive
+topics, such as abortion, by utilizing trust within communities.
 
-We use Respondent-Driven Sampling (RDS) for our survey because it is well-suited for reaching hidden or stigmatized populations, such as mothers who were unable to access abortion services and experienced the death of their infant. These individuals may be difficult to identify through conventional methods due to the sensitive nature of the topic and the lack of a clear sampling frame.
+We use Respondent-Driven Sampling (RDS) for our survey because it is
+well-suited for reaching hidden or stigmatized populations, such as
+mothers who were unable to access abortion services and experienced the
+death of their infant. These individuals may be difficult to identify
+through conventional methods due to the sensitive nature of the topic
+and the lack of a clear sampling frame.
 
-RDS utilizes peer networks, allowing participants to recruit others they trust, fostering higher participation rates in populations that may distrust external researchers. This approach helps maintain confidentiality and reduces the risk of social stigma. Additionally, RDS provides a structured framework for statistical adjustments, mitigating biases inherent in network-based recruitment, and improving the representativeness of the sample. These advantages make RDS an effective and ethical choice for gathering insights into the psychological, social, and systemic impacts of restrictive abortion laws.
+RDS utilizes peer networks, allowing participants to recruit others they
+trust, fostering higher participation rates in populations that may
+distrust external researchers. This approach helps maintain
+confidentiality and reduces the risk of social stigma. Additionally, RDS
+provides a structured framework for statistical adjustments, mitigating
+biases inherent in network-based recruitment, and improving the
+representativeness of the sample. These advantages make RDS an effective
+and ethical choice for gathering insights into the psychological,
+social, and systemic impacts of restrictive abortion laws.
 
 ## Target Population
 
-Our target population is mothers who sought but were unable to access abortion services due to restrictive laws and experienced the death of their infant within the first year of life in states with abortion bans following the Dobbs decision.
-    
+Our target population is mothers who sought but were unable to access
+abortion services due to restrictive laws and experienced the death of
+their infant within the first year of life in states with abortion bans
+following the Dobbs decision.
+
 ## Sample frame
 
-Given the sensitive nature of our study, identifying and reaching the initial participants poses a significant challenge. To address this, we aim to collaborate with support groups and advocacy organizations like Abortion Rights Advocacy Groups. These groups play a critical role in connecting researchers with individuals who are otherwise difficult to reach, particularly for sensitive topics like the impact of restrictive abortion laws on maternal and infant health.
+Given the sensitive nature of our study, identifying and reaching the
+initial participants poses a significant challenge. To address this, we
+aim to collaborate with support groups and advocacy organizations like
+Abortion Rights Advocacy Groups. These groups play a critical role in
+connecting researchers with individuals who are otherwise difficult to
+reach, particularly for sensitive topics like the impact of restrictive
+abortion laws on maternal and infant health.
 
-Therefore, the sample frame of our study will be mothers who sought but were unable to access abortion services due to restrictive laws and experienced the death of their infant within the first year of life in states with abortion bans following the Dobbs decision and are reachable and can be contacted by Abortion Rights Advocacy Groups.
+Therefore, the sample frame of our study will be mothers who live in
+areas where they are unable to access abortion services due to
+restrictive laws and have experienced the death of their infant within
+the first year of life in states with abortion bans following the Dobbs
+decision and are reachable and can be contacted by Abortion Rights
+Advocacy Groups.
 
 ## Sample
 
-We plan to survey 10 respondents for this study. Our sample will consist of mothers who fit the defined sample frame—those who sought but were unable to access abortion services due to restrictive laws, experienced the death of their infant within the first year of life, and are reachable through Abortion Rights Advocacy Groups. These mothers must also be willing to participate in and answer our survey questions, ensuring the reliability and depth of the collected data.
+We plan to survey 20 respondents for this study. Our sample will consist
+of mothers who fit the defined sample frame—those who were unable to
+access abortion services due to restrictive laws, experienced the death
+of their infant within the first year of life, and are reachable through
+Abortion Rights Advocacy Groups. These mothers must also be willing to
+participate in and answer our survey questions, ensuring the reliability
+and depth of the collected data.
+
+## Recruitment of Respondents
+
+To recruit participants for this sensitive study, we will use a Respondent-Driven Sampling (RDS) approach in collaboration with  Abortion Rights Advocacy Groups, that have established relationships with our target population. These organizations will serve as initial “seeds” to identify and reach mothers affected by restrictive abortion laws who meet our study criteria. Outreach materials emphasizing confidentiality and the study’s importance will be shared through trusted channels. As part of the RDS methodology, participants may also invite others from their network who share similar experiences, ensuring the sample expands while maintaining anonymity. Interested participants will undergo a screening process and provide informed consent, with the option to complete the survey anonymously online, ensuring safety and confidentiality. To support participant well-being, we will provide access to mental health resources throughout the process, fostering trust and encouraging meaningful participation.
+
+## Handling Non-response bias
+
+Non-response bias is a concern as it can distort survey results and lead to unrepresentative conclusions about the target population. Since our survey addresses a sensitive topic and takes approximately 10–15 minutes to complete, there is a risk of participant dropout or refusal. To minimize this, we provide a clear overview of the survey’s purpose, confidentiality measures, and estimated completion time, fostering trust and encouraging participation. 
+
+## Respondent Validation
+
+To ensure the credibility of our data, we implement a respondent validation process. Participants will undergo an initial screening to confirm they meet the study criteria, such as being unable to access abortion services due to restrictive laws and experiencing the loss of an infant within the first year of life. Responses will be reviewed for completeness and consistency, and duplicate entries will be removed to maintain data integrity. Collaboration with trusted support groups and advocacy organizations further enhances respondent reliability, ensuring that our findings accurately reflect the experiences of the target population.
 
 ## Ethical Concerns
 
-This study addresses sensitive and emotionally charged topics, necessitating a careful and ethical approach to protect participants’ well-being. We acknowledge the potential psychological distress that discussing experiences of unintended pregnancies, restrictive abortion laws, and infant loss may cause. To mitigate this, the survey will include trigger warnings, and participants will have the option to skip questions or withdraw at any time without penalty. All data collection will adhere to strict confidentiality protocols, ensuring that participants’ identities remain anonymous and their responses are securely stored. Recruitment through trusted advocacy groups will ensure that participants feel safe and supported throughout the process. Additionally, we will provide resources for mental health support to any participant who may experience discomfort as a result of participating in the study. This approach underscores our commitment to conducting ethical, respectful, and responsible research.
+This study addresses sensitive and emotionally charged topics,
+necessitating a careful and ethical approach to protect participants’
+well-being. We acknowledge the potential psychological distress that
+discussing experiences of unintended pregnancies, restrictive abortion
+laws, and infant loss may cause. To mitigate this, the survey will
+include trigger warnings, and participants will have the option to skip
+questions or withdraw at any time without penalty. All data collection
+will adhere to strict confidentiality protocols, ensuring that
+participants’ identities remain anonymous and their responses are
+securely stored. Recruitment through trusted advocacy groups will ensure
+that participants feel safe and supported throughout the process.
+Additionally, we will provide resources for mental health support to any
+participant who may experience discomfort as a result of participating
+in the study. This approach underscores our commitment to conducting
+ethical, respectful, and responsible research.
 
 ## Proposed Survey Design
 
+Abortion, or even considering abortion, carries significant social
+stigma. Therefore, our survey requires extremely careful phrasing and
+design to minimize this stigma’s impact on the study of abortion,
+pregnancy, fertility, and related demographic and health outcomes. In
+@lindberg2022, researchers tested innovative methods in a national
+survey to address persistent underreporting of abortion in the U.S.,
+focusing on question design and placement to reduce sensitivity, social
+desirability bias, and perceived intrusiveness. Although none of their
+experimental approaches significantly improved abortion reporting
+compared to the control condition, their study offers valuable insights
+for improving abortion measurement. We aim to adapt our survey design
+based on their methodologies to enhance data accuracy and respondent
+comfort.
+
+This survey explores the impacts of restrictive abortion laws on maternal mental health and infant outcomes, emphasizing neutral, carefully crafted questions to ensure participant comfort and minimize social desirability bias. Inspired by @lindberg2022, it employs strategies like thoughtful question placement, phrasing, and opt-out options (e.g., “Prefer not to say”) to address underreporting in sensitive topics. Combining multiple-choice and open-ended formats, the survey aims to balance structured data collection with nuanced insights, fostering trust and enhancing data accuracy. Also, based on @lindberg2022 findings that respondents preferred introductions emphasizing how sharing their abortion experiences could help improve health services for other women, we adopted a “helping” framework in each sectionof our survey introductions to encourage accurate reporting and increase participants’ motivation to contribute.
+
+## Solution to the response bias in our survey
+
+We draw on recommendations from @stantcheva2023 to minimize response biases. Common response biases identified in survey design include moderacybias, extreme response bias, ordering bias, acquiescence bias, experimenter demand effect(EDE), and social desirability bias (SDB). Our survey primarily focuses on strategies to reduce moderacy bias, extreme response bias, ordering bias, and SDB.The detailed definitions of these biases are provided in [Appendix-@sec-definition].
+
+To mitigate bias, we enhance our survey in the following ways, drawing on recommendations
+from @stantcheva2023:
+
+- Addressing Extreme/Moderacy Bias: We use a minimum of five response options for scale questions to provide more nuanced choices, reducing the likelihood of respondents defaulting to extreme or middle answers.
+
+- Mitigating Response Order Bias: For nominal questions, we randomize response options.
+
+- Minimizing Social Desirability Bias (SDB): Our online survey is carefully designed to minimize social desirability bias (SDB) while addressing the sensitivity of the topic. The survey begins with a clear introduction explaining its purpose—academic research on the impact of restrictive abortion laws—while emphasizing respondent anonymity and confidentiality. Before sensitive questions, participants are reassured that their responses are entirely confidential and will only be used for research purposes. The anonymous online format provides a safe space for participants to share their experiences without fear of judgment or stigma. Additionally, a feedback section at the end invites respondents to voice any concerns or share additional thoughts, fostering trust and enhancing the quality of the data collected.
+
+
+### Survey Link
+
+The survey has been implemented using Google Forms. You can access it
+here: [Survey Link](https://forms.gle/YRrb6Z6EyorHPkuF8).
+
+## Copy of Survey on Restrictive Abortion Laws and Maternal Health
+
+Welcome Section
+
+Introduction: Welcome to our study on the impact of restrictive abortion
+laws on maternal and infant health. Your participation in this survey
+will help us understand the psychological, social, and systemic impacts
+of these laws. Rest assured that your responses are anonymous and will
+only be used for academic research purposes.
+
+This survey is conducted by nonpartisan researchers in public health and
+social sciences. It consists of 17 carefully designed questions and
+should take approximately 10–15 minutes to complete.
+
+Please answer the questions honestly. If you experience any discomfort
+while completing the survey, you may stop at any time. For support, we
+provide a list of mental health resources at the end of the survey.
+
+Contact Information: Diana Shen Email: diana.shen\@mail.utoronto.ca
+
+Section 1: Demographics and Background Information
+
+1.  What is your age?
+    -   Under 18
+    -   18–24
+    -   25–34
+    -   35–44
+    -   45–54
+    -   55+
+    -   Prefer not to say
+2.  What is your highest level of education?
+    -   Less than high school
+    -   High school graduate or equivalent
+    -   Some college
+    -   Bachelor’s degree
+    -   Graduate or professional degree
+    -   Prefer not to say
+
+3.What is your marital status? - Single - Married - Divorced - Widowed -
+Prefer not to say
+
+Section 2: Understanding Abortion Experiences
+
+Introduction: This section focuses on understanding abortion
+experiences, including the circumstances and decisions surrounding them.
+Your responses are invaluable in helping researchers and policymakers
+improve health services and support for women and families. Please know
+that your answers are entirely confidential and will only be used for
+research purposes. If you are comfortable, we encourage you to answer as
+honestly as possible. If you prefer not to answer, you are welcome to
+skip this section.
+
+1.  Are you willing to answer this part?
+    -   Yes
+    -   No \[Jump to Section 3\]
+2.  Did you seek abortion services during your pregnancy?
+    -   Yes
+    -   No
+    -   Prefer not to say
+3.  If yes, were you unable to access abortion services due to legal
+    restrictions in your state?
+    -   Yes
+    -   No
+    -   Prefer not to say
+4.  How did the inability to access abortion services impact your mental
+    health during pregnancy?
+    -   No impact
+    -   Mild impact
+    -   Moderate impact
+    -   Severe impact
+    -   Prefer not to say
+5.  Did you receive any support from healthcare providers or community
+    organizations during your pregnancy?
+    -   Yes
+    -   No
+6.  If you were unable to access abortion services, what barriers did
+    you encounter? (Select all that apply)
+    -   Legal restrictions
+    -   Financial constraints
+    -   Lack of healthcare providers
+    -   Distance to clinic
+    -   Fear of stigma or judgment
+    -   Prefer not to say
+7.  If you sought an abortion but were unable to access one, how did
+    this affect your mental health during pregnancy?
+    -   Increased stress
+    -   Anxiety
+    -   Depression
+    -   Anger or frustration
+    -   Feeling of helplessness
+    -   Prefer not to say
+
+Section 3: Experiences and Support for Women Facing Pregnancy Challenges
+
+Introduction: This section seeks to understand the experiences and
+outcomes of women who, due to restrictive abortion laws, were unable to
+access abortion services and subsequently faced the loss of their child.
+We recognize that discussing past pregnancies can be sensitive,
+especially those involving circumstances such as abortion or the loss of
+a child. Your insights are invaluable in identifying areas where
+healthcare and support services can be improved. If you prefer not to
+answer, you are welcome to skip this section.
+
+1.  Are you willing to answer this part?
+    -   Yes
+    -   No \[Jump to Section 4\]
+2.  Did you experience the loss of your child within the first year of
+    life?
+    -   Yes
+    -   No \[Jump to Section 4\]
+    -   Prefer not to say
+3.  What was the primary cause of your child’s death as communicated by
+    healthcare providers?
+    -   Premature birth or related complications
+    -   Congenital abnormalities or genetic conditions
+    -   Sudden Infant Death Syndrome (SIDS)
+    -   Infections (e.g., pneumonia, sepsis)
+    -   Birth trauma or delivery complications
+    -   Lack of access to timely medical care
+    -   Other (please specify)
+4.  To what extent do you believe the instances during your pregnancy
+    where mental health challenges prevented you from seeking or
+    receiving adequate medical care?
+    -   1 (No impact)
+    -   2
+    -   3
+    -   4
+    -   5 (Significantly)
+5.  To what extent do you believe the mental health challenges caused by
+    the inability to access abortion services contributed to health
+    complications for your child?
+    -   Not at all – I don’t believe my mental health challenges had any
+        impact on my child’s health.
+    -   Slightly – I think there may have been a minor impact on my
+        child’s health.
+    -   Moderately – I feel my mental health challenges had a noticeable
+        impact on my child’s health.
+    -   Significantly – I believe my mental health challenges had a
+        considerable impact on my child’s health.
+    -   Completely – I think my mental health challenges were the
+        primary factor in my child’s health complications.
+    -   Prefer not to say
+6.  Looking back, do you believe access to abortion services could have
+    positively affected your mental and physical health during
+    pregnancy?
+    -   Yes
+    -   No
+    -   Maybe
+    -   Prefer not to say
+
+Section 4: Perspectives and Support
+
+If you feel distressed or need support after completing this survey, the
+following resources are available to provide assistance:
+
+1.  Postpartum Support International (PSI)
+    -   Website: www.postpartum.net
+    -   Helpline: 1-800-944-4773 (Text “Help” to 800-944-4773)
+    -   Services: Support for mental health during and after pregnancy,
+        including peer support and counseling.
+2.  Mental Health America (MHA)
+    -   Website: www.mhanational.org
+    -   Services: Online screening tools, support networks, and
+        educational materials.
+3.  SAMHSA National Helpline
+    -   Website: www.samhsa.gov
+    -   Hotline: 1-800-662-HELP (4357)
+    -   Services: Free, confidential referrals for mental health and
+        substance use disorders.
+
+Section 5: Feedback
+
+1.  Do you have any concerns or feedback regarding the survey, surveyor,
+    or entity?
+    -   Your feedback is important to us and will help ensure
+        transparency and trust in the research process.
+
+Section 6: Thank You
+
+Thank you for taking the time to complete this survey. Your honest
+feedback is invaluable and will help us better understand and address
+the experiences of women who have faced similar circumstances. We deeply
+appreciate your participation and the courage it takes to share your
+experiences.
+
+## Response bias definition {#sec-definition}
+
+In the design of the questionnaire, there will be some common biases that
+may occur when running the questionnaire.
+
+@stantcheva2023 defines these biases as:
+
+- **Moderacy response bias**: The tendency to choose mid-scale responses.
+
+- **Extreme response bias**: The inclination to select extreme values on the scale.
+
+- **Response order bias**: Occurs when the position of options influences responses, with the **primacy effect** (favoring early options in written surveys) and **recency effect** (favoring later options in oral surveys) as common forms.
+
+- **Social desirability bias**: Respondents may hide true views to present a socially favorable image, influenced by topic and social context.
+
+- **Acquiescence bias**: The habit of giving positive responses, such as consistently choosing “agree” or “yes.”
 \newpage
 
 # References
