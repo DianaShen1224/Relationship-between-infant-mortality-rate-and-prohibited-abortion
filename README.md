@@ -169,7 +169,7 @@ The model can be fine-tuned or integrated into broader systems for tasks such as
 ## Fine-tune the model with additional data
 
 ``` r
-fine_tuned_model <- stan_glm( death_rate \~ after_injunction \* abortion_illegal + age_of_mother + mothers_single_race + year_of_death, data = extended_data, family = gaussian(link = "identity") )
+fine_tuned_model <- stan_glm( death_rate ~ after_injunction * abortion_illegal + age_of_mother + mothers_single_race + year_of_death + (1|state), data = extended_data, family = gaussian(link = "identity") )
 
 # Generate predictions using the fine-tuned model
 
