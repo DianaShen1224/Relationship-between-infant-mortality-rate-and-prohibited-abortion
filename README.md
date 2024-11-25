@@ -291,7 +291,7 @@ Evaluation of the model’s performance was disaggregated across the following f
 
 #### Metrics
 
-The evaluation metrics used to assess the models include: 1. **Root Mean Square Error (RMSE)**: - Measures the average prediction error. - Lower RMSE indicates better model fit. 2. **R-squared (**$R^2$): - Indicates the proportion of variance explained by the model. - Higher $R^2$ values represent a better fit. 3. **Posterior Predictive Checks**: - Examines the alignment of predicted and observed values to assess model calibration. 4. **Significance of Coefficients**: - Evaluates the statistical significance of key predictors, including interaction terms like after_injunction \* abortion_illegal.
+The evaluation metrics used to assess the models include: 1. **Root Mean Square Error (RMSE)**: - Measures the average prediction error. - Lower RMSE indicates better model fit. 2. **R-squared (**$R^2$): - Indicates the proportion of variance explained by the model. - Higher $R^2$ values represent a better fit. 3. **Posterior Predictive Checks**: - Examines the alignment of predicted and observed values to assess model calibration. 
 
 #### Results
 
