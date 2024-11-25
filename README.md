@@ -313,7 +313,7 @@ The models effectively captured the impact of abortion bans on infant mortality 
 
 #### Model Examination
 
-The models underwent posterior predictive checks and comparison between prior and posterior distributions: - Posterior Predictive Checks: - Demonstrated good alignment between predicted and observed infant mortality rates, validating model fit. - Prior vs. Posterior Distributions: - Confirmed that the data significantly informed posterior estimates, particularly for key predictors like the interaction term.
+The models underwent extensive posterior predictive checks and comparisons between prior and posterior distributions. The posterior predictive checks indicated a strong alignment between the predicted and observed infant mortality rates, highlighting the model’s ability to capturer general trends but limited precision. The comparison of prior and posterior distributions demonstrated that the data substantially informed the posterior estimates, particularly for key predictors such as the interaction term between restrictive abortion laws and the timing of the Dobbs decision. These results validate the model’s capacity to explore the effects of restrictive abortion policies on maternal mental health and infant outcomes, offering a sound basis for policy recommendations.
 
 #### Environmental Impact
 
