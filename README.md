@@ -299,7 +299,7 @@ The evaluation metrics used to assess the models include: 1. **Root Mean Square 
 
 -   RMSE: 4.21 deaths per 1,000 live births.
 -   $R^2$: 0.256.
--   The interaction term (after_injunction \* abortion_illegal) was statistically significant, indicating an increase in infant mortality rates in states with abortion bans after June 2022.
+-   The interaction term (after_injunction \* abortion_illegal) was significant, indicating an increase in infant mortality rates in states with abortion bans after June 2022.
 
 2.  **Model 2: Incorporates additional demographic factors (age_of_mother, mothers_single_race).**
 
