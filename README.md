@@ -38,7 +38,7 @@ model-index:
 
 ## Overview
 
-This repository contains the analysis and methodology used to examine the impact of abortion bans following the 2022 Dobbs decision on infant mortality rates in the United States. The primary objective is to quantify the changes in infant mortality rates in states where abortion became illegal compared to states where it remained legal. The analysis employs Bayesian Difference-in-Differences (DID) models, incorporating both policy factors and demographic variables, to understand these changes in-depth.
+This repository contains the analysis and methodology used to examine the impact of abortion bans following the 2022 Dobbs decision on infant mortality rates in the United States. The primary objective is to quantify the changes in infant mortality rates in states where abortion is restricted compared to states where abortion is protected. The analysis employs Bayesian Difference-in-Differences (DID) models, incorporating both policy factors and demographic variables, to understand these changes in-depth.
 
 The project draws on data from the CDC WONDER database (2021–2022) and explores the implications of policy changes on public health. It also discusses the data preparation process, statistical modeling, and the limitations of using observational data for causal inference. This repository provides all the necessary data, R scripts, and documentation for readers to reproduce and understand the study’s findings on the intersection of reproductive policy and infant health outcomes.
 
