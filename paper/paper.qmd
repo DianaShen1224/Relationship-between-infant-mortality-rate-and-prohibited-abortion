@@ -848,6 +848,21 @@ maternal and infant health outcomes.
 
 # Additional data details {#sec-data-details}
 
+## Dataset and Graph Sketches
+
+Sketches depicting both the desired dataset and the graphs generated in
+this analysis is available in the GitHub Repository `other/sketches`.
+
+## Data Cleaning
+
+The raw dataset, consisting of U.S. infant mortality records from 2021 and 2022, was cleaned and pre-processed to ensure its suitability for analysis. The dataset was first imported from a tab-separated file, with irregular lines handled appropriately. Variables were standardized using `janitor::clean_names()` to ensure consistent naming conventions. Key variables such as state, maternal age, maternal race, year of death, month, and infant death rates were selected for analysis, and missing values were removed.
+
+Additional variables were created to facilitate analysis: `after_injunction`, indicating whether the data corresponded to the period after June 2022 (post-Dobbs decision), and `abortion_illegal`, denoting whether the state had restrictive abortion laws. Death rate reliability was assessed, and unreliable rates were flagged for transparency. The death rate column was cleaned to remove annotations and converted to numeric format for analysis. A date variable was created by combining the year and month columns, providing a timeline for analysis. Finally, a date variable was created by combining the year and month variables. The cleaned dataset was saved in CSV and Parquet formats to ensure compatibility with analytical workflows.
+
+## Attribution Statement
+
+The data utilized in this study was sourced from the CDC WONDER Online Database. Access to the data and its use complies with the terms outlined on the [CDC WONDER Data Use Agreement](https://wonder.cdc.gov/datause.html). Specifically, the data was used for academic research purposes, with acknowledgment of the Centers for Disease Control and Prevention (CDC) as the original data provider. The CDC, however, does not assume responsibility for any analyses, interpretations, or conclusions drawn from the data by the authors of this study.
+
 # Model details {#sec-model-details}
 
 ## Posterior predictive check
