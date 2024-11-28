@@ -113,7 +113,7 @@ evidence on how restrictive abortion policies disproportionately affect
 vulnerable populations, emphasizing the need for evidence-based policies to
 mitigate these adverse outcomes.
 
-The structure of this paper is as follows: @sec-data details the data sources and variables used in the analysis. @sec-model outlines the modeling approach, including assumptions and specifications of the Bayesian DID framework. In @sec-results, we present the findings, emphasizing key observations.In @sec-results, we present findings on the impact of abortion bans and the post-injunction period, highlighting their association with increased infant mortality. Key disparities by maternal age and race are discussed, along with model validation metrics like RMSE and $R^2$. Finally, @sec-discussion explores the implications of the results and suggests potential directions for future research. Additional details are provided in the appendices: [Appendix-@sec-data-details] elaborates on external data sources, [Appendix-@sec-model-details] provides an in-depth explanation of the model, and [Appendix-@sec-survey] introduces the idealized methodology for a related qualitative analysis.
+The structure of this paper is as follows: @sec-data details the data sources and variables used in the analysis. @sec-model outlines the modeling approach, including assumptions and specifications of the Bayesian DID framework. In @sec-results, we present the findings, emphasizing key observations. In @sec-results, we present findings on the impact of abortion bans and the post-injunction period, highlighting their association with increased infant mortality. Key disparities by maternal age and race are discussed, along with model validation metrics like RMSE and $R^2$. Finally, @sec-discussion explores the implications of the results and suggests potential directions for future research. Additional details are provided in the appendices: [Appendix-@sec-data-details] elaborates on external data sources, [Appendix-@sec-model-details] provides an in-depth explanation of the model, and [Appendix-@sec-survey] introduces the idealized methodology for related qualitative analysis.
 
 # Data {#sec-data}
 
@@ -149,7 +149,7 @@ point of reference for file locations, regardless of the operating
 system or working directory. Data cleaning was facilitated by `janitor`
 @janitor, while `lubridate` @lubridate handled date-time variables.
 Visualization tasks were enhanced with `ggplot2` @ggplot2, and Bayesian
-regression modeling was conducted using `rstanarm` @rstanarm. We use `fixest` @fixest to conduct the event study. We use `caret` @caret to conduct the cross-validation of model. Together, these packages supported an efficient, reproducible workflow for
+regression modeling was conducted using `rstanarm` @rstanarm. We use `fixest` @fixest to conduct the event study. We use `caret` @caret to conduct the cross-validation of the model. Together, these packages supported an efficient, reproducible workflow for
 analyzing and presenting our findings.
 
 ## Measurement
@@ -182,7 +182,7 @@ birthweight data, assigning values based on gestational period, race,
 sex, and plurality, further reducing potential bias in the analysis.
 
 Once cleaned, the data is stratified by maternal and infant attributes,
-providing understanding into trends and disparities across demographic
+providing an understanding of trends and disparities across demographic
 groups. Statistical models are employed to estimate associations between
 state-level abortion policies and infant mortality, controlling for
 confounders such as maternal characteristics. This structured approach
@@ -674,7 +674,7 @@ y_i|\mu_i,\sigma &\sim \mbox{Normal}(\mu_i, \sigma)\\
 \sigma &\sim \mbox{Exponential}(1)
 \end{aligned}$$
 
-The models are run in R (R Core Team 2023) using the rstanarm package of
+The models are run in R (R Core Team 2023) using the `rstanarm` package of
 @rstanarm. The default priors from `rstanarm` are used for both GLM
 Bayesian models. We run the model in R [@citeR] using the `rstanarm`
 package of @rstanarm. We use the default priors from `rstanarm` used for
@@ -700,11 +700,11 @@ Alternative models, such as Fixed Effects, Propensity Score Matching (PSM), and 
 
 #### Bayesian Framework
 
-We use a Bayesian approach to enhance the Difference-in-Differences (DID) method, which allows us to incorporate prior knowledge and better account for uncertainty. With the rstanarm package, we apply weakly informative priors—such as a Normal prior centered at zero with moderate spread ($\mu=0$, $\sigma=2.5$) for fixed effects and an Exponential prior (rate = 1) for variability parameters. These priors automatically adjust to the scale of the data, improving model stability and ensuring they complement rather than dominate the observed data. This approach helps us center estimates realistically, account for hidden differences between groups, and produce reliable results while assuming trends between treated and control groups are similar before treatment.
+We use a Bayesian approach to enhance the Difference-in-Differences (DID) method, which allows us to incorporate prior knowledge and better account for uncertainty. With the `rstanarm` package, we apply weakly informative priors—such as a Normal prior centered at zero with moderate spread ($\mu=0$, $\sigma=2.5$) for fixed effects and an Exponential prior (rate = 1) for variability parameters. These priors automatically adjust to the scale of the data, improving model stability and ensuring they complement rather than dominate the observed data. This approach helps us center estimates realistically, account for hidden differences between groups, and produce reliable results while assuming trends between treated and control groups are similar before treatment.
 
 #### Limitations and Applicability
 
-Our Bayesian DID model offers a robust approach to examining the impact of abortion bans on infant mortality but has limitations. Misspecified priors, data imbalances, and violations of the parallel trends assumption could introduce biases. Despite these challenges, the model effectively integrates prior knowledge and addresses uncertainty, providing valuable understanding into policy impacts.
+Our Bayesian DID model offers a robust approach to examining the impact of abortion bans on infant mortality but has limitations. Misspecified priors, data imbalances, and violations of the parallel trends assumption could introduce biases. Despite these challenges, the model effectively integrates prior knowledge and addresses uncertainty, providing a valuable understanding of policy impacts.
 
 # Results {#sec-results}
 
@@ -741,15 +741,15 @@ rates associated with the combination of abortion bans and the
 post-injunction period.
 
 For the independent effects, states where abortion is illegal show
-higher infant mortality rates, with coefficients of 3.365 in first model and
-1.400 in second model. The post-injunction period alone is associated with
-coefficients of -0.525 in first model and -0.940 in second model, indicating a
+higher infant mortality rates, with coefficients of 3.365 in the first model and
+1.400 in the second model. The post-injunction period alone is associated with
+coefficients of -0.525 in the first model and -0.940 in the second model, indicating a
 decrease in infant mortality during this time.
 
 Demographic variables also exhibit some associations. Maternal age is
 negatively associated with infant mortality, with coefficients for age
-groups 25–29 and 30–34 of -5.73 and -6.15 in second model, relative to group 15-19 respectively. The
-the coefficient for Black mothers in second model is 6.66 relative to Asia monthers, reflecting a higher
+groups 25–29 and 30–34 of -5.73 and -6.15 in the second model, relative to groups 15-19 respectively. The
+the coefficient for Black mothers in the second model is 6.66 relative to Asia mothers, reflecting a higher
 infant mortality compared to other racial groups.
 
 The model highlights key demographic and policy-driven influences on infant mortality rates. The interaction between abortion bans and the post-injunction period is associated with increased mortality, while states with abortion bans consistently exhibit higher rates. Younger mothers and Black mothers face significantly elevated risks, highlighting disparities likely driven by limited healthcare access and systemic inequities. Conversely, increasing maternal age correlates with lower infant mortality rates, reflecting improved access to resources, better prenatal care, and greater maternal stability. These results demonstrate the impact of policy and demographic factors on infant health outcomes.
@@ -762,11 +762,11 @@ variance in infant mortality rates.
 
 ## Key Findings and Implications
 
-The analysis reveals notable patterns in infant mortality rates influenced by policy and demographic factors. For states where abortion remained legal, the post-injunction period (after_injunction1) is associated with reductions in infant mortality rates, with a decrease of 0.525 deaths per 1,000 live births in first model and 0.947 in second model, compared to the pre-injunction period. In contrast, states where abortion became illegal (abortion_illegal1) experienced significantly higher infant mortality rates, with increases of 3.365 deaths in first model and 1.401 in second model, relative to states where abortion remained legal.
+The analysis reveals notable patterns in infant mortality rates influenced by policy and demographic factors. For states where abortion remained legal, the post-injunction period (after_injunction1) is associated with reductions in infant mortality rates, with a decrease of 0.525 deaths per 1,000 live births in the first model and 0.947 in the second model, compared to the pre-injunction period. In contrast, states where abortion became illegal (abortion_illegal1) experienced significantly higher infant mortality rates, with increases of 3.365 deaths in the first model and 1.401 in the second model, relative to states where abortion remained legal.
 
-The Difference-in-Differences (DID) interaction term (after_injunction1 × abortion_illegal1) indicates that abortion bans during the post-injunction period resulted in an additional increase of 0.111 deaths per 1,000 live births in first model and 0.280 in second model. These effects highlight the compounded impact of restrictive abortion policies on infant health outcomes.
+The Difference-in-Differences (DID) interaction term (after_injunction1 × abortion_illegal1) indicates that abortion bans during the post-injunction period resulted in an additional increase of 0.111 deaths per 1,000 live births in the first model and 0.280 in the second model. These effects highlight the compounded impact of restrictive abortion policies on infant health outcomes.
 
-Demographic factors also play a significant role. Compared to mothers aged 15–19 years (reference level), older maternal age groups (20–24, 25–29, and 30–34 years) are associated with progressively lower infant mortality rates, with reductions of 3.571, 5.732, and 6.155 deaths per 1,000 live births in second model, respectively. Regarding maternal race, Black or African American mothers have a significantly higher infant mortality rate, with an increase of 6.604 deaths per 1,000 live births compared to Asian mothers (reference level). In contrast, White mothers exhibit a lower infant mortality rate, with a decrease of 2.562 deaths per 1,000 live births compared to Asian mothers.
+Demographic factors also play a significant role. Compared to mothers aged 15–19 years (reference level), older maternal age groups (20–24, 25–29, and 30–34 years) are associated with progressively lower infant mortality rates, with reductions of 3.571, 5.732, and 6.155 deaths per 1,000 live births in the second model, respectively. Regarding maternal race, Black or African American mothers have a significantly higher infant mortality rate, with an increase of 6.604 deaths per 1,000 live births compared to Asian mothers (reference level). In contrast, White mothers exhibit a lower infant mortality rate, with a decrease of 2.562 deaths per 1,000 live births compared to Asian mothers.
 
 These findings underscore the interplay of policy and demographic factors, emphasizing the disproportionate burden of restrictive abortion policies and systemic inequities on infant mortality rates.
 
@@ -830,11 +830,11 @@ this analysis is available in the GitHub Repository `other/sketches`.
 
 The raw dataset, consisting of U.S. infant mortality records from 2021 and 2022, was cleaned and pre-processed to ensure its suitability for analysis. The dataset was first imported from a tab-separated file, with irregular lines handled appropriately. Variables were standardized using `janitor::clean_names()` to ensure consistent naming conventions. Key variables such as state, maternal age, maternal race, year of death, month, and infant death rates were selected for analysis, and missing values were removed.
 
-Additional variables were created to facilitate analysis: `after_injunction`, indicating whether the data correspond to the period after June 2022 (post-Dobbs decision) and `abortion_illegal`, denoting whether the state had restrictive abortion laws. Death rate reliability was assessed, and unreliable rates were flagged for transparency. The death rate column was cleaned to remove annotations and converted to numeric format for analysis. A date variable was created by combining the year and month columns, providing a timeline for analysis. Finally, a date variable was created by combining the year and month variables. The cleaned dataset was saved in CSV and Parquet formats to ensure compatibility with analytical workflows.
+Additional variables were created to facilitate analysis: `after_injunction`, indicating whether the data correspond to the period after June 2022 (post-Dobbs decision), and `abortion_illegal`, denoting whether the state had restrictive abortion laws. Death rate reliability was assessed, and unreliable rates were flagged for transparency. The death rate column was cleaned to remove annotations and converted to numeric format for analysis. A date variable was created by combining the year and month columns, providing a timeline for analysis. Finally, a date variable was created by combining the year and month variables. The cleaned dataset was saved in CSV and Parquet formats to ensure compatibility with analytical workflows.
 
 ## Attribution Statement
 
-The data utilized in this study was sourced from the CDC WONDER Online Database. Access to the data and its use complies with the terms outlined on the [CDC WONDER Data Use Agreement](https://wonder.cdc.gov/datause.html). Specifically, the data was used for academic research purposes, with acknowledgment of the Centers for Disease Control and Prevention (CDC) as the original data provider. The CDC, however, does not assume responsibility for any analyses, interpretations, or conclusions drawn from the data by the authors of this study.
+The data utilized in this study was sourced from the CDC WONDER Online Database. Access to the data and its use complies with the terms outlined in the [CDC WONDER Data Use Agreement](https://wonder.cdc.gov/datause.html). Specifically, the data was used for academic research purposes, with acknowledgment of the Centers for Disease Control and Prevention (CDC) as the original data provider. The CDC, however, does not assume responsibility for any analyses, interpretations, or conclusions drawn from the data by the authors of this study.
 
 # Model details {#sec-model-details}
 
@@ -880,7 +880,7 @@ iplot(est_did,main = "Impact of Abortion Bans on Infant \nMortality Rates by Sta
 
 In @fig-ppcheckandposteriorvsprior-1 and @fig-ppcheckandposteriorvsprior-2 we implement a posterior predictive check for the first model and second model. It represents posterior predictive checks for first model and second model, illustrating how well each model captures the observed data. The posterior predictive checks for first model (policy-focused) and second model (policy and demographic factors) illustrate model fit. In @fig-ppcheckandposteriorvsprior-1, the observed ($y$) and replicated ($y_{rep}$) distributions align moderately, reflecting general trends but limited precision. @fig-ppcheckandposteriorvsprior-2 shows improved alignment, indicating that adding demographic factors enhances predictive accuracy and better captures the complexities of infant mortality rates.
 
-In @fig-ppcheckandposteriorvsprior-3 and @fig-ppcheckandposteriorvsprior-4 we compare the posterior with the prior. The posterior vs. prior plots for first model and second model illustrate the role of data in informing the posterior estimates of the model parameters. In first model @fig-ppcheckandposteriorvsprior-3, which focuses on policy-related predictors (e.g., abortion restrictions), the data significantly shift the posterior distributions for key variables, demonstrating their explanatory power. second model @fig-ppcheckandposteriorvsprior-4, incorporating additional demographic factors such as maternal age and race, shows a more refined and concentrated posterior distribution, emphasizing the added predictive utility of demographic variables. The comparison indicates that second model provides better-informed parameter estimates, supporting the hypothesis that demographic factors play an essential role in understanding infant mortality in the context of restrictive abortion laws.
+In @fig-ppcheckandposteriorvsprior-3 and @fig-ppcheckandposteriorvsprior-4 we compare the posterior with the prior. The posterior vs. prior plots for first model and second model illustrate the role of data in informing the posterior estimates of the model parameters. In the first model @fig-ppcheckandposteriorvsprior-3, which focuses on policy-related predictors (e.g., abortion restrictions), the data significantly shift the posterior distributions for key variables, demonstrating their explanatory power. second model @fig-ppcheckandposteriorvsprior-4, incorporating additional demographic factors such as maternal age and race, shows a more refined and concentrated posterior distribution, emphasizing the added predictive utility of demographic variables. The comparison indicates that the second model provides better-informed parameter estimates, supporting the hypothesis that demographic factors play an essential role in understanding infant mortality in the context of restrictive abortion laws.
 
 ```{r}
 #| eval: true
@@ -941,7 +941,7 @@ plot(
   "areas"
 )
 ```
-Credibility intervals are the Bayesian equivalent of confidence intervals, offering an understanding of the range of probable values for a parameter @tellingstories. Using Bayesian estimation, we derive a posterior distribution for each model coefficient. @fig-area-1 presents the 95% credibility intervals for coefficients in first model, while @fig-area-2 illustrates the same for second model. These intervals represent the range within which 95% of the posterior probability mass falls, offering a robust understanding of parameter uncertainty and the influence of predictors under the Bayesian framework @tellingstories.
+Credibility intervals are the Bayesian equivalent of confidence intervals, offering an understanding of the range of probable values for a parameter @tellingstories. Using Bayesian estimation, we derive a posterior distribution for each model coefficient. @fig-area-1 presents the 95% credibility intervals for coefficients in the first model, while @fig-area-2 illustrates the same for the second model. These intervals represent the range within which 95% of the posterior probability mass falls, offering a robust understanding of parameter uncertainty and the influence of predictors under the Bayesian framework @tellingstories.
 
 ## Cross Validation
 
@@ -1005,7 +1005,7 @@ rmse_value <- sqrt(mean(errors^2))
 # Output the RMSE
 print(paste("The RMSE is:", round(rmse_value, 2)))
 ```
-The RMSE values from cross-validation indicate that first model and second model perform similarly in predicting infant mortality rates, with RMSE values of 5.07 and 5.06, respectively. This similarity suggests that adding demographic factors such as maternal age and race in second model has only a marginal impact on predictive accuracy compared to first model, which primarily relies on policy-related variables like abortion legality and timing of the injunction. An average error of approximately 5 deaths per 1,000 live births indicates the magnitude of prediction errors, which may or may not be acceptable depending on the variability in the dataset. While second model slightly reduces the error, its added complexity may not justify the trade-off if simplicity is a priority. However, if a nuanced understanding of demographic influences is essential, second model provides a modest improvement in accuracy while offering more detailed insights into maternal and infant health disparities. The cross-validation process reinforces the reliability of these models by confirming their performance across multiple data splits, reducing the risk of overfitting.
+The RMSE values from cross-validation indicate that the first model and second model perform similarly in predicting infant mortality rates, with RMSE values of 5.07 and 5.06, respectively. This similarity suggests that adding demographic factors such as maternal age and race in the second model has only a marginal impact on predictive accuracy compared to the first model, which primarily relies on policy-related variables like abortion legality and timing of the injunction. An average error of approximately 5 deaths per 1,000 live births indicates the magnitude of prediction errors, which may or may not be acceptable depending on the variability in the dataset. While the second model slightly reduces the error, its added complexity may not justify the trade-off if simplicity is a priority. However, if a nuanced understanding of demographic influences is essential, the second model provides a modest improvement in accuracy while offering more detailed insights into maternal and infant health disparities. The cross-validation process reinforces the reliability of these models by confirming their performance across multiple data splits, reducing the risk of overfitting.
 
 ## Diagnostics
 
@@ -1028,12 +1028,12 @@ plot(second_model, "trace")
 plot(second_model, "rhat")
 ```
 
-The trace plot in @fig-stanareyouokay-1 shows the sampling chains for first model, indicating good mixing and convergence as the chains overlap and appear stable throughout. This suggests that the model has achieved convergence during sampling. The Rhat plot in @fig-stanareyouokay-2 demonstrates that all Rhat values are below 1.05, further confirming convergence and indicating that the model’s posterior samples are reliable. @fig-stanareyouokay-3 represents the trace plots for second model, showing the posterior samples across four chains. The plots indicate good mixing, as the chains overlap well and stabilize around the same region, suggesting convergence.
-@fig-stanareyouokay-4 is the Rhat diagnostic plot for second model. All Rhat values are close to 1.00, confirming that the Markov chains have converged, and the posterior estimates are reliable. This supports the validity of second model’s Bayesian estimation process.
+The trace plot in @fig-stanareyouokay-1 shows the sampling chains for the first model, indicating good mixing and convergence as the chains overlap and appear stable throughout. This suggests that the model has achieved convergence during sampling. The Rhat plot in @fig-stanareyouokay-2 demonstrates that all Rhat values are below 1.05, further confirming convergence and indicating that the model’s posterior samples are reliable. @fig-stanareyouokay-3 represents the trace plots for the second model, showing the posterior samples across four chains. The plots indicate good mixing, as the chains overlap well and stabilize around the same region, suggesting convergence.
+@fig-stanareyouokay-4 is the Rhat diagnostic plot for the second model. All Rhat values are close to 1.00, confirming that the Markov chains have converged, and the posterior estimates are reliable. This supports the validity of the second model’s Bayesian estimation process.
 
 # Idealized Methodology for A Survey-Based Qualitative Studies {#sec-survey}
 
-Our study examines the impact of abortion bans on infant mortality rates in the U.S. following the Dobbs decision, combining observational Difference-in-Differences (DID) analysis with qualitative surveys. While the DID analysis quantifies policy impacts, qualitative surveys provide context-specificunderstanding into how restrictive abortion policies affect maternal mental health, healthcare access, and pregnancy decisions. These lived experiences help interpret quantitative findings, offering a fuller understanding of the systemic and psychological factors driving observed trends, and supporting evidence-based policy recommendations.
+Our study examines the impact of abortion bans on infant mortality rates in the U.S. following the Dobbs decision, combining observational Difference-in-Differences (DID) analysis with qualitative surveys. While the DID analysis quantifies policy impacts, qualitative surveys provide a context-specific understanding of how restrictive abortion policies affect maternal mental health, healthcare access, and pregnancy decisions. These lived experiences help interpret quantitative findings, offering a fuller understanding of the systemic and psychological factors driving observed trends, and supporting evidence-based policy recommendations.
 
 ## Introduction
 
@@ -1044,7 +1044,7 @@ Our survey focuses on mothers unable to access abortion services who later exper
 ## Objective
 
 The objective of this study is to investigate the psychological, social,
-and systemic impacts of restrictive abortion laws on maternal health and infant outcomes. By focusing on mothers unable to access abortion services who experienced the death of their infant, the study aims to document lived experiences, and explore the role of maternal stress and healthcare barriers in adverse outcomes. Understanding how maternal mental health directly affects prenatal care decisions, access to healthcare, and overall maternal behavior is essential to addressing the systemic factors contributing to higher infant mortality rates. The findings will guide the development of evidence-based strategies to improve maternal mental health, enhance healthcare access, and shape policy responses to restrictive abortion laws.
+and systemic impacts of restrictive abortion laws on maternal health and infant outcomes. By focusing on mothers unable to access abortion services who experienced the death of their infant, the study aims to document lived experiences and explore the role of maternal stress and healthcare barriers in adverse outcomes. Understanding how maternal mental health directly affects prenatal care decisions, access to healthcare, and overall maternal behavior is essential to addressing the systemic factors contributing to higher infant mortality rates. The findings will guide the development of evidence-based strategies to improve maternal mental health, enhance healthcare access, and shape policy responses to restrictive abortion laws.
 
 ## Sampling Approach
 
