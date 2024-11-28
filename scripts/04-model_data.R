@@ -1,11 +1,13 @@
 #### Preamble ####
-# Purpose: Models... [...UPDATE THIS...]
-# Author: Rohan Alexander [...UPDATE THIS...]
-# Date: 11 February 2023 [...UPDATE THIS...]
-# Contact: rohan.alexander@utoronto.ca [...UPDATE THIS...]
+# Purpose: Model Infant Death Rate in the U.S. across states in year 2021-2022 using Bayesian DID Model Approach.
+# Author: Diana Shen
+# Date: 20 November 2024 
+# Contact: diana.shen@mail.utoronto.ca
 # License: MIT
-# Pre-requisites: [...UPDATE THIS...]
-# Any other information needed? [...UPDATE THIS...]
+# Pre-requisites: 
+# - Cleaned data file `analysis_data.parquet` should be available in the `data/02-analysis_data/` directory.
+# - Packages `arrow`, `rstanarm`, and `tidyverse` must be installed and loaded
+# Any other information needed? Make sure you are in the `Relationship between_infant_mortality_rate_and_prohibited_abortion` rproj
 
 
 #### Workspace setup ####
