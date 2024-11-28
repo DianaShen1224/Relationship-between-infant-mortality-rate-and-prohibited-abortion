@@ -947,11 +947,12 @@ Credibility intervals are the Bayesian equivalent of confidence intervals, offer
 
 ```{r}
 #| echo: false
-#| eval: true
+#| eval: false
 #| message: false
 #| warning: false
-set.seed(123)
+#| include: false
 
+set.seed(123)
 # Split the data into training and testing sets (80/20 split)
 train_index <- createDataPartition(analysis_data$death_rate, p = 0.8, list = FALSE)
 train_data <- analysis_data[train_index, ]
@@ -984,7 +985,12 @@ print(paste("The RMSE is:", round(rmse_value, 2)))
 #| eval: true
 #| message: false
 #| warning: false
-# Fit a Bayesian model on the training set
+#| include: false
+
+set.seed(123)
+train_index <- createDataPartition(analysis_data$death_rate, p = 0.8, list = FALSE)
+train_data <- analysis_data[train_index, ]
+test_data <- analysis_data[-train_index, ]
 model2 <- stan_glmer(
   death_rate ~ after_injunction * abortion_illegal + year_of_death + age_of_mother + mothers_single_race + (1 | state),
   data = train_data,
