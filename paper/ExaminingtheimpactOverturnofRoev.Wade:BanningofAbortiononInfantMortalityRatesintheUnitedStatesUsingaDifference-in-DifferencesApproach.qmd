@@ -29,6 +29,7 @@ library(ggplot2)
 library(dplyr)
 library(kableExtra)
 library(rstanarm)
+library(fixest)  
 ```
 
 ```{r}
@@ -157,8 +158,7 @@ point of reference for file locations, regardless of the operating
 system or working directory. Data cleaning was facilitated by `janitor`
 @janitor, while `lubridate` @lubridate handled date-time variables.
 Visualization tasks were enhanced with `ggplot2` @ggplot2, and Bayesian
-regression modeling was conducted using `rstanarm` @rstanarm. Together,
-these packages supported an efficient, reproducible workflow for
+regression modeling was conducted using `rstanarm` @rstanarm. We use `fixest` @fixest to conduct the event study. Together, these packages supported an efficient, reproducible workflow for
 analyzing and presenting our findings.
 
 ## Measurement
@@ -218,7 +218,10 @@ standards for reliability or precision. After cleaning the dataset, the
 
 ```{r}
 #| label: fig-deathrate
-#| fig-cap: Distribution of Infant Death Rates: The infant death rate (per 1,000 live births) shows a peak between 5 and 10 deaths per 1,000 infants, with a right-skewed distribution. This skewness highlights that lower infant death rates are more prevalent in the dataset, while higher rates occur less frequently.
+#| fig-cap: >
+#|   Distribution of Infant Death Rates: The infant death rate (per 1,000 live births) 
+#|   shows a peak between 5 and 10 deaths per 1,000 infants, with a right-skewed 
+#|   distribution. 
 #| echo: false
 
 ggplot(analysis_data, aes(x = death_rate)) +
@@ -296,7 +299,11 @@ map_data <- us_map|>
 
 ```{r}
 #| label: fig-map
-#| fig-cap: Abortion Legality by State: After June 2022, abortion is prohibited in the following states: Alabama, Arkansas, Idaho, Indiana, Kentucky, Louisiana, Mississippi, Missouri, North Dakota, Oklahoma, South Dakota, Tennessee, Texas, West Virginia, and Wisconsin.
+#| fig-cap: >
+#|   Abortion Legality by State: After June 2022, abortion is prohibited in the
+#|   following states: Alabama, Arkansas, Idaho, Indiana, Kentucky, Louisiana,
+#|   Mississippi, Missouri, North Dakota, Oklahoma, South Dakota, Tennessee,
+#|   Texas, West Virginia, and Wisconsin.
 #| echo: false
 ggplot() +
   geom_polygon(data = map_data, aes(fill = abortion_illegal, x = long, y = lat, group = group),
@@ -315,7 +322,11 @@ ggplot() +
 
 ```{r}
 #| label: fig-rateandstate
-#| fig-cap: Infant Death Rates Over Time: Infant death rates (per 1,000 live births) show a slight increase in states where abortion became illegal following June 2022, whereas rates in states with legal abortion remained relatively stable. This trend suggests a potential association between restrictive abortion laws and higher infant mortality rates.
+#| fig-cap: >
+#|   Infant Death Rates Over Time: Infant death rates (per 1,000 live births)
+#|   show a slight increase in states where abortion became illegal following
+#|   June 2022, whereas rates in states with legal abortion remained relatively
+#|   stable. 
 #| echo: false
 #| message: false
 analysis_data|>
@@ -347,7 +358,12 @@ investigation.
 
 ```{r}
 #| label: tbl-interact
-#| tbl-cap: Average Infant Death Rate by Abortion Legality and Injunction Timing: States categorized as "Illegal Abortion and After Injunction" ('1') exhibit a higher average infant death rate (per 1,000 live births) compared to states in other categories, including "Legal Abortion and Before/After Injunction" or "Illegal Abortion and Before Injunction" ('0'). This highlights a potential link between restrictive abortion laws implemented after the injunction and elevated infant mortality rates.
+#| tbl-cap: >
+#|   Average Infant Death Rate by Abortion Legality and Injunction Timing: 
+#|   States categorized as "Illegal Abortion and After Injunction" ('1') 
+#|   exhibit a higher average infant death rate (per 1,000 live births) compared 
+#|   to states in other categories, including "Legal Abortion and Before/After 
+#|   Injunction" or "Illegal Abortion and Before Injunction" ('0'). 
 #| echo: false
 #| warning: false
 #| message: false
@@ -417,11 +433,16 @@ mortality, with younger mothers experiencing higher risks.
 
 ```{r}
 #| label: tbl-motherage
-#| tbl-cap: Average Infant Death Rate by Maternal Age Group: Infant mortality rates (per 1,000 live births) vary significantly by maternal age, with younger mothers experiencing higher rates. Mothers aged 20–24 exhibit the highest infant death rate at 10.0, while the lowest rate of 6.6 is observed among mothers aged 30–34, indicating a potential association between maternal age and infant health outcomes.
+#| tbl-cap: >
+#|   Average Infant Death Rate by Maternal Age Group: 
+#|   Infant mortality rates (per 1,000 live births) vary significantly by maternal age, 
+#|   with younger mothers experiencing higher rates. Mothers aged 20–24 exhibit the 
+#|   highest infant death rate at 10.0, while the lowest rate of 6.6 is observed among 
+#|   mothers aged 30–34.
 #| echo: false
 #| warning: false
 #| message: false
-#| 
+
 analysis_data_state <- analysis_data|>
   group_by(age_of_mother)|>
   summarize(`Average Infant Death Rate (per 1,000 live births)` = round(mean(death_rate, na.rm = TRUE), 1)) |>rename(`Age of Mother`=age_of_mother)
@@ -440,7 +461,11 @@ groups.
 
 ```{r}
 #| label: tbl-motherrace
-#| tbl-cap: Average Infant Death Rate by Mother’s Single Race: Infant mortality rates (per 1,000 live births) vary significantly by race, with Black or African American mothers experiencing the highest rate at 14.5, compared to 5.8 for White mothers and 5.4 for Asian mothers. This highlights potential disparities in infant health outcomes linked to racial factors.
+#| tbl-cap: >
+#|   Average Infant Death Rate by Mother’s Single Race: 
+#|   Infant mortality rates (per 1,000 live births) vary significantly by race, 
+#|   with Black or African American mothers experiencing the highest rate at 14.5, 
+#|   compared to 5.8 for White mothers and 5.4 for Asian mothers. 
 #| echo: false
 #| warning: false
 #| message: false
@@ -462,9 +487,12 @@ territories.
 
 ```{r}
 #| label: fig-choromap
-#| fig-cap: Infant Death Rates Across U.S. States (per 1,000 Live Births): The infant mortality rate is significantly higher in the Southeastern states, with Alabama and Mississippi reporting the highest rates. In contrast, states like California and New York exhibit notably lower rates.
+#| fig-cap: >
+#|   Infant Death Rates Across U.S. States (per 1,000 Live Births): 
+#|   The infant mortality rate is significantly higher in the Southeastern states, 
+#|   with Alabama and Mississippi reporting the highest rates. In contrast, 
+#|   states like California and New York exhibit notably lower rates.
 #| echo: false
-
 death<-analysis_data|>group_by(state)|>summarise(death_rate=mean(death_rate))|>mutate(state=tolower(state))
 death_full <- us_map|>
    full_join(death, c("region"="state"))
@@ -789,17 +817,7 @@ are accompanied by measures to mitigate their public health impact.
 
 ## Data and Temporal Limitations
 
-A key limitation of our analysis is the temporal and demographic scope
-of the dataset. The data includes only infant deaths under 1 year of age
-occurring within the United States to U.S. residents during 2021–2022.
-This timeframe does not capture the full year of infant mortality
-outcomes following the Dobbs decision, as infants who died in 2023 are
-not included. Furthermore, the dataset’s focus on infants under 1 year
-of age may exclude cases that reflect longer-term health impacts. These
-limitations could lead to an underestimation of the full effects of
-abortion bans. Future research should incorporate more detailed and
-updated datasets to provide a clearer and more complete analysis of the
-long-term trends and implications of restrictive abortion policies.
+A key limitation of our analysis is the temporal and demographic scope of the dataset. The data includes only infant deaths under 1 year of age occurring within the United States to U.S. residents during 2021–2022. This timeframe does not capture the full year of infant mortality outcomes following the Dobbs decision, as infants who died in 2023 are not included. Furthermore, the dataset’s focus on infants under 1 year of age may exclude cases that reflect longer-term health impacts. These limitations could lead to an underestimation of the full effects of abortion bans. As no publicly available dataset currently provides complete 2023 data or longer-term health outcomes, future research should incorporate more detailed and updated datasets to provide a clearer and more complete analysis of the long-term trends and implications of restrictive abortion policies.
 
 ## Weaknesses and Future Directions
 
@@ -852,13 +870,6 @@ The data utilized in this study was sourced from the CDC WONDER Online Database.
 #| message: false
 #| include: false
 
-
-library(fixest)  # For fast DiD modeling
-
-# Ensure the tidyverse package is loaded
-library(tidyverse)
-
-# Define relative_time as numeric (time relative to treatment)
 cleaned_data <- analysis_data %>%filter(year_of_death==2022)|>
   mutate(relative_time = (month_code-6))
 
@@ -874,13 +885,15 @@ est_did <- feols(
 
 
 ```{r}
+#| label: fig-eventstudy
+#| fig-cap: >
+#|   Event Study Analysis of the Impact of Abortion Bans on Infant Mortality Rates in the United   States: 
+#|   Evidence Using June 2022 as the Treatment Date and Pre-Treatment (-1, May) as the Reference Period.
+#| warning: false
 #| echo: false
 #| eval: true
-#| label: fig-eventstudy
-#| tbl-cap: "Event Study Analysis of the Impact of Abortion Bans on Infant Mortality Rates in the United States: Evidence Using June 2022 as the Treatment Date and Pre-Treatment (-1, May) as the Reference Period"
-#| warning: false
 
-iplot(est_did,main = "Impact of Abortion Bans on Infant Mortality Rates by State",
+iplot(est_did,main = "Impact of Abortion Bans on Infant \nMortality Rates by State",
   value.lab = "Estimate and __ci__ Conf. Int.",xlab = "Relative Time (Month)")
 ```
 
@@ -955,10 +968,6 @@ plot(
 Credibility intervals are the Bayesian equivalent of confidence intervals, offering an understanding of the range of probable values for a parameter @tellingstories. Using Bayesian estimation, we derive a posterior distribution for each model coefficient. @fig-area-1 presents the 95% credibility intervals for coefficients in Model 1, while @fig-area-2 illustrates the same for Model 2. These intervals represent the range within which 95% of the posterior probability mass falls, offering a robust understanding of parameter uncertainty and the influence of predictors under the Bayesian framework @tellingstories.
 
 ## Diagnostics
-
-@fig-stanareyouokay-1 is a trace plot for model 1. It shows... This suggests...
-
-@fig-stanareyouokay-2 is a Rhat plot. It shows... This suggests...
 
 ```{r}
 #| echo: false
