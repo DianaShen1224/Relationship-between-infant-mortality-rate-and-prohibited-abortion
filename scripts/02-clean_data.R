@@ -6,7 +6,7 @@
 # License: MIT
 # Pre-requisites:  
 # - The `tidyverse`, `janitor`,`lubridate`,`arrow` packages must be installed and loaded
-# - 02-download_data.R must have been run
+# - Linked_Birth_Infant_Death_Records_2017-2022_Expanded.txt must have been downloaded and uploaded to the data/01-raw_data
 # Any other information needed?  Make sure you are in the `Relationship between_infant_mortality_rate_and_prohibited_abortion` rproj
 
 #### Workspace setup ####
