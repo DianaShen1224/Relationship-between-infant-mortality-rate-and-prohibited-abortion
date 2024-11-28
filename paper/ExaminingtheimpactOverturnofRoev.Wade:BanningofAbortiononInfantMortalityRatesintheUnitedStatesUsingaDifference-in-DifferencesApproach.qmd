@@ -137,19 +137,19 @@ account for potential confounding factors.
 
 In this study, we utilized several R packages to streamline data
 manipulation, modeling, and visualization. The `tidyverse` package
-@tidyverse was central to our workflow, providing tools for data
-wrangling and analysis, while `arrow` @arrow efficiently managed parquet
-files for larger datasets. We used `modelsummary` package @modelsummary
+[@tidyverse] was central to our workflow, providing tools for data
+wrangling and analysis, while `arrow` [@arrow] efficiently managed parquet
+files for larger datasets. We used `modelsummary` package [@modelsummary]
 to generate clean and interpretable summaries of our regression
-models.We used `knitr` @knitr and `kableExtra` @kableExtra to generate
+models.We used `knitr` [@knitr] and `kableExtra` [@kableExtra] to generate
 clean tables and reproducible reports, and `usmap` for geographical
-visualizations. We use `here` @here package simplifies the management of
+visualizations. We use `here` [@here] package simplifies the management of
 file paths, ensuring a reproducible workflow by creating a consistent
 point of reference for file locations, regardless of the operating
 system or working directory. Data cleaning was facilitated by `janitor`
-@janitor, while `lubridate` @lubridate handled date-time variables.
-Visualization tasks were enhanced with `ggplot2` @ggplot2, and Bayesian
-regression modeling was conducted using `rstanarm` @rstanarm. We use `fixest` @fixest to conduct the event study. We use `caret` @caret to conduct the cross-validation of the model. Together, these packages supported an efficient, reproducible workflow for
+[@janitor], while `lubridate` [@lubridate] handled date-time variables.
+Visualization tasks were enhanced with `ggplot2` [@ggplot2], and Bayesian
+regression modeling was conducted using `rstanarm` [@rstanarm]. We use `fixest` [@fixest] to conduct the event study. We use `caret` [@caret] to conduct the cross-validation of the model. Together, these packages supported an efficient, reproducible workflow for
 analyzing and presenting our findings.
 
 ## Measurement
@@ -864,7 +864,7 @@ est_did <- feols(
 #| label: fig-eventstudy
 #| fig-cap: >
 #|   Event Study Analysis of the Impact of Abortion Bans on Infant Mortality Rates in the United   States: 
-#|   Evidence Using June 2022 as the Treatment Date and Pre-Treatment (-1, May) as the Reference Period.
+#|   Evidence Using June 2022 as the Treatment Date and Pre-Treatment (-1, May 2022) as the Reference Period.
 #| warning: false
 #| echo: false
 #| eval: true
