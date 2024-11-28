@@ -703,7 +703,7 @@ We use a Bayesian approach to enhance the Difference-in-Differences (DID) method
 
 #### Limitations and Applicability
 
-Our Bayesian DID model offers a robust approach to examining the impact of abortion bans on infant mortality but has limitations. Misspecified priors, data imbalances, and violations of the parallel trends assumption could introduce biases. Despite these challenges, the model effectively integrates prior knowledge and addresses uncertainty, providing valuable insights into policy impacts.
+Our Bayesian DID model offers a robust approach to examining the impact of abortion bans on infant mortality but has limitations. Misspecified priors, data imbalances, and violations of the parallel trends assumption could introduce biases. Despite these challenges, the model effectively integrates prior knowledge and addresses uncertainty, providing valuable understanding into policy impacts.
 
 # Results {#sec-results}
 
@@ -745,13 +745,13 @@ higher infant mortality rates, with coefficients of 3.365 in Model 1 and
 coefficients of -0.525 in Model 1 and -0.940 in Model 2, indicating a
 decrease in infant mortality during this time.
 
-Demographic variables also exhibit notable associations. Maternal age is
+Demographic variables also exhibit some associations. Maternal age is
 negatively associated with infant mortality, with coefficients for age
-groups 25–29 and 30–34 of -5.73 and -6.15 in Model 2, respectively. The
-the coefficient for Black mothers in Model 2 is 6.66, reflecting a higher
+groups 25–29 and 30–34 of -5.73 and -6.15 in Model 2, relative to group 15-19 respectively. The
+the coefficient for Black mothers in Model 2 is 6.66 relative to Asia monthers, reflecting a higher
 infant mortality compared to other racial groups.
 
-The model highlights key demographic and policy-driven impacts on infant mortality rates. The interaction between abortion bans and the post-injunction period is linked to increased mortality, while states enforcing abortion bans show consistently higher rates. Younger mothers and Black mothers face disproportionately higher risks, with limited access to healthcare and systemic inequities compounding their vulnerabilities, emphasizing the essential need for targeted health and social interventions. Increasing maternal age shows a protective effect, likely reflecting greater access to resources, improved prenatal care, and overall maternal stability, correlating with markedly lower infant mortality rates. These findings underscore the interplay of policy and demographics in shaping infant health outcomes, informing the need for evidence-based policies and healthcare strategies.
+The model highlights key demographic and policy-driven influences on infant mortality rates. The interaction between abortion bans and the post-injunction period is associated with increased mortality, while states with abortion bans consistently exhibit higher rates. Younger mothers and Black mothers face significantly elevated risks, highlighting disparities likely driven by limited healthcare access and systemic inequities. Conversely, increasing maternal age correlates with lower infant mortality rates, reflecting improved access to resources, better prenatal care, and greater maternal stability. These results demonstrate the impact of policy and demographic factors on infant health outcomes.
 
 The models performed well, with low RMSE values and high $R^2$ values,
 indicating that the predictors account for a substantial portion of the
@@ -761,23 +761,13 @@ variance in infant mortality rates.
 
 ## Key Findings and Implications
 
-The analysis shows distinct patterns in infant mortality rates across
-various policy and demographic factors. In states where abortion
-remained legal, the post-injunction period (after_injunction1) is linked
-to reductions in infant mortality rates by 0.525 and 0.940 deaths per
-1,000 live births in Models 1 and 2, respectively. However, states with
-abortion bans (abortion_illegal1) exhibit significantly higher infant
-mortality rates, with increases of 3.365 deaths in Model 1 and 1.400
-deaths in Model 2. The DID interaction term (after_injunction1 ×
-abortion_illegal1) shows that abortion bans during the post-injunction
-period results in an additional increase of 0.111 deaths in Model 1 and
-0.280 deaths in Model 2. Demographic factors also play an essential role,
-with older maternal age (25–34 years) reducing infant mortality rates,
-while younger mothers (15–19 years) face elevated risks. Black mothers
-experience disproportionately higher infant mortality rates, with an
-increase of 6.660 deaths per 1,000 live births compared to Asian
-mothers. These findings collectively emphasize the compounded effects of
-policy and demographic disparities on infant health outcomes.
+The analysis reveals notable patterns in infant mortality rates influenced by policy and demographic factors. For states where abortion remained legal, the post-injunction period (after_injunction1) is associated with reductions in infant mortality rates, with a decrease of 0.525 deaths per 1,000 live births in Model 1 and 0.947 in Model 2, compared to the pre-injunction period. In contrast, states where abortion became illegal (abortion_illegal1) experienced significantly higher infant mortality rates, with increases of 3.365 deaths in Model 1 and 1.401 in Model 2, relative to states where abortion remained legal.
+
+The Difference-in-Differences (DID) interaction term (after_injunction1 × abortion_illegal1) indicates that abortion bans during the post-injunction period resulted in an additional increase of 0.111 deaths per 1,000 live births in Model 1 and 0.280 in Model 2. These effects highlight the compounded impact of restrictive abortion policies on infant health outcomes.
+
+Demographic factors also play a significant role. Compared to mothers aged 15–19 years (reference level), older maternal age groups (20–24, 25–29, and 30–34 years) are associated with progressively lower infant mortality rates, with reductions of 3.571, 5.732, and 6.155 deaths per 1,000 live births in Model 2, respectively. Regarding maternal race, Black or African American mothers have a significantly higher infant mortality rate, with an increase of 6.604 deaths per 1,000 live births compared to Asian mothers (reference level). In contrast, White mothers exhibit a lower infant mortality rate, with a decrease of 2.562 deaths per 1,000 live births compared to Asian mothers.
+
+These findings underscore the interplay of policy and demographic factors, emphasizing the disproportionate burden of restrictive abortion policies and systemic inequities on infant mortality rates.
 
 ## Racial and Socioeconomic Disparities
 
@@ -978,7 +968,7 @@ The trace plot in @fig-stanareyouokay-1 shows the sampling chains for model 1, i
 
 # Idealized Methodology for A Survey-Based Qualitative Studies {#sec-survey}
 
-Our study examines the impact of abortion bans on infant mortality rates in the U.S. following the Dobbs decision, combining observational Difference-in-Differences (DID) analysis with qualitative surveys. While the DID analysis quantifies policy impacts, qualitative surveys provide context-specific insights into how restrictive abortion policies affect maternal mental health, healthcare access, and pregnancy decisions. These lived experiences help interpret quantitative findings, offering a fuller understanding of the systemic and psychological factors driving observed trends, and supporting evidence-based policy recommendations.
+Our study examines the impact of abortion bans on infant mortality rates in the U.S. following the Dobbs decision, combining observational Difference-in-Differences (DID) analysis with qualitative surveys. While the DID analysis quantifies policy impacts, qualitative surveys provide context-specificunderstanding into how restrictive abortion policies affect maternal mental health, healthcare access, and pregnancy decisions. These lived experiences help interpret quantitative findings, offering a fuller understanding of the systemic and psychological factors driving observed trends, and supporting evidence-based policy recommendations.
 
 ## Introduction
 
