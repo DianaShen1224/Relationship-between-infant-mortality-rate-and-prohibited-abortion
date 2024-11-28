@@ -89,14 +89,6 @@ If you’d prefer to recreate the process yourself, you can follow these steps t
 
 Aspects of the code were written with the help of ChatGPT4o. Part of the writing process, including generating and polishing was written with the help of ChatGPT4o, and the entire chat history is available in other/llms/usage.txt.
 
-## Some checks
-
--   [ ] Change the rproj file name so that it's not starter_folder.Rproj
--   [ ] Change the README title so that it's not Starter folder
--   [ ] Remove files that you're not using
--   [ ] Update comments in R scripts
--   [ ] Remove this checklist
-
 # Model Card for Infant Mortality and Abortion Policy Analysis Model
 
 This model analyzes the impact of abortion bans resulting from the Dobbs v. Jackson Women’s Health Organization decision on infant mortality rates in the United States using data from 2021–2022. It incorporates policy factors, such as abortion legality and the timing of the Dobbs decision, as well as demographic variables, through Bayesian Difference-in-Differences (DID) regression models. The analysis focuses on the health disparities linked to restrictive abortion policies post-Dobbs.
