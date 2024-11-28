@@ -112,17 +112,7 @@ evidence on how restrictive abortion policies disproportionately affect
 vulnerable populations, emphasizing the need for evidence-based policies to
 mitigate these adverse outcomes.
 
-The structure of this paper is organized as follows: @sec-data provides
-details on the data sources and variables used in our analysis.
-@sec-model explains the modeling approach, including the assumptions and
-specifications of our linear regression framework. In @sec-results, we
-present our findings, emphasizing the key predictors of Harris's
-support. Finally, @sec-discussion explores the implications of our
-results and suggests potential directions for future research.
-[Appendix- @sec-data-details] provides external data detail, [Appendix-
-@sec-model-details] provides model details, and [Appendix- @sec-survey]
-provides a detailed introduction to surveys, sampling, and observational
-data in our paper.
+The structure of this paper is as follows: @sec-data details the data sources and variables used in the analysis. @sec-model outlines the modeling approach, including assumptions and specifications of the Bayesian DID framework. In @sec-results, we present the findings, emphasizing key observations.In @sec-results, we present findings on the impact of abortion bans and the post-injunction period, highlighting their association with increased infant mortality. Key disparities by maternal age and race are discussed, along with model validation metrics like RMSE and $R^2$. Finally, @sec-discussion explores the implications of the results and suggests potential directions for future research. Additional details are provided in the appendices: [Appendix-@sec-data-details] elaborates on external data sources, [Appendix-@sec-model-details] provides an in-depth explanation of the model, and [Appendix-@sec-survey] introduces the idealized methodology for a related qualitative analysis.
 
 # Data {#sec-data}
 
@@ -404,6 +394,25 @@ reduced access to maternal healthcare, and exacerbated social or
 economic disparities.
 
 ## Control Variables
+
+Our analysis includes three key control variables: maternal age (`age_of_mother`), race (`mothers_single_race`), and year of death (`year_of_death`), to account for demographic and temporal differences.
+
+```{r}
+#| label: tbl-summary
+#| tbl-cap: >
+#|   Demographic Distribution of Infant Mortality Cases by Year, Maternal Age, and Race (2021–2022): 
+#|   The data highlights the proportional representation of cases across different years, 
+#|   maternal age groups, and racial categories. Younger mothers and Black or African American 
+#|   mothers show higher proportions of cases compared to other groups.
+#| echo: false
+#| warning: false
+#| message: false
+analysis_data|>mutate(year_of_death=as.factor(year_of_death))|>
+  select(year_of_death,age_of_mother,mothers_single_race) |> 
+  modelsummary::datasummary_skim()
+```
+
+@tbl-summary shows that 50.7% of infant deaths occurred in 2022, slightly higher than 2021 (49.3%). The majority of cases were among mothers aged 25–29 (37.8%), followed by those aged 30–34 (32.5%), and 20–24 (27.2%), with the lowest occurrence in mothers aged 15–19 (2.6%). By race, White mothers accounted for the highest percentage (75.7%), followed by Black or African American mothers (24.0%), and Asian mothers (0.3%).
 
 ### Year of Death
 
@@ -690,11 +699,11 @@ Alternative models, such as Fixed Effects, Propensity Score Matching (PSM), and 
 
 #### Bayesian Framework
 
-We adopt a Bayesian framework to enhance the DID approach by incorporating prior information and quantifying uncertainty probabilistically. Using the `rstanarm` package, we apply weakly informative priors, including a Normal prior ($\mu=0$, $\sigma=2.5$) for fixed effects and an Exponential prior (rate = 1) for the auxiliary parameter, with autoscale=TRUE to dynamically adjust priors based on the data scale. This improves convergence and ensures priors align with predictor ranges without dominating the data. The Bayesian framework supports plausible parameter centering, captures unobserved heterogeneity through random effects, and ensures robust estimates within the DID framework, assuming parallel trends between groups.
+We use a Bayesian approach to enhance the Difference-in-Differences (DID) method, which allows us to incorporate prior knowledge and better account for uncertainty. With the rstanarm package, we apply weakly informative priors—such as a Normal prior centered at zero with moderate spread ($\mu=0$, $\sigma=2.5$) for fixed effects and an Exponential prior (rate = 1) for variability parameters. These priors automatically adjust to the scale of the data, improving model stability and ensuring they complement rather than dominate the observed data. This approach helps us center estimates realistically, account for hidden differences between groups, and produce reliable results while assuming trends between treated and control groups are similar before treatment.
 
 #### Limitations and Applicability
 
-While Bayesian DID models provide robust and interpretable causal estimates, they have limitations. Potential biases from misspecified priors, computational challenges in hierarchical models, and sensitivity to data sparsity or imbalances are notable risks. Additionally, these models may not be suitable if group-level effects are negligible, parallel trends are violated, or data are insufficient. When applied appropriately, however, they offer a reliable approach to understanding the causal effects of abortion bans on infant mortality.
+Our Bayesian DID model offers a robust approach to examining the impact of abortion bans on infant mortality but has limitations. Misspecified priors, data imbalances, and violations of the parallel trends assumption could introduce biases. Despite these challenges, the model effectively integrates prior knowledge and addresses uncertainty, providing valuable insights into policy impacts.
 
 # Results {#sec-results}
 
@@ -770,22 +779,6 @@ increase of 6.660 deaths per 1,000 live births compared to Asian
 mothers. These findings collectively emphasize the compounded effects of
 policy and demographic disparities on infant health outcomes.
 
-## Public Health Implications of Restrictive Abortion Laws
-
-The findings highlight the significant public health consequences of
-abortion bans in the United States. The observed increase of 0.285
-infant deaths per 1,000 live births in states enforcing abortion bans
-after the Dobbs decision underscores the detrimental impact of
-restrictive abortion policies. These increases often reflect systemic
-issues such as inadequate prenatal care, gaps in healthcare access, and
-underlying socioeconomic inequities. States with pre-existing healthcare
-challenges may experience amplified effects, suggesting an urgent need
-for detailed policy interventions to address these disparities.
-Tackling the root causes of these health disparities—such as improving
-prenatal care, expanding healthcare access, and addressing socioeconomic
-inequalities—will be essential for mitigating the unintended
-consequences of restrictive abortion legislation.
-
 ## Racial and Socioeconomic Disparities
 
 The results reveal stark racial disparities in infant mortality rates,
@@ -801,19 +794,11 @@ communities most impacted by these disparities. Such policies should
 prioritize investments in healthcare infrastructure, culturally
 competent care, and programs that support at-risk populations.
 
-## Integration of Policy and Healthcare Systems
+## Addressing Public Health and Long-Term Implications of Restrictive Abortion Laws
 
-The significant interaction between abortion legality and the
-post-injunction period illustrates the compounded impact of restrictive
-abortion policies on infant mortality rates. These findings underscore
-the need for integrated healthcare systems that can address the
-consequences of high-risk pregnancies, improve prenatal care and ensure
-equitable access to medical services. Policymakers must consider the
-broader public health implications of abortion bans and implement
-strategies that safeguard maternal and infant health. This includes
-enhancing healthcare delivery in underserved areas, investing in
-community-based interventions, and ensuring that restrictive policies
-are accompanied by measures to mitigate their public health impact.
+Addressing Public Health and Long-Term Implications of Restrictive Abortion Laws
+
+Restrictive abortion policies significantly impact maternal and infant health, as evidenced by an increase of 0.285 infant deaths per 1,000 live births in states enforcing abortion bans during the post-injunction period. These policies exacerbate systemic issues such as inadequate prenatal care, gaps in healthcare access, and socioeconomic inequities, disproportionately affecting marginalized communities. Over time, the consequences may include higher rates of untreated maternal mental health issues, delayed or insufficient prenatal care, and elevated infant mortality, creating lasting health challenges for families and communities. Addressing these disparities requires targeted interventions, such as expanding maternal mental health services, improving prenatal and postnatal care in underserved areas, ensuring culturally competent healthcare, and advocating for equitable policies. Investments in community-based support systems, enhanced healthcare delivery, and robust data infrastructure are essential to monitor and mitigate the long-term impacts of these policies, fostering sustainable improvements in maternal and infant health outcomes.
 
 ## Data and Temporal Limitations
 
@@ -993,7 +978,7 @@ The trace plot in @fig-stanareyouokay-1 shows the sampling chains for model 1, i
 
 # Idealized Methodology for A Survey-Based Qualitative Studies {#sec-survey}
 
-Our study examines the impact of abortion bans on infant mortality rates in the U.S. following the Dobbs decision, combining observational data and surveys. Observational data reveal trends and associations but often struggle with confounding factors and causality. Surveys address these gaps by capturing a qualitative understanding of individual experiences and contextual factors. This mixed-methods approach integrates statistical rigor with detailed personal accounts, offering a detailed framework to understand how restrictive abortion policies affect maternal health and infant outcomes, and informing evidence-based policy recommendations.
+Our study examines the impact of abortion bans on infant mortality rates in the U.S. following the Dobbs decision, combining observational Difference-in-Differences (DID) analysis with qualitative surveys. While the DID analysis quantifies policy impacts, qualitative surveys provide context-specific insights into how restrictive abortion policies affect maternal mental health, healthcare access, and pregnancy decisions. These lived experiences help interpret quantitative findings, offering a fuller understanding of the systemic and psychological factors driving observed trends, and supporting evidence-based policy recommendations.
 
 ## Introduction
 
