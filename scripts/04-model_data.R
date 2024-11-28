@@ -1,7 +1,7 @@
 #### Preamble ####
 # Purpose: Model Infant Death Rate in the U.S. across states in year 2021-2022 using Bayesian DID Model Approach.
 # Author: Diana Shen
-# Date: 20 November 2024 
+# Date: 24 November 2024 
 # Contact: diana.shen@mail.utoronto.ca
 # License: MIT
 # Pre-requisites: 
