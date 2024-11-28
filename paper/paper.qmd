@@ -662,7 +662,7 @@ Alternative models, such as Fixed Effects, Propensity Score Matching (PSM), and 
 
 #### Bayesian Framework
 
-We adopt a Bayesian framework to enhance the DID approach by incorporating prior information and quantifying uncertainty probabilistically. Using the rstanarm package, we apply weakly informative priors, including a Normal prior ($\mu=0$, $\sigma=2.5$) for fixed effects and an Exponential prior (rate = 1) for the auxiliary parameter, with autoscale=TRUE to dynamically adjust priors based on the data scale. This improves convergence and ensures priors align with predictor ranges without dominating the data. The Bayesian framework supports plausible parameter centering, captures unobserved heterogeneity through random effects, and ensures robust estimates within the DID framework, assuming parallel trends between groups.
+We adopt a Bayesian framework to enhance the DID approach by incorporating prior information and quantifying uncertainty probabilistically. Using the `rstanarm` package, we apply weakly informative priors, including a Normal prior ($\mu=0$, $\sigma=2.5$) for fixed effects and an Exponential prior (rate = 1) for the auxiliary parameter, with autoscale=TRUE to dynamically adjust priors based on the data scale. This improves convergence and ensures priors align with predictor ranges without dominating the data. The Bayesian framework supports plausible parameter centering, captures unobserved heterogeneity through random effects, and ensures robust estimates within the DID framework, assuming parallel trends between groups.
 
 #### Limitations and Applicability
 
@@ -714,7 +714,7 @@ groups 25–29 and 30–34 of -5.73 and -6.15 in Model 2, respectively. The
 the coefficient for Black mothers in Model 2 is 6.66, reflecting a higher
 infant mortality compared to other racial groups.
 
-The model highlights key demographic and policy-driven impacts on infant mortality rates. The interaction between abortion bans and the post-injunction period is linked to increased mortality, while states enforcing abortion bans show consistently higher rates. Younger mothers and Black mothers face disproportionately higher risks, with limited access to healthcare and systemic inequities compounding their vulnerabilities, emphasizing the essential need for targeted health and social interventions. Increasing maternal age shows a protective effect, likely reflecting greater access to resources, improved prenatal care, and overall maternal stability, correlating with markedly lower infant mortality rates.These findings underscore the interplay of policy and demographics in shaping infant health outcomes, informing the need for evidence-based policies and healthcare strategies.
+The model highlights key demographic and policy-driven impacts on infant mortality rates. The interaction between abortion bans and the post-injunction period is linked to increased mortality, while states enforcing abortion bans show consistently higher rates. Younger mothers and Black mothers face disproportionately higher risks, with limited access to healthcare and systemic inequities compounding their vulnerabilities, emphasizing the essential need for targeted health and social interventions. Increasing maternal age shows a protective effect, likely reflecting greater access to resources, improved prenatal care, and overall maternal stability, correlating with markedly lower infant mortality rates. These findings underscore the interplay of policy and demographics in shaping infant health outcomes, informing the need for evidence-based policies and healthcare strategies.
 
 The models performed well, with low RMSE values and high $R^2$ values,
 indicating that the predictors account for a substantial portion of the
@@ -734,7 +734,7 @@ mortality rates, with increases of 3.365 deaths in Model 1 and 1.400
 deaths in Model 2. The DID interaction term (after_injunction1 ×
 abortion_illegal1) shows that abortion bans during the post-injunction
 period results in an additional increase of 0.111 deaths in Model 1 and
-0.280 deaths in Model 2. Demographic factors also play a essential role,
+0.280 deaths in Model 2. Demographic factors also play an essential role,
 with older maternal age (25–34 years) reducing infant mortality rates,
 while younger mothers (15–19 years) face elevated risks. Black mothers
 experience disproportionately higher infant mortality rates, with an
@@ -836,7 +836,7 @@ this analysis is available in the GitHub Repository `other/sketches`.
 
 The raw dataset, consisting of U.S. infant mortality records from 2021 and 2022, was cleaned and pre-processed to ensure its suitability for analysis. The dataset was first imported from a tab-separated file, with irregular lines handled appropriately. Variables were standardized using `janitor::clean_names()` to ensure consistent naming conventions. Key variables such as state, maternal age, maternal race, year of death, month, and infant death rates were selected for analysis, and missing values were removed.
 
-Additional variables were created to facilitate analysis: `after_injunction`, indicating whether the data corresponded to the period after June 2022 (post-Dobbs decision), and `abortion_illegal`, denoting whether the state had restrictive abortion laws. Death rate reliability was assessed, and unreliable rates were flagged for transparency. The death rate column was cleaned to remove annotations and converted to numeric format for analysis. A date variable was created by combining the year and month columns, providing a timeline for analysis. Finally, a date variable was created by combining the year and month variables. The cleaned dataset was saved in CSV and Parquet formats to ensure compatibility with analytical workflows.
+Additional variables were created to facilitate analysis: `after_injunction`, indicating whether the data correspond to the period after June 2022 (post-Dobbs decision) and `abortion_illegal`, denoting whether the state had restrictive abortion laws. Death rate reliability was assessed, and unreliable rates were flagged for transparency. The death rate column was cleaned to remove annotations and converted to numeric format for analysis. A date variable was created by combining the year and month columns, providing a timeline for analysis. Finally, a date variable was created by combining the year and month variables. The cleaned dataset was saved in CSV and Parquet formats to ensure compatibility with analytical workflows.
 
 ## Attribution Statement
 
@@ -891,7 +891,7 @@ iplot(est_did,main = "Impact of Abortion Bans on Infant Mortality Rates by State
 
 In @fig-ppcheckandposteriorvsprior-1 and @fig-ppcheckandposteriorvsprior-2 we implement a posterior predictive check for the first model and second model. It represents posterior predictive checks for Model 1 and Model 2, illustrating how well each model captures the observed data. The posterior predictive checks for Model 1 (policy-focused) and Model 2 (policy and demographic factors) illustrate model fit. In @fig-ppcheckandposteriorvsprior-1, the observed ($y$) and replicated ($y_{rep}$) distributions align moderately, reflecting general trends but limited precision. @fig-ppcheckandposteriorvsprior-2 shows improved alignment, indicating that adding demographic factors enhances predictive accuracy and better captures the complexities of infant mortality rates.
 
-In @fig-ppcheckandposteriorvsprior-3 and @fig-ppcheckandposteriorvsprior-4 we compare the posterior with the prior. The posterior vs. prior plots for Model 1 and Model 2 illustrate the role of data in informing the posterior estimates of the model parameters. In Model 1 @fig-ppcheckandposteriorvsprior-3, which focuses on policy-related predictors (e.g., abortion restrictions), the data significantly shift the posterior distributions for key variables, demonstrating their explanatory power. Model 2 @fig-ppcheckandposteriorvsprior-4, incorporating additional demographic factors such as maternal age and race, shows a more refined and concentrated posterior distribution, emphasizing the added predictive utility of demographic variables. The comparison indicates that Model 2 provides better-informed parameter estimates, supporting the hypothesis that demographic factors play a essential role in understanding infant mortality in the context of restrictive abortion laws.
+In @fig-ppcheckandposteriorvsprior-3 and @fig-ppcheckandposteriorvsprior-4 we compare the posterior with the prior. The posterior vs. prior plots for Model 1 and Model 2 illustrate the role of data in informing the posterior estimates of the model parameters. In Model 1 @fig-ppcheckandposteriorvsprior-3, which focuses on policy-related predictors (e.g., abortion restrictions), the data significantly shift the posterior distributions for key variables, demonstrating their explanatory power. Model 2 @fig-ppcheckandposteriorvsprior-4, incorporating additional demographic factors such as maternal age and race, shows a more refined and concentrated posterior distribution, emphasizing the added predictive utility of demographic variables. The comparison indicates that Model 2 provides better-informed parameter estimates, supporting the hypothesis that demographic factors play an essential role in understanding infant mortality in the context of restrictive abortion laws.
 
 ```{r}
 #| eval: true
@@ -952,7 +952,7 @@ plot(
   "areas"
 )
 ```
-Credibility intervals are the Bayesian equivalent of confidence intervals, offering understanding into the range of probable values for a parameter @tellingstories. Using Bayesian estimation, we derive a posterior distribution for each model coefficient. @fig-area-1 presents the 95% credibility intervals for coefficients in Model 1, while @fig-area-2 illustrates the same for Model 2. These intervals represent the range within which 95% of the posterior probability mass falls, offering a robust understanding of parameter uncertainty and the influence of predictors under the Bayesian framework @tellingstories.
+Credibility intervals are the Bayesian equivalent of confidence intervals, offering an understanding of the range of probable values for a parameter @tellingstories. Using Bayesian estimation, we derive a posterior distribution for each model coefficient. @fig-area-1 presents the 95% credibility intervals for coefficients in Model 1, while @fig-area-2 illustrates the same for Model 2. These intervals represent the range within which 95% of the posterior probability mass falls, offering a robust understanding of parameter uncertainty and the influence of predictors under the Bayesian framework @tellingstories.
 
 ## Diagnostics
 
@@ -984,7 +984,7 @@ The trace plot in @fig-stanareyouokay-1 shows the sampling chains for model 1, i
 
 # Idealized Methodology for A Survey-Based Qualitative Studies {#sec-survey}
 
-Our study examines the impact of abortion bans on infant mortality rates in the U.S. following the Dobbs decision, combining observational data and surveys. Observational data reveal trends and associations, but often struggle with confounding factors and causality. Surveys address these gaps by capturing qualitative understanding into individual experiences and contextual factors. This mixed-methods approach integrates statistical rigor with detailed personal accounts, offering a detailed framework to understand how restrictive abortion policies affect maternal health and infant outcomes, and informing evidence-based policy recommendations.
+Our study examines the impact of abortion bans on infant mortality rates in the U.S. following the Dobbs decision, combining observational data and surveys. Observational data reveal trends and associations but often struggle with confounding factors and causality. Surveys address these gaps by capturing a qualitative understanding of individual experiences and contextual factors. This mixed-methods approach integrates statistical rigor with detailed personal accounts, offering a detailed framework to understand how restrictive abortion policies affect maternal health and infant outcomes, and informing evidence-based policy recommendations.
 
 ## Introduction
 
@@ -995,7 +995,7 @@ Our survey focuses on mothers unable to access abortion services who later exper
 ## Objective
 
 The objective of this study is to investigate the psychological, social,
-and systemic impacts of restrictive abortion laws on maternal health and infant outcomes. By focusing on mothers unable to access abortion services who experienced the death of their infant, the study aims to document lived experiences, explore the role of maternal stress and healthcare barriers in adverse outcomes. Understanding how maternal mental health directly affects prenatal care decisions, access to healthcare, and overall maternal behavior is essential to addressing the systemic factors contributing to higher infant mortality rates. The findings will guide the development of evidence-based strategies to improve maternal mental health, enhance healthcare access and shape policy responses to restrictive abortion laws.
+and systemic impacts of restrictive abortion laws on maternal health and infant outcomes. By focusing on mothers unable to access abortion services who experienced the death of their infant, the study aims to document lived experiences, and explore the role of maternal stress and healthcare barriers in adverse outcomes. Understanding how maternal mental health directly affects prenatal care decisions, access to healthcare, and overall maternal behavior is essential to addressing the systemic factors contributing to higher infant mortality rates. The findings will guide the development of evidence-based strategies to improve maternal mental health, enhance healthcare access, and shape policy responses to restrictive abortion laws.
 
 ## Sampling Approach
 
@@ -1018,7 +1018,7 @@ Thus, the sample frame for our study comprises mothers who reside in areas where
 
 ## Sample
 
-We aim to survey 20 respondents who meet our defined sample criteria: mothers unable to access abortion services due to restrictive laws, who experienced the death of their infant within the first year of life, and are reachable through Abortion Rights Advocacy Groups. Participation will be voluntary, and respondents must be willing to answer the survey questions, ensuring the quality and depth of the data collected.
+We aim to survey 20 respondents who meet our defined sample criteria: mothers unable to access abortion services due to restrictive laws, who experienced the death of their infant within the first year of life, and who are reachable through Abortion Rights Advocacy Groups. Participation will be voluntary, and respondents must be willing to answer the survey questions, ensuring the quality and depth of the data collected.
 
 ## Recruitment of Respondents
 
