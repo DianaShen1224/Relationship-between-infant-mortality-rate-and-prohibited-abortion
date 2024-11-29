@@ -964,7 +964,7 @@ maternal and infant health outcomes.
 
 ## Dataset and Graph Sketches
 
-Sketches depicting both the desired dataset and the graphs generated in
+Sketches depicting both the desired dataset and the tables generated in
 this analysis is available in the GitHub Repository `other/sketches`.
 
 ## Data Cleaning
@@ -1003,6 +1003,10 @@ analyses, interpretations, or conclusions drawn from the data by the
 authors of this study.
 
 # Model details {#sec-model-details}
+
+## Model Card
+
+The model card, referenced from @ozoani2022modelcard, is included in the README under the section titled `Model Card for Infant Mortality and Abortion Policy Analysis Model` for detailed documentation.
 
 ## Parall Assumption: An Event Study Analysis
 
