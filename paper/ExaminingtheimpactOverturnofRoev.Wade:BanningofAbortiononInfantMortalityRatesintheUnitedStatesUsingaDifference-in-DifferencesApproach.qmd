@@ -634,15 +634,15 @@ model’s structure and assumptions to ensure valid results.
 The model focuses on the infant death rate per 1,000 live births as the
 dependent variable and includes the following independent variables:
 
--   **Treatment Group Indicator `abortion_illegal`**: A binary variable
+-   **Treatment Group Indicator (`abortion_illegal`)**: A binary variable
     indicating the group: 1 if abortion is illegal in the state. 0 if
     abortion remains legal.
 
--   **Time Indicator `after_injunction`**: A binary variable indicating
+-   **Time Indicator (`after_injunction`)**: A binary variable indicating
     the time period: 0 for the period before the injunction was
     implemented. 1 for the period after the injunction was implemented.
 
--   **Interaction Term`after_injunction` × `abortion_illegal`**: The
+-   **Interaction Term (`after_injunction` × `abortion_illegal`)**: The
     interaction term captures the additional change in the outcome
     (e.g., percentage of support, behavior, or health-related metrics)
     for regions where abortion is illegal after the injunction
@@ -654,18 +654,18 @@ demographic and temporal factors that could influence infant mortality
 rates, ensuring that the estimated effects are not confounded by these
 characteristics:
 
--   **`age_of_mother`**: The age of the mother at the time of birth,
+-   **Age of Mother (`age_of_mother`)**: The age of the mother at the time of birth,
     represented as a continuous variable.
 
--   **`mothers_single_race`**: Self-identified race of the mother,
+-   **Mother's Single Race (`mothers_single_race`)**: Self-identified race of the mother,
     represented as a categorical variable.
 
--   **`year_of_death`**: The year in which the infant death occurred,
+-   **Year of Death (`year_of_death`)**: The year in which the infant death occurred,
     represented as a continuous variable.
 
 Finally, we include a random variable:
 
--   **`state`**: Mother's residence state when the infant was born as a
+-   **State (`state`)**: Mother's residence state when the infant was born as a
     random effect in the model.
 
 By isolating the impact of the abortion injunction through this
@@ -717,8 +717,8 @@ after_injunction and abortion_illegal. To ensure consistency and
 comparability, both models share the same predictors, capturing the
 determinants of infant mortality.
 
-One model includes control variables— `age_of_mother`,
-`mothers_single_race`, and `year_of_death` to adjust for confounders
+One model includes control variables — Age of Mother,
+Mother's Single Race, and Year of Death to adjust for confounders
 that may influence infant death rates. This adjustment addresses
 compositional differences assumed in the DID framework and ensures
 unbiased estimates of the intervention’s effect. The second model
