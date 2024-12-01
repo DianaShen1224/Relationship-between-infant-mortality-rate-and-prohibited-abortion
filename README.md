@@ -218,7 +218,8 @@ The training data originates from the Linked Birth/Infant Death Records (2017-20
 -   State of Residence: Identifies the mother’s state of residence during childbirth.
 -   Maternal Age: Categorized into groups such as 15-19, 20-24, 25-29, and 30-34 years.
 -   Maternal Race: Recorded as a categorical variable (e.g., Asian, Black or African American, White).
--   Year and Month of Death: Specifies when the infant death occurred. - Death Rate: Continuous variable indicating the number of infant deaths per 1,000 live births, with reliability labels.
+-   Year and Month of Death: Specifies when the infant death occurred.
+-   Death Rate: Continuous variable indicating the number of infant deaths per 1,000 live births, with reliability labels.
 
 The dataset underwent cleaning and feature engineering, as described in the preprocessing steps, to ensure readiness for analysis and modeling.
 
@@ -285,13 +286,13 @@ Key attributes include:
 
 Evaluation of the model’s performance was disaggregated across the following factors: 
 1. **Policy Factors**:
-   -  States categorized based on abortion legality (abortion_illegal).
-   -  Timing relative to the abortion injunction (after_injunction).
+ -  States categorized based on abortion legality (abortion_illegal).
+ -  Timing relative to the abortion injunction (after_injunction).
 2. **Demographic Factors**:
-   -  Maternal race (mothers_single_race).
-   -  Maternal age group (age_of_mother).
+ -  Maternal race (mothers_single_race).
+ -  Maternal age group (age_of_mother).
 3. **Temporal Factors**:
-   -  Year and month of death (year_of_death, date).
+ -  Year and month of death (year_of_death, date).
 
 #### Metrics
 
@@ -299,7 +300,7 @@ The evaluation metrics used to assess the models include:
 1. **Root Mean Square Error (RMSE)**: 
    -  Measures the average prediction error. 
    -  Lower RMSE indicates better model fit.
-2. **R-squared (**$R^2$): 
+2. **R-squared ($R^2$)**: 
    -  Indicates the proportion of variance explained by the model. 
    -  Higher $R^2$ values represent a better fit.
 3. **Posterior Predictive Checks**:
