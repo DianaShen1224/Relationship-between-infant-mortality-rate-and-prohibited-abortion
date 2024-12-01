@@ -6,12 +6,13 @@
 # Contact: diana.shen@mail.utoronto.ca
 # License: MIT
 # Pre-requisites: 
-# - The `tidyverse` package must be installed and loaded
+# - The `tidyverse`,`testthat` package must be installed and loaded
 # - 03-clean_data.R must have been run
 # Any other information needed? Make sure you are in the `Relationship between_infant_mortality_rate_and_prohibited_abortion` rproj
 
 #### Workspace setup ####
 library(tidyverse)
+library(testthat)
 
 analysis_data <- read_csv(
   file = "data/02-analysis_data/analysis_data.csv",
@@ -43,6 +44,32 @@ state =c(
   "Virginia", "Washington", "West Virginia", "Wisconsin", "Wyoming"
 )
 
+## test analysis data has correct structure
+test_that("Cleaned analysis data has correct structure and values", {
+  
+  # Check that the dataset is a data frame
+  expect_true(is.data.frame(cleaned_data))
+  
+  # Check that all required columns exist
+  required_columns <- c("state", "age_of_mother", "mothers_single_race", "year_of_death", 
+                        "month", "month_code", "death_rate", "after_injunction", 
+                        "abortion_illegal", "reliable", "date")
+  expect_true(all(required_columns %in% colnames(cleaned_data)))
+  
+  # Check column types
+  expect_true(is.character(cleaned_data$state)) # State should be character
+  expect_true(is.factor(cleaned_data$age_of_mother)) # Age of mother should be a factor
+  expect_true(is.character(cleaned_data$mothers_single_race)) # Mother's race should be character
+  expect_true(is.numeric(cleaned_data$year_of_death)) # Year of death should be numeric
+  expect_true(is.numeric(cleaned_data$month_code)) # Month code should be numeric
+  expect_true(is.factor(cleaned_data$month)) # Month should be a factor
+  expect_true(is.numeric(cleaned_data$death_rate)) # Death rate should be numeric
+  expect_true(is.factor(cleaned_data$after_injunction)) # After injunction should be a factor
+  expect_true(is.factor(cleaned_data$abortion_illegal)) # Abortion illegal should be a factor
+  expect_true(is.character(cleaned_data$reliable)) # Reliable column should be character
+  expect_true(inherits(cleaned_data$date, "Date")) # Date should be a valid Date class
+})
+  
 # Test if the data was successfully loaded
 if (exists("analysis_data")) {
   message("Test Passed: The dataset was successfully loaded.")

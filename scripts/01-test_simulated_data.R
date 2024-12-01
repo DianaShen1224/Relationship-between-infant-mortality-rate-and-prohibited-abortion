@@ -6,12 +6,13 @@
 # Contact: diana.shen@mail.utoronto.ca
 # License: MIT
 # Pre-requisites: 
-# - The `tidyverse` package must be installed and loaded
+# - The `tidyverse`,`testthat` package must be installed and loaded
 # - 00-simulate_data.R must have been run
 # Any other information needed? Make sure you are in the `Relationship between_infant_mortality_rate_and_prohibited_abortion` rproj
 
 #### Workspace setup ####
 library(tidyverse)
+library(testthat)
 
 #### Define the list of states where abortion is illegal ####
 illegal_states <- c("AL", "AR", "ID", "IN", "KY", "LA", "MS", "OK", "SD", "TN", "TX", "WV")
@@ -26,6 +27,26 @@ if (exists("simulated_data")) {
 }
 
 #### Test data ####
+
+## test simulated data has correct structure
+test_that("Simulated data has correct structure", {
+  expect_true(is.numeric(simulated_data$death_rate)) # death_rate should be numeric
+  expect_true(is.factor(simulated_data$state)) # state should be a factor
+  expect_true(all(levels(simulated_data$state) %in% state.abb)) # state levels should match US state abbreviations
+  expect_true(is.character(simulated_data$age_of_mother) || is.factor(simulated_data$age_of_mother)) # age_of_mother can be character or factor
+  expect_true(all(simulated_data$age_of_mother %in% c("15–19", "20–24", "25–29", "30–34", "35–39", "40–44", "45+"))) # age_of_mother must match predefined categories
+  expect_true(is.character(simulated_data$mothers_single_race) || is.factor(simulated_data$mothers_single_race)) # mothers_single_race can be character or factor
+  expect_true(all(simulated_data$mothers_single_race %in% c("White", "Black", "Asian", "Native American", "Pacific Islander", 
+                                                            "More than one race", "Unknown or Not Stated"))) # mothers_single_race must match predefined categories
+  expect_true(is.numeric(simulated_data$year_of_death)) # year_of_death should be numeric
+  expect_true(all(simulated_data$year_of_death %in% c(2021, 2022))) # year_of_death should be 2021 or 2022
+  expect_true(is.numeric(simulated_data$month)) # month should be numeric
+  expect_true(all(simulated_data$month >= 1 & simulated_data$month <= 12)) # month must be between 1 and 12
+  expect_true(is.factor(simulated_data$after_injunction)) # after_injunction should be a factor
+  expect_true(all(levels(simulated_data$after_injunction) %in% c("0", "1"))) # after_injunction levels should be 0 or 1
+  expect_true(is.factor(simulated_data$abortion_illegal)) # abortion_illegal should be a factor
+  expect_true(all(levels(simulated_data$abortion_illegal) %in% c("0", "1"))) # abortion_illegal levels should be 0 or 1
+})
 
 # Check if the dataset has 700 rows (expected based on simulation)
 if (nrow(simulated_data) == 700) {
