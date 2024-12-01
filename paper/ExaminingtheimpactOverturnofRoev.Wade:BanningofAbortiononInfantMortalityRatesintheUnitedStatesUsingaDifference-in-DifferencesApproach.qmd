@@ -6,7 +6,7 @@ author:
 thanks: "Code and data are available at: [https://github.com/DianaShen1224/Relationship-between-infant-mortality-rate-and-prohibited-abortion](https://github.com/DianaShen1224/Relationship-between-infant-mortality-rate-and-prohibited-abortion)."
 date: today
 date-format: long
-abstract: "This study investigates the impact of the Dobbs decision and abortion bans on U.S. infant mortality rates using 2021–2022 data. A Difference-in-Differences (DID) analysis shows a 0.285 increase in infant deaths per 1,000 live births in states enforcing bans, with amplified effects post-injunction. Maternal age and race are key factors, with Black mothers experiencing higher mortality rates. These findings highlight the public health impact of restrictive abortion policies and the need for targeted interventions to address disparities. This study uses the latest available data and rigorous modeling to explore the link between reproductive rights and infant health."
+abstract: "This study investigates the impact of the Dobbs decision and abortion bans on U.S. infant mortality rates using 2021–2022 data. A Difference-in-Differences (DID) analysis shows a 0.285 increase in infant deaths per 1,000 live births in states enforcing bans, with amplified effects post-injunction. Maternal age and race are key factors, with Black mothers experiencing higher infant mortality rates. These findings highlight the public health impact of restrictive abortion policies and the need for targeted interventions to address disparities. This study uses the latest available data and rigorous modeling to explore the link between reproductive rights and infant health."
 format: pdf
 toc: true
 number-sections: true
@@ -86,7 +86,7 @@ decision. Using a Difference-in-Differences (DID) approach, we assess
 the interaction between abortion legality in states and the timing of
 the injunction implemented to understand its influence on infant health
 outcomes. The study utilizes observational data from the Centers for
-Disease Control and Prevention’s WONDER database, captures infant
+Disease Control and Prevention’s WONDER database [@cdc_wonder_2024], captures infant
 mortality trends across states with varying levels of abortion
 restrictiveness. Key predictors include the mother’s state of residence,
 race, age, and the year of infant death, enabling a detailed examination
@@ -134,19 +134,17 @@ qualitative analysis.
 
 We conduct our infant death rate observational data analysis using the R
 programming language [@citeR]. Our dataset, obtained from the CDC
-Wonder[@cdc_wonder_2024], based on data as of December 2022, provides a
-detailed overview of the Infant Death Rate across the USA. CDC WONDER
+Wonder[@cdc_wonder_2024], based on data as of December 2022, provides detailed state-level information on infant death rates in the United States, serving as the foundation for our study of the impact of abortion injunctions. CDC WONDER
 (Wide-ranging ONline Data for Epidemiologic Research) is an online
 system providing public health professionals and the public with access
 to a wide range of the Centers for Disease Control and Prevention (CDC)
-epidemiologic data and resources. Following the guidelines outlined in
+epidemiologic data and resources. This dataset offers detailed state-level information on infant death rates in the United States, serving as the foundation for our study of the impact of abortion injunctions.
+Following the guidelines outlined in
 @tellingstories, we analyze the impact of abortion injunctions on infant
-death rates using the Difference-in-Difference method. This approach
-utilizes the interaction between the legality of abortion in the
-mother’s state of residence and the timing of the infant’s death as the
-predictor variable. Additionally, we include control variables such as
-infant year of death, the mother’s state of residence, race, and age to
-account for potential confounding factors.
+death rates using the Difference-in-Difference method. This approach, shown in @sec-model, utilizes the main effects and the interaction between the legality of abortion in the
+mother’s state of residence and the timing of the infant’s death as the predictor variable. Additionally, we include control variables, infant year of death, race, and age to account for potential confounding factors, and the mother’s state of residence as a random variable.
+
+We selected the CDC WONDER dataset for its combination of granularity, consistency, and accessibility, making it suitable for a nationwide analysis. Alternative datasets lacked either the breadth or the standardization required for a study of this scale. Additionally, CDC WONDER’s public availability enhances transparency and allows for independent verification, ensuring the reliability and reproducibility of our research.
 
 In this study, we utilized several R packages to streamline data
 manipulation, modeling, and visualization. The `tidyverse` package
@@ -212,14 +210,13 @@ health strategies and legislative decisions.
 
 ### Death Rate
 
-The `death rate` refers to the number of deaths of infants under one
+The death rate (`death rate`) refers to the number of deaths of infants under one
 year of age per 1,000 live births in a specified population during a
 given time period. It serves as a key indicator of a population’s
 overall health and access to healthcare. Rates labeled as "Unreliable"
 occur when there are fewer than 20 deaths in the numerator, as these
 figures do not meet the National Center for Health Statistics (NCHS)
-standards for reliability or precision. After cleaning the dataset, the "Unreliable" label is converted into a separate variable named
-`reliable`.
+standards for reliability or precision. After cleaning the dataset, the "Unreliable" label is converted into a separate variable named `reliable` (This variable is available in the `analysis data` for reference but was not included in the model analysis.).
 
 ```{r}
 #| label: fig-deathrate
@@ -249,9 +246,9 @@ of lower infant death rates in the dataset.
 
 ## Predictor variables
 
-### Interaction Term: Abortion Legality and After Injunction
+### Abortion Legality
 
-Abortion legality (named `abortion_illegal` in the dataset) is a newly
+Abortion legality (`abortion_illegal`) is a newly
 created variable in our dataset, which refers to the legal status of
 abortion within a given state. It is represented as a binary variable,
 where 1 indicates that abortion is illegal in the state, and 0 indicates
@@ -310,13 +307,14 @@ map_data <- us_map|>
 #|   Mississippi, Missouri, North Dakota, Oklahoma, South Dakota, Tennessee,
 #|   Texas, West Virginia, and Wisconsin.
 #| echo: false
+#| fig-pos: "H"
 ggplot() +
   geom_polygon(data = map_data, aes(fill = abortion_illegal, x = long, y = lat, group = group),
     color = "black") +
   scale_fill_manual(
     values = c("0" = "blue", "1" = "red"),
     labels = c("Legal", "Illegal"),
-    name = "Abortion Legal Or Not"
+    name = "State is Illegal for Abortion or Not"
   )+
   theme_void() +
   labs(
@@ -324,6 +322,24 @@ ggplot() +
   ) +
   theme(legend.position = "bottom")
 ```
+
+### After Injunction
+
+Another created variable After Injunction (`after_injunction`) indicates whether the date
+of infants' death falls after the implementation of the abortion
+injunctions following the overturn of Roe v. Wade in June 2022. It is
+coded as a binary variable, where 1 represents dates after June 2022,
+signifying the post-injunction period, and 0 represents dates before
+June 2022, indicating the pre-injunction period.
+
+@fig-rateandstate illustrates trends in infant death rates (per 1,000
+live births) over time in states where abortion is illegal versus legal.
+In states with abortion bans, infant mortality shows a slight increase
+after June 2022, marked by the dashed line representing the overturn of
+Roe v. Wade. In contrast, states where abortion remains legal exhibit
+relatively stable trends. This suggests a potential link between
+abortion bans and rising infant mortality rates, warranting further
+investigation.
 
 ```{r}
 #| label: fig-rateandstate
@@ -334,12 +350,13 @@ ggplot() +
 #|   stable. 
 #| echo: false
 #| message: false
+#| fig-pos: "H"
 analysis_data|>
   mutate(illegal = if_else( abortion_illegal== 1, "Illegal State", "Legal State"))|>
   ggplot(aes(x = date, y = death_rate,colour = illegal)) +
   geom_point(alpha = 0.5)+
   geom_smooth() +
-  labs(x = "Date of Infant Death", y = "Infant Death Rate \n(per 1,000 live births)",color="State is Illegal for Abortion Or Not",caption = "Data source: CDC Wonder.\nIn June 2022, the U.S. Supreme Court overturned Roe v. Wade.") +
+  labs(x = "Date of Infant Death", y = "Infant Death Rate \n(per 1,000 live births)",color="State is Illegal for Abortion or Not",caption = "Data source: CDC Wonder.\nIn June 2022, the U.S. Supreme Court overturned Roe v. Wade.") +
   facet_wrap(vars(illegal), nrow = 2)+
   geom_vline(xintercept = as.Date("2022-06-01"), linetype = "dashed")  +
   scale_x_date(
@@ -352,14 +369,15 @@ analysis_data|>
   theme(legend.position = "bottom")
 ```
 
-@fig-rateandstate illustrates trends in infant death rates (per 1,000
-live births) over time in states where abortion is illegal versus legal.
-In states with abortion bans, infant mortality shows a slight increase
-after June 2022, marked by the dashed line representing the overturn of
-Roe v. Wade. In contrast, states where abortion remains legal exhibit
-relatively stable trends. This suggests a potential link between
-abortion bans and rising infant mortality rates, warranting further
-investigation.
+### Interaction Term: Abortion Legality and After Injunction
+
+To evaluate the impact of abortion injunctions on infant death rates, we
+utilize the Difference-in-Difference (DID) method. As part of this
+approach, we construct an interaction term defined as the product of
+`abortion_illegal` and `after_injunction`. The resulting interaction
+term equals 1 when abortion is illegal the time is after the injunction,
+and 0 otherwise. This term is included in the analysis to evaluate the
+joint impact of these factors on infant death rates.
 
 ```{r}
 #| label: tbl-interact
@@ -372,6 +390,7 @@ investigation.
 #| echo: false
 #| warning: false
 #| message: false
+
 analysis_data_state <- analysis_data|>mutate(illegal_after_injunction=as.numeric(as.character(abortion_illegal))*as.numeric(as.character(after_injunction)))|>
   group_by(illegal_after_injunction)|>rename(`Abortion Restriction Post-Overturn`=illegal_after_injunction)|>
   summarize(`Average Infant Death Rate (per 1,000 live births)` = round(mean(death_rate, na.rm = TRUE), 1)) 
@@ -381,21 +400,6 @@ kable(analysis_data_state, align = "c") |>
     "Data Source: CDC Wonder"
   )
 ```
-
-Another created variable `after_injunction` indicates whether the date
-of infants' death falls after the implementation of the abortion
-injunctions following the overturn of Roe v. Wade in June 2022. It is
-coded as a binary variable, where 1 represents dates after June 2022,
-signifying the post-injunction period, and 0 represents dates before
-June 2022, indicating the pre-injunction period.
-
-To evaluate the impact of abortion injunctions on infant death rates, we
-utilize the Difference-in-Difference (DID) method. As part of this
-approach, we construct an interaction term defined as the product of
-`abortion_illegal` and `after_injunction`. The resulting interaction
-term equals 1 when abortion is illegal the time is after the injunction,
-and 0 otherwise. This term is included in the analysis to evaluate the
-joint impact of these factors on infant death rates.
 
 @tbl-interact highlights average infant death rates (per 1,000 live
 births) based on abortion legality and injunction timing. States
@@ -432,7 +436,7 @@ analysis_data|>mutate(year_of_death=as.factor(year_of_death))|>
   modelsummary::datasummary_skim()
 ```
 
-@tbl-summary shows that 50.7% of infant deaths occurred in 2022, slightly higher than in 2021 (49.3%). The majority of cases were among
+@tbl-summary shows the summary statistics of control variables. 50.7% of infant deaths occurred in 2022, slightly higher than in 2021 (49.3%). The majority of cases were among
 mothers aged 25–29 (37.8%), followed by those aged 30–34 (32.5%), and
 20–24 (27.2%), with the lowest occurrence in mothers aged 15–19 (2.6%).
 By race, White mothers accounted for the highest percentage (75.7%),
@@ -441,7 +445,7 @@ followed by Black or African American mothers (24.0%), and Asian mothers
 
 ### Year of Death
 
-The Year of Death variable represents the calendar year in which the
+The Year of Death (`year_of_death`) represents the calendar year in which the
 infant death occurred, specifically focusing on the years 2021 and 2022
 in this study. This variable is essential for analyzing temporal trends
 and identifying patterns or shifts in infant mortality rates over this
@@ -487,11 +491,7 @@ kable(analysis_data_state)|>footnote("Data Source: CDC Wonder")
 
 ### Mother's Single Race
 
-The self-identified race of the mother was recorded as a single race
-category. In this dataset, the available categories are: Asian, Black or
-African American, and White. This classification facilitates the
-analysis of maternal and infant health outcomes across these racial
-groups.
+Mother's Single Race (`mothers_single_race`) refers to the self-identified race of the mother, which was recorded as a single race category. In this dataset, the available categories are Asian, Black or African American, and White. This classification facilitates the analysis of maternal and infant health outcomes across these racial groups.
 
 ```{r}
 #| label: tbl-motherrace
@@ -511,13 +511,14 @@ analysis_data_state <- analysis_data|>
 kable(analysis_data_state)|>footnote("Data Source: CDC Wonder")
 ```
 
+@tbl-motherrace represents the average infant death rates (per 1,000 live births) by maternal race. Black or African American mothers have the highest rate at 14.5, compared to 5.8 for White mothers and 5.4 for Asian mothers. These differences indicate significant disparities in infant mortality outcomes across racial groups.
+
 ## Random Variable
 
 ### State
 
-The state of the mother’s legal residence at the time of birth. This
-data is categorized by the mother’s state of residence and excludes
-territories.
+State (`state`) referes to the state of the mother’s legal residence at the time of birth. This
+data is categorized by the mother’s state of residence and excludes territories.
 
 ```{r}
 #| label: fig-choromap
@@ -527,6 +528,7 @@ territories.
 #|   with Alabama and Mississippi reporting the highest rates. In contrast, 
 #|   states like California and New York exhibit notably lower rates.
 #| echo: false
+#| fig-pos: "H"
 death<-analysis_data|>group_by(state)|>summarise(death_rate=mean(death_rate))|>mutate(state=tolower(state))
 death_full <- us_map|>
    full_join(death, c("region"="state"))
@@ -683,7 +685,8 @@ model builds on the first by incorporating additional control variables
 to account for potential confounding factors.
 
 Define $y_i$ as as the infant death rate per 1,000 live births, and
-$\gamma_j$ as the random state effect. $$
+$\gamma_j$ as the random state effect for state j. 
+$$
 \begin{aligned}
 y_i|\mu_i,\sigma &\sim \mbox{Normal}(\mu_i, \sigma)\\
 \text{First Model}: \mu_i &= \beta_0 + \beta_1\cdot\text{After Injunction} + \beta_2\cdot\text{Abortion Illegal}\\&+\beta_3\cdot\text{After Injunction}\cdot\text{Abortion Illegal}_i+\gamma_j\\
@@ -697,13 +700,10 @@ y_i|\mu_i,\sigma &\sim \mbox{Normal}(\mu_i, \sigma)\\
 \beta_6 &\sim \mbox{Normal}(0, 2.5)\\
 \gamma_j&\sim \text{Normal}(0, \sigma_j^2)\\
 \sigma &\sim \mbox{Exponential}(1)
-\end{aligned}$$
+\end{aligned}
+$$
 
-The models are run in R (R Core Team 2023) using the `rstanarm` package
-of @rstanarm. The default priors from `rstanarm` are used for both GLM
-Bayesian models. We run the model in R [@citeR] using the `rstanarm`
-package of @rstanarm. We use the default priors from `rstanarm` used for
-both Gaussian Bayesian models.
+We run the model in R [@citeR] using the `rstanarm` package of @rstanarm. We use the default priors from `rstanarm` used for both Gaussian Bayesian models.
 
 ### Model justification
 
@@ -770,7 +770,7 @@ We use a Bayesian approach to enhance the Difference-in-Differences
 account for uncertainty. With the `rstanarm` package, we apply weakly
 informative priors—such as a Normal prior centered at zero with moderate
 spread ($\mu=0$, $\sigma=2.5$) for fixed effects and an Exponential
-prior (rate = 1) for variability parameters. These priors automatically adjust to the scale of the data, improving model stability and ensuring they complement rather than dominate the observed data. This approach
+prior (rate = 1) for variability parameters. By using `autoscale=TRUE`, these priors automatically adjust to the scale of the data, improving model stability and ensuring they complement rather than dominate the observed data. This approach
 helps us center estimates realistically, account for hidden differences
 between groups, and produce reliable results while assuming trends
 between treated and control groups are similar before treatment.
@@ -813,7 +813,7 @@ modelsummary::msummary(
 
 The results from the two Bayesian models are summarized in
 @tbl-modelresults. The interaction term between after_injunction and
-abortion_illegal is positive and statistically significant (0.111 in
+abortion_illegal is positive and significant (0.111 in
 first model and 0.280 in the second model), indicating a change in infant
 mortality rates associated with the combination of abortion bans and the
 post-injunction period.
@@ -844,9 +844,7 @@ better prenatal care, and greater maternal stability. These results
 demonstrate the impact of policy and demographic factors on infant
 health outcomes.
 
-The models performed well, with low RMSE values and high $R^2$ values,
-indicating that the predictors account for a substantial portion of the
-variance in infant mortality rates.
+Both models exhibit low RMSE values and high $R^2$, indicating a strong overall fit and that the predictors explain much of the variance in infant mortality rates. The second model, with its additional covariates, provides a more detailed and adjusted view of the intervention’s effects, while the first model offers a simpler and more direct perspective. The choice between models depends on the balance between interpretability and precision.
 
 # Discussion {#sec-discussion}
 
@@ -1037,6 +1035,7 @@ est_did <- feols(
 #| warning: false
 #| echo: false
 #| eval: true
+#| fig-pos: "H"
 
 iplot(est_did,main = "Impact of Abortion Bans on Infant \nMortality Rates by State",
   value.lab = "Estimate and __ci__ Conf. Int.",xlab = "Relative Time (Month)")
@@ -1088,6 +1087,7 @@ restrictive abortion laws.
 #| layout-ncol: 1
 #| fig-cap: "Posterior Predictive Check: Examining how the model for infant death rate fits, and is affected by, the data"
 #| fig-subcap: ["First Model Posterior prediction check", "Second Model Posterior prediction check" ]
+#| fig-pos: "H"
 
 pp_check(first_model) +
   theme_classic() +
@@ -1104,6 +1104,7 @@ pp_check(second_model) +
 #| warning: false
 #| label: fig-posteriorvsprior1
 #| fig-cap: "Comparing Prior and Posterior Distributions: Examining how the first model for infant death rate fits, and is affected by, the data"
+#| fig-pos: "H"
 posterior_vs_prior(first_model) +
   theme_minimal() +
   scale_color_brewer(palette = "Set1") +
@@ -1118,7 +1119,7 @@ posterior_vs_prior(first_model) +
 #| warning: false
 #| label: fig-posteriorvsprior2
 #| fig-cap: "Comparing Prior and Posterior Distributions: Examining how the second model for infant death rate fits, and is affected by, the data"
-#| 
+#| fig-pos: "H"
 posterior_vs_prior(second_model) +
   theme_minimal() +
   scale_color_brewer(palette = "Set1") +
@@ -1152,7 +1153,7 @@ prior_summary(second_model)
 
 : Prior Specifications for Bayesian Models {#tbl-priorsummary}
 
-@tbl-priorsummary shows the prior summaries for the two models, `first_model` and `second_model`, indicating that both use weakly
+@tbl-priorsummary shows the prior summaries for the two models, indicating that both use weakly
 informative priors. For the intercept, a normal prior with a mean of 0
 and a standard deviation of 2.5 was specified, which adjusts to a scale
 of 12 after centering the predictors. The coefficients for both models
@@ -1176,9 +1177,10 @@ estimates while avoiding extreme parameter values.
 #| message: false
 #| warning: false
 #| label: fig-area
-#| layout-ncol: 1
+#| layout-ncol: 2
 #| fig-cap: "95% credibility intervals for fitted models"
 #| fig-subcap: ["First Model", "Second Model"]
+#| fig-pos: "H"
 
 plot(
   first_model,
@@ -1298,6 +1300,7 @@ risk of overfitting.
 #| fig-cap: "First Model: Checking the convergence of the MCMC algorithm for the infant death rate model"
 #| fig-subcap: ["First Model Trace plot", "First Model Rhat plot"]
 #| layout-ncol: 1
+#| fig-pos: "H"
 
 plot(first_model, "trace")
 
@@ -1314,6 +1317,7 @@ plot(first_model, "rhat")
 #| fig-cap: "Second Model: Checking the convergence of the MCMC algorithm for the infant death rate model"
 #| fig-subcap: ["Second Model Trace plot", "Second Model Rhat plot"]
 #| layout-ncol: 1
+#| fig-pos: "H"
 plot(second_model, "trace")
 
 plot(second_model, "rhat")
