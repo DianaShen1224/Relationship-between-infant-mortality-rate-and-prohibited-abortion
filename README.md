@@ -309,7 +309,12 @@ The models underwent extensive posterior predictive checks and comparisons betwe
 
 #### Environmental Impact
 
-The computational resources used to train and evaluate the models were minimal: - Hardware Type: Standard 8-core CPU with 16 GB RAM. - Hours used: Approximately 1-2 hours for training and evaluation. - Cloud Provider: Local machine; no external cloud services were used. - Compute Region: N/A for local computation. - Carbon Emitted: Negligible, as computations were performed on energy-efficient hardware.
+The computational resources used to train and evaluate the models were minimal: 
+- Hardware Type: Standard 8-core CPU with 16 GB RAM.
+- Hours used: Approximately 1-2 hours for training and evaluation.
+- Cloud Provider: Local machine; no external cloud services were used. 
+- Compute Region: N/A for local computation. 
+- Carbon Emitted: Negligible, as computations were performed on energy-efficient hardware.
 
 ## Technical Specifications
 
