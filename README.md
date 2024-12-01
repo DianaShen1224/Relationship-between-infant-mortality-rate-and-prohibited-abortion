@@ -218,7 +218,8 @@ The training data originates from the Linked Birth/Infant Death Records (2017-20
 -   State of Residence: Identifies the mother’s state of residence during childbirth.
 -   Maternal Age: Categorized into groups such as 15-19, 20-24, 25-29, and 30-34 years.
 -   Maternal Race: Recorded as a categorical variable (e.g., Asian, Black or African American, White).
--   Year and Month of Death: Specifies when the infant death occurred. - Death Rate: Continuous variable indicating the number of infant deaths per 1,000 live births, with reliability labels.
+-   Year and Month of Death: Specifies when the infant death occurred.
+-   Death Rate: Continuous variable indicating the number of infant deaths per 1,000 live births, with reliability labels.
 
 The dataset underwent cleaning and feature engineering, as described in the preprocessing steps, to ensure readiness for analysis and modeling.
 
@@ -275,15 +276,35 @@ Here is a detailed response for the evaluation section based on your project req
 
 #### Testing Data
 
-The testing data is a subset of the Linked Birth/Infant Death Records (2017-2022) dataset, focusing on infant mortality trends after 2021 and up to 2022. This subset includes demographic, temporal, and geographic factors relevant to evaluating the causal impact of abortion bans. Key attributes include: - States with and without abortion bans post-June 2022. - Temporal data: Infant deaths categorized before and after the abortion injunctions. - Demographic data: Maternal age and race.
+The testing data is a subset of the Linked Birth/Infant Death Records (2017-2022) dataset, focusing on infant mortality trends after 2021 and up to 2022. This subset includes demographic, temporal, and geographic factors relevant to evaluating the causal impact of abortion bans. 
+Key attributes include: 
+-  States with and without abortion bans post-June 2022.
+-  Temporal data: Infant deaths categorized before and after the abortion injunctions.
+-  Demographic data: Maternal age and race.
 
 #### Factors
 
-Evaluation of the model’s performance was disaggregated across the following factors: 1. **Policy Factors**: - States categorized based on abortion legality (abortion_illegal). - Timing relative to the abortion injunction (after_injunction). 2. **Demographic Factors**: - Maternal race (mothers_single_race). - Maternal age group (age_of_mother). 3. **Temporal Factors**: - Year and month of death (year_of_death, date).
+Evaluation of the model’s performance was disaggregated across the following factors: 
+1. **Policy Factors**:
+ -  States categorized based on abortion legality (abortion_illegal).
+ -  Timing relative to the abortion injunction (after_injunction).
+2. **Demographic Factors**:
+ -  Maternal race (mothers_single_race).
+ -  Maternal age group (age_of_mother).
+3. **Temporal Factors**:
+ -  Year and month of death (year_of_death, date).
 
 #### Metrics
 
-The evaluation metrics used to assess the models include: 1. **Root Mean Square Error (RMSE)**: - Measures the average prediction error. - Lower RMSE indicates better model fit. 2. **R-squared (**$R^2$): - Indicates the proportion of variance explained by the model. - Higher $R^2$ values represent a better fit. 3. **Posterior Predictive Checks**: - Examines the alignment of predicted and observed values to assess model calibration.
+The evaluation metrics used to assess the models include: 
+1. **Root Mean Square Error (RMSE)**: 
+   -  Measures the average prediction error. 
+   -  Lower RMSE indicates better model fit.
+2. **R-squared ($R^2$)**: 
+   -  Indicates the proportion of variance explained by the model. 
+   -  Higher $R^2$ values represent a better fit.
+3. **Posterior Predictive Checks**:
+   -  Examines the alignment of predicted and observed values to assess model calibration.
 
 #### Results
 
@@ -309,7 +330,12 @@ The models underwent extensive posterior predictive checks and comparisons betwe
 
 #### Environmental Impact
 
-The computational resources used to train and evaluate the models were minimal: - Hardware Type: Standard 8-core CPU with 16 GB RAM. - Hours used: Approximately 1-2 hours for training and evaluation. - Cloud Provider: Local machine; no external cloud services were used. - Compute Region: N/A for local computation. - Carbon Emitted: Negligible, as computations were performed on energy-efficient hardware.
+The computational resources used to train and evaluate the models were minimal: 
+- Hardware Type: Standard 8-core CPU with 16 GB RAM.
+- Hours used: Approximately 1-2 hours for training and evaluation.
+- Cloud Provider: Local machine; no external cloud services were used. 
+- Compute Region: N/A for local computation. 
+- Carbon Emitted: Negligible, as computations were performed on energy-efficient hardware.
 
 ## Technical Specifications
 
