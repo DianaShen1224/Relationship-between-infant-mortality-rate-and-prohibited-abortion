@@ -959,6 +959,10 @@ maternal and infant health outcomes.
 
 # Additional data details {#sec-data-details}
 
+## Raw Dataset Download
+
+The complete process of downloading the raw dataset is shown in the `README.md` file.
+
 ## Dataset and Graph Sketches
 
 Sketches depicting both the desired dataset and the tables generated in
