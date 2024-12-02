@@ -87,7 +87,7 @@ If you’d prefer to recreate the process yourself, you can follow these steps t
 
 ## Statement on LLM usage
 
-Aspects of the code were written with the help of ChatGPT4o. Part of the writing process, including generating and polishing was written with the help of ChatGPT4o, and the entire chat history is available in other/llms/usage.txt.
+Aspects of the code were written with the help of ChatGPT4o. Part of the writing process, including generating and polishing was written with the help of ChatGPT4o, and the entire chat history is available in `other/llms/usage.txt`.
 
 # Model Card for Infant Mortality and Abortion Policy Analysis Model
 
