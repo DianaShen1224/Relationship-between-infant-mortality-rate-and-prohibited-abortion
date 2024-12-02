@@ -244,7 +244,7 @@ The dataset underwent cleaning and feature engineering, as described in the prep
 
 ##### Training Hyperparameters
 
-The training process used the Stan Generalized Linear Mixed Model (GLMM) framework implemented through the rstanarm library in R. Two models were trained:
+The training process used the Stan Generalized Linear Mixed Model (GLMM) framework implemented through the `rstanarm` library in R. Two models were trained:
 
 -   First Model:
 
@@ -286,13 +286,13 @@ Key attributes include:
 
 Evaluation of the model’s performance was disaggregated across the following factors: 
 1. **Policy Factors**:
- -  States categorized based on abortion legality (abortion_illegal).
- -  Timing relative to the abortion injunction (after_injunction).
+ -  States categorized based on abortion legality (`abortion_illegal`).
+ -  Timing relative to the abortion injunction (`after_injunction`).
 2. **Demographic Factors**:
- -  Maternal race (mothers_single_race).
- -  Maternal age group (age_of_mother).
+ -  Maternal race (`mothers_single_race`).
+ -  Maternal age group (`age_of_mother`).
 3. **Temporal Factors**:
- -  Year and month of death (year_of_death, date).
+ -  Year of death (`year_of_death`).
 
 #### Metrics
 
