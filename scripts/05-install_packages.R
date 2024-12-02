@@ -8,13 +8,17 @@
 # Any other information needed? Make sure you are in the `Relationship between_infant_mortality_rate_and_prohibited_abortion` rproj
 
 # Install necessary packages
-install.packages("tidyverse")
-install.packages("arrow")
-install.packages("knitr")
-install.packages("usmap")
-install.packages("ggplot2")
-install.packages("dplyr")
-install.packages("kableExtra")
-install.packages("rstanarm")
-install.packages("janitor")
-install.packages("lubridate")
+# List of packages used in the study
+required_packages <- c(
+  "tidyverse", "arrow", "modelsummary", "knitr", "kableExtra", 
+  "usmap", "dplyr", "testthat", "here", "janitor", 
+  "lubridate", "ggplot2", "rstanarm", "fixest", "caret"
+)
+
+# Install any packages not already installed
+installed_packages <- installed.packages()
+for (pkg in required_packages) {
+  if (!(pkg %in% installed_packages[, "Package"])) {
+    install.packages(pkg)
+  }
+}
