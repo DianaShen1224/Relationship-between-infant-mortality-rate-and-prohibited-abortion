@@ -53,7 +53,7 @@ The repository is structured as follows:
 -   `other` contains details about LLM chat interactions and sket
 -   `paper` contains the files used to generate the paper, including the Quarto document and reference bibliography file, as well as the PDF of the paper.
 
-### Data Download
+## Data Download
 
 One way to download the Query Criteria, the same as the raw data, is to use the [saved request](https://wonder.cdc.gov/controller/saved/D159/D414F912) to get the exact same query criteria. After clicking the link, please read the terms of data use and click the "I Agree" button below to access the saved request. Once the processing requests are completed (about 5-7 minutes), click the "Results" tab at the top of the page to see the result table.
 
