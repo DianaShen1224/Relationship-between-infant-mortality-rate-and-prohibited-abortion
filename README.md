@@ -108,7 +108,7 @@ This model predicts the impact of abortion injunctions on infant mortality rates
 ### Model Sources
 
 -   **Repository:** [GitHub Link](https://github.com/DianaShen1224/Relationship-between-infant-mortality-rate-and-prohibited-abortion)
--   **Paper**:[Impact of Roe v. Wade’s Overturn: Abortion Restrictions and Infant Mortality in the U.S. Using a Difference-in-Differences Analysis](https://github.com/DianaShen1224/Relationship-between-infant-mortality-rate-and-prohibited-abortion/blob/main/paper/ExaminingtheimpactOverturnofRoev.Wade-BanningofAbortiononInfantMortalityRatesintheUnitedStatesUsingaDifference-in-DifferencesApproach.pdf)
+-   **Paper**: [Impact of Roe v. Wade’s Overturn: Abortion Restrictions and Infant Mortality in the U.S. Using a Difference-in-Differences Analysis](https://github.com/DianaShen1224/Relationship-between-infant-mortality-rate-and-prohibited-abortion/blob/main/paper/ExaminingtheimpactOverturnofRoev.Wade-BanningofAbortiononInfantMortalityRatesintheUnitedStatesUsingaDifference-in-DifferencesApproach.pdf)
 
 ## Uses
 
