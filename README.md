@@ -218,7 +218,7 @@ The training data originates from the Linked Birth/Infant Death Records (2017-20
 -   State of Residence: Identifies the mother’s state of residence during childbirth.
 -   Maternal Age: Categorized into groups such as 15-19, 20-24, 25-29, and 30-34 years.
 -   Maternal Race: Recorded as a categorical variable (e.g., Asian, Black or African American, White).
--   Year and Month of Death: Specifies when the infant death occurred.
+-   Year of Death: Specifies when the infant death occurred.
 -   Death Rate: Continuous variable indicating the number of infant deaths per 1,000 live births, with reliability labels.
 
 The dataset underwent cleaning and feature engineering, as described in the preprocessing steps, to ensure readiness for analysis and modeling.
