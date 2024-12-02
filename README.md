@@ -53,7 +53,7 @@ The repository is structured as follows:
 -   `other` contains details about LLM chat interactions and sket
 -   `paper` contains the files used to generate the paper, including the Quarto document and reference bibliography file, as well as the PDF of the paper.
 
-### Data Download
+## Data Download
 
 One way to download the Query Criteria, the same as the raw data, is to use the [saved request](https://wonder.cdc.gov/controller/saved/D159/D414F912) to get the exact same query criteria. After clicking the link, please read the terms of data use and click the "I Agree" button below to access the saved request. Once the processing requests are completed (about 5-7 minutes), click the "Results" tab at the top of the page to see the result table.
 
@@ -108,7 +108,7 @@ This model predicts the impact of abortion injunctions on infant mortality rates
 ### Model Sources
 
 -   **Repository:** [GitHub Link](https://github.com/DianaShen1224/Relationship-between-infant-mortality-rate-and-prohibited-abortion)
--   **Paper**:[Examining the impact Overturn of Roe v. Wade: Banning of Abortion on Infant Mortality Rates in the United States Using a Difference-in-Differences Approach](https://github.com/DianaShen1224/Relationship-between-infant-mortality-rate-and-prohibited-abortion/blob/main/paper/paper.pdf)
+-   **Paper**: [Impact of Roe v. Wade’s Overturn: Abortion Restrictions and Infant Mortality in the U.S. Using a Difference-in-Differences Analysis](https://github.com/DianaShen1224/Relationship-between-infant-mortality-rate-and-prohibited-abortion/blob/main/paper/ExaminingtheimpactOverturnofRoev.Wade-BanningofAbortiononInfantMortalityRatesintheUnitedStatesUsingaDifference-in-DifferencesApproach.pdf)
 
 ## Uses
 
@@ -218,7 +218,7 @@ The training data originates from the Linked Birth/Infant Death Records (2017-20
 -   State of Residence: Identifies the mother’s state of residence during childbirth.
 -   Maternal Age: Categorized into groups such as 15-19, 20-24, 25-29, and 30-34 years.
 -   Maternal Race: Recorded as a categorical variable (e.g., Asian, Black or African American, White).
--   Year and Month of Death: Specifies when the infant death occurred.
+-   Year of Death, Month: Specifies when the infant death occurred.
 -   Death Rate: Continuous variable indicating the number of infant deaths per 1,000 live births, with reliability labels.
 
 The dataset underwent cleaning and feature engineering, as described in the preprocessing steps, to ensure readiness for analysis and modeling.
@@ -236,15 +236,15 @@ The dataset underwent cleaning and feature engineering, as described in the prep
 
 3.  Feature Engineering:
 
--   Time Indicator (after_injunction): Created a binary variable indicating whether the infant death occurred after June 2022.
--   Policy Indicator (abortion_illegal): A binary variable indicating whether abortion was illegal in the state of residence.
+-   Time Indicator (`after_injunction`): Created a binary variable indicating whether the infant death occurred after June 2022.
+-   Policy Indicator (`abortion_illegal`): A binary variable indicating whether abortion was illegal in the state of residence.
 -   Date Consolidation: Combined year and month into a Date object for analysis.
 
 4.  Output Data: Saved the cleaned data in CSV and Parquet formats for compatibility with modeling tools in`data/02-analysis_data`.
 
 ##### Training Hyperparameters
 
-The training process used the Stan Generalized Linear Mixed Model (GLMM) framework implemented through the rstanarm library in R. Two models were trained:
+The training process used the Stan Generalized Linear Mixed Model (GLMM) framework implemented through the `rstanarm` library in R. Two models were trained:
 
 -   First Model:
 
@@ -286,13 +286,13 @@ Key attributes include:
 
 Evaluation of the model’s performance was disaggregated across the following factors: 
 1. **Policy Factors**:
- -  States categorized based on abortion legality (abortion_illegal).
- -  Timing relative to the abortion injunction (after_injunction).
+ -  States categorized based on abortion legality (`abortion_illegal`).
+ -  Timing relative to the abortion injunction (`after_injunction`).
 2. **Demographic Factors**:
- -  Maternal race (mothers_single_race).
- -  Maternal age group (age_of_mother).
+ -  Maternal race (`mothers_single_race`).
+ -  Maternal age group (`age_of_mother`).
 3. **Temporal Factors**:
- -  Year and month of death (year_of_death, date).
+ -  Year of death (`year_of_death`).
 
 #### Metrics
 
