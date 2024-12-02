@@ -153,8 +153,7 @@ parquet files for larger datasets. We used `modelsummary` package
 [@modelsummary] to generate clean and interpretable summaries of our
 regression models. We used `knitr` [@knitr] and `kableExtra`
 [@kableExtra] to generate clean tables and reproducible reports, and
-`usmap` for geographical visualizations. We use `here` [@here] package
-simplifies the management of file paths, ensuring a reproducible
+`usmap` for geographical visualizations. We use `dplyr` [@dplyr] to manipulate data. We use `testthat` [@testthat] to test the simulated and analysis dataset. We use `usmap` [@usmap] to plot and analyze U.S. state and county-level data on maps by providing preformatted map geometries and easy integration with data. We use `here` [@here] package simplifies the management of file paths, ensuring a reproducible
 workflow by creating a consistent point of reference for file locations,
 regardless of the operating system or working directory. Data cleaning
 was facilitated by `janitor` [@janitor], while `lubridate` [@lubridate]
