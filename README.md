@@ -218,7 +218,7 @@ The training data originates from the Linked Birth/Infant Death Records (2017-20
 -   State of Residence: Identifies the mother’s state of residence during childbirth.
 -   Maternal Age: Categorized into groups such as 15-19, 20-24, 25-29, and 30-34 years.
 -   Maternal Race: Recorded as a categorical variable (e.g., Asian, Black or African American, White).
--   Year of Death: Specifies when the infant death occurred.
+-   Year of Death, Month: Specifies when the infant death occurred.
 -   Death Rate: Continuous variable indicating the number of infant deaths per 1,000 live births, with reliability labels.
 
 The dataset underwent cleaning and feature engineering, as described in the preprocessing steps, to ensure readiness for analysis and modeling.
@@ -236,8 +236,8 @@ The dataset underwent cleaning and feature engineering, as described in the prep
 
 3.  Feature Engineering:
 
--   Time Indicator (after_injunction): Created a binary variable indicating whether the infant death occurred after June 2022.
--   Policy Indicator (abortion_illegal): A binary variable indicating whether abortion was illegal in the state of residence.
+-   Time Indicator (`after_injunction`): Created a binary variable indicating whether the infant death occurred after June 2022.
+-   Policy Indicator (`abortion_illegal`): A binary variable indicating whether abortion was illegal in the state of residence.
 -   Date Consolidation: Combined year and month into a Date object for analysis.
 
 4.  Output Data: Saved the cleaned data in CSV and Parquet formats for compatibility with modeling tools in`data/02-analysis_data`.
