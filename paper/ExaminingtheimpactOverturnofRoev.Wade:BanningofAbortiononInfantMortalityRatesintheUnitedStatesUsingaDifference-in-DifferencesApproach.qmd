@@ -141,8 +141,7 @@ to a wide range of the Centers for Disease Control and Prevention (CDC)
 epidemiologic data and resources. This dataset offers detailed state-level information on infant death rates in the United States, serving as the foundation for our study of the impact of abortion injunctions.
 Following the guidelines outlined in
 @tellingstories, we analyze the impact of abortion injunctions on infant
-death rates using the Difference-in-Difference method. This approach, shown in @sec-model, utilizes the main effects and the interaction between the legality of abortion in the
-mother’s state of residence and the timing of the infant’s death as the predictor variable. Additionally, we include control variables, infant year of death, race, and age to account for potential confounding factors, and the mother’s state of residence as a random variable.
+death rates using the Difference-in-Difference method. This approach, shown in @sec-model, utilizes the main effects and the interaction between the legality of abortion in the mother’s state of residence and the timing of the infant’s death as the predictor variable. Additionally, we include the infants' year of death, race, and age as control variables to account for potential confounding factors, and the mother’s state of residence as a random variable.
 
 We selected the CDC WONDER dataset for its combination of granularity, consistency, and accessibility, making it suitable for a nationwide analysis. Alternative datasets lacked either the breadth or the standardization required for a study of this scale. Additionally, CDC WONDER’s public availability enhances transparency and allows for independent verification, ensuring the reliability and reproducibility of our research.
 
@@ -685,7 +684,7 @@ model builds on the first by incorporating additional control variables
 to account for potential confounding factors.
 
 Define $y_i$ as as the infant death rate per 1,000 live births, and
-$\gamma_j$ as the random state effect for state j. 
+$\gamma_j$ as the random state effect for state $j$. 
 $$
 \begin{aligned}
 y_i|\mu_i,\sigma &\sim \mbox{Normal}(\mu_i, \sigma)\\
@@ -1195,13 +1194,13 @@ plot(
 
 Credibility intervals are the Bayesian equivalent of confidence
 intervals, offering an understanding of the range of probable values for
-a parameter @tellingstories. Using Bayesian estimation, we derive a
+a parameter [@tellingstories]. Using Bayesian estimation, we derive a
 posterior distribution for each model coefficient. @fig-area-1 presents
 the 95% credibility intervals for coefficients in the first model, while
 @fig-area-2 illustrates the same for the second model. These intervals
 represent the range within which 95% of the posterior probability mass
 falls, offering a robust understanding of parameter uncertainty and the
-influence of predictors under the Bayesian framework @tellingstories.
+influence of predictors under the Bayesian framework [@tellingstories].
 
 ## Cross Validation
 
@@ -1354,7 +1353,7 @@ recommendations.
 
 Restrictive abortion laws can heighten maternal stress, anxiety, or
 depression—particularly in unintended or high-risk
-pregnancies—compromising maternal health and prenatal care. Research
+pregnancies—compromising maternal health and prenatal care. Research from
 @crugnola2022 highlights maternal mental health as a key determinant of
 infant health outcomes, with conditions like chronic stress and depression adversely affecting prenatal behaviors, healthcare access,
 and overall well-being. These compounded challenges, driven by societal and systemic barriers, can significantly increase risks of adverse
