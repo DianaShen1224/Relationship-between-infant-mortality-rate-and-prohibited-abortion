@@ -411,3 +411,7 @@ Diana Shen
 ## Model Card Contact
 
 [diana.shen\@mail.utoronto.ca](mailto:diana.shen@mail.utoronto.ca)
+
+## Reference
+
+Ozoani, Ezi and Gerchick, Marissa and Mitchell, Margaret. Model Card Guidebook. Hugging Face, 2022. https://huggingface.co/docs/hub/en/model-card-guidebook
