@@ -881,6 +881,14 @@ These findings underscore the interplay of policy and demographic
 factors, emphasizing the disproportionate burden of restrictive abortion
 policies and systemic inequities on infant mortality rates.
 
+## Impact of Control Variables on Model Performance and Results
+
+The inclusion of control variables in the second model significantly improves its explanatory power compared to the first model, as evidenced by the higher adjusted $R^2$ (0.778) in the second model versus 0.213 in the first. These control variables—such as maternal age, race, and year of death—capture critical demographic and temporal variations influencing infant mortality rates, leading to more precise and reliable estimates of the impact of abortion bans.
+
+For instance, the coefficient for the interaction term (`after_injunction` × `abortion_illegal`) increases from 0.111 in the first model to 0.285 in the second model, suggesting a stronger observed effect of abortion injunctions after adjusting for confounding factors. Additionally, the second model highlights disparities, such as the substantial positive effect of 6.604 for Black mothers on infant mortality, underscoring the influence of racial and demographic factors.
+
+The improvement in model fit is further demonstrated by a lower RMSE (2.36 in the second model versus 4.21 in the first) and better predictive performance metrics, including LOOIC and WAIC. These results emphasize the importance of controlling for demographic and socioeconomic heterogeneity across states to ensure that the estimated effects of abortion bans are robust and not confounded by underlying differences.
+
 ## Racial and Socioeconomic Disparities
 
 The results reveal stark racial disparities in infant mortality rates,
