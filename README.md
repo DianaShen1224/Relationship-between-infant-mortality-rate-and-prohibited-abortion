@@ -48,7 +48,7 @@ The repository is structured as follows:
 
 -   `data/01-raw_data` contains the raw infant death data as obtained from [CDC Wonder](https://wonder.cdc.gov/controller/datarequest/D159), The process for selecting the query parameters and downloading the dataset is outlined in the <ins>Data Download </ins>. This ensures the traceability and reproducibility of the data acquisition process. To open these data through GitHub, they can be downloaded. Alternatively, to view these files within RStudio, they can be imported using the library `read.delim`.
 -   `data/02-analysis_data` contains the cleaned dataset constructed in `scripts/03-clean_data`.
--   The `scripts` folder contains the R scripts and code that simulated, tested, downloaded, and cleaned the data.
+-   The `scripts` folder contains the R scripts and code that simulated, tested, and cleaned the data.
 -   `model` contains fitted models.
 -   `other` contains details about LLM chat interactions and sketches.
 -   `paper` contains the files used to generate the paper, including the Quarto document and reference bibliography file, as well as the PDF of the paper.
