@@ -13,7 +13,7 @@ datasets:
 metrics:
 - rmse  
 - r2  
-base_model: null
+base_model: Bayesian
 
 model-index:
 - name: Impact of Abortion Policies on Infant Mortality
