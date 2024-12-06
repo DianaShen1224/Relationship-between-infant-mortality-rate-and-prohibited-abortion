@@ -715,14 +715,14 @@ after_injunction and abortion_illegal. To ensure consistency and
 comparability, both models share the same predictors, capturing the
 determinants of infant mortality.
 
-One model includes control variables — Age of Mother,
+The first model
+excludes these controls to focus on the overall intervention impact,
+avoid overfitting, and prioritize simplicity where variability is
+adequately accounted for by design or random effects. The second model includes control variables — Age of Mother,
 Mother's Single Race, and Year of Death to adjust for confounders
 that may influence infant death rates. This adjustment addresses
 compositional differences assumed in the DID framework and ensures
-unbiased estimates of the intervention’s effect. The second model
-excludes these controls to focus on the overall intervention impact,
-avoid overfitting, and prioritize simplicity where variability is
-adequately accounted for by design or random effects. By fitting two
+unbiased estimates of the intervention’s effect. By fitting two
 models, we compare outcomes to refine estimates and evaluate the direct
 impact of the intervention.
 
