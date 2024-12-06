@@ -153,7 +153,7 @@ parquet files for larger datasets. We used `modelsummary` package
 [@modelsummary] to generate clean and interpretable summaries of our
 regression models. We used `knitr` [@knitr] and `kableExtra`
 [@kableExtra] to generate clean tables and reproducible reports, and
-`usmap` for geographical visualizations. We use `dplyr` [@dplyr] to manipulate data. We use `testthat` [@testthat] to test the simulated and analysis dataset. We use `usmap` [@usmap] to plot and analyze U.S. state and county-level data on maps by providing preformatted map geometries and easy integration with data. We use `here` [@here] package simplifies the management of file paths, ensuring a reproducible
+`usmap` for geographical visualizations. We use `dplyr` [@dplyr] to manipulate data. We use `testthat` [@testthat] to test the simulated and analysis dataset. We use `usmap` [@usmap] to plot and analyze U.S. state and county-level data on maps by providing preformatted map geometries and easy integration with data. We use `here` [@here] package to simplify the management of file paths, ensuring a reproducible
 workflow by creating a consistent point of reference for file locations,
 regardless of the operating system or working directory. Data cleaning
 was facilitated by `janitor` [@janitor], while `lubridate` [@lubridate]
@@ -515,7 +515,7 @@ kable(analysis_data_state)|>footnote("Data Source: CDC Wonder")
 
 ### State
 
-State (`state`) referes to the state of the mother’s legal residence at the time of birth. This
+State (`state`) refers to the state of the mother’s legal residence at the time of birth. This
 data is categorized by the mother’s state of residence and excludes territories.
 
 ```{r}
@@ -682,7 +682,7 @@ predictor variables and the random effect for the state. The second
 model builds on the first by incorporating additional control variables
 to account for potential confounding factors.
 
-Define $y_i$ as as the infant death rate per 1,000 live births, and
+Define $y_i$ as the infant death rate per 1,000 live births, and
 $\gamma_j$ as the random state effect for state $j$. 
 $$
 \begin{aligned}
