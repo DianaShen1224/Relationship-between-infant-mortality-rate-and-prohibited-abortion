@@ -780,7 +780,7 @@ of abortion bans on infant mortality but has limitations. Misspecified
 priors, data imbalances, and violations of the parallel trends
 assumption could introduce biases. Despite these challenges, the model
 effectively integrates prior knowledge and addresses uncertainty,
-providing a valuable understanding of policy impacts.
+providing an important understanding of policy impacts.
 
 # Results {#sec-results}
 
@@ -848,7 +848,7 @@ Both models exhibit low RMSE values and high $R^2$, indicating a strong overall 
 
 ## Key Findings and Implications
 
-The analysis reveals notable patterns in infant mortality rates
+The analysis explains notable patterns in infant mortality rates
 influenced by policy and demographic factors. For states where abortion
 remained legal, the post-injunction period (after_injunction1) is
 associated with reductions in infant mortality rates, with a decrease of
@@ -883,7 +883,7 @@ policies and systemic inequities on infant mortality rates.
 
 ## Impact of Control Variables on Model Performance and Results
 
-The inclusion of control variables in the second model significantly improves its explanatory power compared to the first model, as evidenced by the higher adjusted $R^2$ (0.778) in the second model versus 0.213 in the first. These control variables—such as maternal age, race, and year of death—capture critical demographic and temporal variations influencing infant mortality rates, leading to more precise and reliable estimates of the impact of abortion bans.
+The inclusion of control variables in the second model significantly improves its explanatory power compared to the first model, as evidenced by the higher adjusted $R^2$ (0.778) in the second model versus 0.213 in the first. These control variables—such as maternal age, race, and year of death—capture detailed demographic and temporal variations influencing infant mortality rates, leading to more precise and reliable estimates of the impact of abortion bans.
 
 For instance, the coefficient for the interaction term (`after_injunction` × `abortion_illegal`) increases from 0.111 in the first model to 0.285 in the second model, suggesting a stronger observed effect of abortion injunctions after adjusting for confounding factors. Additionally, the second model highlights disparities, such as the substantial positive effect of 6.604 for Black mothers on infant mortality, underscoring the influence of racial and demographic factors.
 
@@ -891,7 +891,7 @@ The improvement in model fit is further demonstrated by a lower RMSE (2.36 in th
 
 ## Racial and Socioeconomic Disparities
 
-The results reveal stark racial disparities in infant mortality rates,
+The results explain stark racial disparities in infant mortality rates,
 with Black mothers experiencing significantly higher rates compared to
 other racial groups. These disparities are exacerbated by restrictive
 abortion policies, which disproportionately affect already vulnerable
@@ -1291,10 +1291,8 @@ variables like abortion legality and timing of the injunction. An average error 
 the magnitude of prediction errors, which may or may not be acceptable
 depending on the variability in the dataset. While the second model
 slightly reduces the error, its added complexity may not justify the
-trade-off if simplicity is a priority. However, if a nuanced
-understanding of demographic influences is essential, the second model
-provides a modest improvement in accuracy while offering more detailed
-insights into maternal and infant health disparities. The
+trade-off if simplicity is a priority. However, if a detailed understanding of demographic influences is essential, the second model
+provides a modest improvement in accuracy while offering a more detailed understanding of maternal and infant health disparities. The
 cross-validation process reinforces the reliability of these models by
 confirming their performance across multiple data splits, reducing the
 risk of overfitting.
@@ -1665,7 +1663,7 @@ outcomes of women who, due to restrictive abortion laws, were unable to
 access abortion services and subsequently faced the loss of their child.
 We recognize that discussing past pregnancies can be sensitive,
 especially those involving circumstances such as abortion or the loss of
-a child. Your understanding are invaluable in identifying areas where
+a child. Your understanding is invaluable in identifying areas where
 healthcare and support services can be improved. If you prefer not to
 answer, you are welcome to skip this section.
 
