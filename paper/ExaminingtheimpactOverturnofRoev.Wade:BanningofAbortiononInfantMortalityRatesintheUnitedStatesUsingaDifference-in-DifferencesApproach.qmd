@@ -1094,7 +1094,7 @@ restrictive abortion laws.
 #| message: false
 #| warning: false
 #| label: fig-ppcheck
-#| layout-ncol: 1
+#| layout-ncol: 2
 #| fig-cap: "Posterior Predictive Check: Examining how the model for infant death rate fits, and is affected by, the data"
 #| fig-subcap: ["First Model Posterior prediction check", "Second Model Posterior prediction check" ]
 #| fig-pos: "H"
